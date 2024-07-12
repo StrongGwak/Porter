@@ -93,4 +93,9 @@ Build/Android/res/*/*
 Plugins/**/Binaries/*
 Plugins/**/Intermediate/*
 
+# Content
+Content/MarketplaceAssets
+Content/Image
+
+
 # End of https://www.toptal.com/developers/gitignore/api/unrealengine
