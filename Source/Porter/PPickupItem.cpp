@@ -17,7 +17,7 @@ APPickupItem::APPickupItem()
 	RootComponent = TriggerVolume;
 	ItemMesh->SetupAttachment(RootComponent);
 
-	TriggerVolume->SetBoxExtent(FVector(40, 42, 30));
+	TriggerVolume->SetBoxExtent(FVector(150	, 150, 150));
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> Item(TEXT("/Script/Engine.StaticMesh'/Engine/BasicShapes/Cube.Cube'"));
 
@@ -33,21 +33,32 @@ void APPickupItem::BeginPlay()
 {
 	Super::BeginPlay();
 
-	TriggerVolume->OnComponentBeginOverlap.AddDynamic(this, &APPickupItem::MyCustomOverlapBegin);
+	TriggerVolume->OnComponentBeginOverlap.AddDynamic(this, &APPickupItem::PickupItemBeginOverlap);
 	TriggerVolume->OnComponentEndOverlap.AddDynamic(this, &APPickupItem::MyCustomOverlapEnd);;
 	
+}
+
+void APPickupItem::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	Heroinfo.Clear();
 }
 
 // Called every frame
 void APPickupItem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
-void APPickupItem::MyCustomOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void APPickupItem::PickupItemBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("BeginOverlap"));
+
+	if(Heroinfo.IsBound() == true)
+	{
+		Heroinfo.Broadcast(1, 2);
+	}
 }
 
 void APPickupItem::MyCustomOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)

@@ -16,6 +16,7 @@ public:
 	// Sets default values for this character's properties
 	APPlayer();
 
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -34,13 +35,13 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputAction* MoveAction;
 
-	UPROPERTY(VisibleAnywhere, Category = "Input")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputAction* LookAction;
 
-	UPROPERTY(VisibleAnywhere, Category = "Input")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputAction* TestUpAction;
 
-	UPROPERTY(VisibleAnywhere, Category = "Input")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputAction* TestDownAction;
 
 public:
@@ -77,5 +78,7 @@ public:
 	UPROPERTY(EditAnywhere)
 	float MaxHero = 15;
 
+private:
+	int32 TempNum;
 
 };

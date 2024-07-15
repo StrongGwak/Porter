@@ -41,6 +41,7 @@ APPlayer::APPlayer()
 	FObjectFinderInputManager();
 }
 
+
 // Called when the game starts or when spawned
 void APPlayer::BeginPlay()
 {
