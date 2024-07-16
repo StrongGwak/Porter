@@ -18,21 +18,21 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString HeroName;
 
-	/*UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int Attack;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int Damage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int AttackSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UStaticMeshComponent* MeshComponent;
+	USkeletalMesh* SkeletalMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UAnimMontage AnimMontage;*/
+	UAnimMontage* AttackAnim;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float SightRadius;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float PeripheralVisionAngle;
+	float VisionAngle;
 };

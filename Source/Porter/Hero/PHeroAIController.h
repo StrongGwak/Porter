@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "Perception/AISenseConfig_Sight.h"
 #include "PHeroAIController.generated.h"
 
 /**
@@ -25,7 +26,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category="Awareness")
 	class UAIPerceptionComponent* AIPerception;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, Category="Awareness")
 	class UAISenseConfig_Sight* SightConfig;
 
 public:
@@ -33,6 +34,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, Category="Awareness")
 	UObject* Target;
+
+	UFUNCTION()
+	void OnPerceptionUpdated(const TArray<AActor*>& Actors);
 	
 	
 };
