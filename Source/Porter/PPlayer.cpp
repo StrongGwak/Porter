@@ -6,8 +6,10 @@
 #include "Camera/CameraComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Components/ArrowComponent.h"
 #include "InputMappingContext.h"
 #include "Engine/Engine.h"
+#include "TestHeroBox.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -24,6 +26,9 @@ APPlayer::APPlayer()
 		GetMesh()->SetRelativeLocationAndRotation(FVector(0, 0, -90), FRotator(0, -90, 0));
 	}
 
+	HeroSpawnLocation = CreateDefaultSubobject<UArrowComponent>(TEXT("HeroSpawnLocation"));
+	HeroSpawnLocation->SetupAttachment(RootComponent);
+
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(RootComponent);
 	SpringArm->SetWorldLocation(FVector(0, 0, 70));
@@ -34,9 +39,6 @@ APPlayer::APPlayer()
 	Camera->SetupAttachment(SpringArm);
 
 	bUseControllerRotationYaw = true;
-
-	//넉넉하게 100
-	HeroArray.Init(0, 100);
 
 	FObjectFinderInputManager();
 }
@@ -106,11 +108,19 @@ void APPlayer::Up()
 	if (CurrentHero < MaxHero)
 	{
 		CurrentHero++;
+		UpdateSpringArmTargetLength();
+		UpdateOffset();
+
+		ACharacter* TestHeroBox = GetWorld()->SpawnActor<ACharacter>(HeroBoxSpawner, HeroSpawnLocation->GetComponentLocation() + Offset, HeroSpawnLocation->GetComponentRotation());
+
+		if(TestHeroBox)
+		{
+			HeroBoxArray.Add(TestHeroBox);
+		}
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHero));
 	}
 
-	UpdateSpringArmTargetLength();
-
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHero));
+	
 }
 
 void APPlayer::Down()
@@ -118,11 +128,23 @@ void APPlayer::Down()
 	if (CurrentHero > 0)
 	{
 		CurrentHero--;
+		UpdateSpringArmTargetLength();
+		UpdateOffset();
+
+		if(HeroBoxArray.Num() > 0)
+		{
+			ACharacter* LastHeroBox = HeroBoxArray.Last();
+
+			if(LastHeroBox)
+			{
+				LastHeroBox->Destroy();
+				HeroBoxArray.Pop();
+			}
+		}
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHero));
 	}
 
-	UpdateSpringArmTargetLength();
-
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHero));
+	
 }
 
 void APPlayer::UpdateSpringArmTargetLength()
@@ -143,6 +165,32 @@ void APPlayer::UpdateSpringArmTargetLength()
 	SpringArm->TargetArmLength = 400 + CameraLevel * 300;
 
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Blue, FString::FromInt(CameraLevel));
+}
+
+void APPlayer::UpdateOffset()
+{
+	float OffsetY = 0;
+	float CurrentSpawnNum = CurrentHero - (CameraLevel-1)*CameraLevel / 2;
+	int ForCount = round(CameraLevel);
+	for(int i = 0; i<CurrentSpawnNum; i++)
+	{
+		if(i%2 == 1)
+		{
+			OffsetY = -1 * OffsetY - 200;
+		}
+		else
+		{
+			OffsetY *= -1;
+		}
+	}
+	if (ForCount%2 == 0)
+	{
+		OffsetY += 100;
+	}
+
+	Offset = FVector(-100, OffsetY, CameraLevel*100);
+
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Black, FString::FromInt(OffsetY));
 }
 
 void APPlayer::FObjectFinderInputManager()
