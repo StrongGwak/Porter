@@ -32,4 +32,7 @@ public:
 	UPROPERTY(EditAnywhere)
 	FVector Offset;
 
+	UPROPERTY()
+	int32 HeroNum;
+
 };

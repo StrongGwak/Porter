@@ -28,7 +28,8 @@ void ATestHeroBox::BeginPlay()
 	APPlayer* PPlayer = Cast<APPlayer>(Player);
 	if(PPlayer)
 	{
-		Offset = PPlayer->Offset;
+		HeroNum = PPlayer->CurrentHero;
+		Offset = PPlayer->OffsetArr[HeroNum];
 	}
 }
 
