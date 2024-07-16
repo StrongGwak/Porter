@@ -32,7 +32,7 @@ APPlayer::APPlayer()
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(RootComponent);
 	SpringArm->SetWorldLocation(FVector(0, 0, 70));
-	SpringArm->TargetArmLength = 400 + CameraLevel * 300;
+	SpringArm->TargetArmLength = 400;
 	SpringArm->bUsePawnControlRotation=true;
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
@@ -41,6 +41,8 @@ APPlayer::APPlayer()
 	bUseControllerRotationYaw = true;
 
 	FObjectFinderInputManager();
+	MakeArrays();
+	
 }
 
 
@@ -56,6 +58,8 @@ void APPlayer::BeginPlay()
 			subSystem->AddMappingContext(IMC, 0);
 		}
 	}
+
+	
 	
 }
 
@@ -108,10 +112,11 @@ void APPlayer::Up()
 	if (CurrentHero < MaxHero)
 	{
 		CurrentHero++;
-		UpdateSpringArmTargetLength();
-		UpdateOffset();
+		//UpdateSpringArmTargetLength();
+		SpringArm->TargetArmLength = 400 + CameraLevelArr[CurrentHero] * 300;
+		//UpdateOffset();
 
-		ACharacter* TestHeroBox = GetWorld()->SpawnActor<ACharacter>(HeroBoxSpawner, HeroSpawnLocation->GetComponentLocation() + Offset, HeroSpawnLocation->GetComponentRotation());
+		ACharacter* TestHeroBox = GetWorld()->SpawnActor<ACharacter>(HeroBoxSpawner, HeroSpawnLocation->GetComponentLocation() + OffsetArr[CurrentHero], HeroSpawnLocation->GetComponentRotation());
 
 		if(TestHeroBox)
 		{
@@ -128,8 +133,7 @@ void APPlayer::Down()
 	if (CurrentHero > 0)
 	{
 		CurrentHero--;
-		UpdateSpringArmTargetLength();
-		UpdateOffset();
+		SpringArm->TargetArmLength = 400 + CameraLevelArr[CurrentHero] * 300;
 
 		if(HeroBoxArray.Num() > 0)
 		{
@@ -147,50 +151,55 @@ void APPlayer::Down()
 	
 }
 
-void APPlayer::UpdateSpringArmTargetLength()
+void APPlayer::MakeArrays()
 {
-	CameraLevel = 0;
-	while (true)
+	int TempCameraLevel = 0;
+	for(int HeroNum=0; HeroNum<MaxHero+1; HeroNum++)
 	{
-		if (CurrentHero <= CameraLevel * (CameraLevel + 1) / 2)
+		// Hero 수에 따른 카메라 레벨 == 쌓은 층 수
+		TempCameraLevel = 0;
+		while (true)
 		{
-			break;
+			if (HeroNum <= TempCameraLevel * (TempCameraLevel + 1) / 2)
+			{
+				break;
+			}
+			else
+			{
+				TempCameraLevel++;
+			}
 		}
-		else
+		// 배열 추가
+		CameraLevelArr.Add(TempCameraLevel);
+
+		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CameraLevelArr[HeroNum]));
+
+
+		
+		// 층수로 계산하는 스폰 위치 Offset
+		float OffsetY = 0;
+		float CurrentSpawnNum = HeroNum - (TempCameraLevel-1)*TempCameraLevel / 2;
+		int ForCount = round(TempCameraLevel);
+		for(int i = 0; i<round(CurrentSpawnNum); i++)
 		{
-			CameraLevel++;
+			if(i%2 == 1)
+			{
+				OffsetY = -1 * OffsetY - 200;
+			}
+			else
+			{
+				OffsetY *= -1;
+			}
 		}
+		if (ForCount%2 == 0)
+		{
+			OffsetY += 100;
+		}
+		// 배열 추가
+		OffsetArr.Add(FVector(-100, OffsetY, TempCameraLevel*100));
+
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(OffsetArr[HeroNum].Y));
 	}
-
-	SpringArm->TargetArmLength = 400 + CameraLevel * 300;
-
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Blue, FString::FromInt(CameraLevel));
-}
-
-void APPlayer::UpdateOffset()
-{
-	float OffsetY = 0;
-	float CurrentSpawnNum = CurrentHero - (CameraLevel-1)*CameraLevel / 2;
-	int ForCount = round(CameraLevel);
-	for(int i = 0; i<CurrentSpawnNum; i++)
-	{
-		if(i%2 == 1)
-		{
-			OffsetY = -1 * OffsetY - 200;
-		}
-		else
-		{
-			OffsetY *= -1;
-		}
-	}
-	if (ForCount%2 == 0)
-	{
-		OffsetY += 100;
-	}
-
-	Offset = FVector(-100, OffsetY, CameraLevel*100);
-
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Black, FString::FromInt(OffsetY));
 }
 
 void APPlayer::FObjectFinderInputManager()

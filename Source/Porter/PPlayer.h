@@ -60,9 +60,11 @@ public:
 
 	UFUNCTION()
 	void Down();
-	
-	void UpdateSpringArmTargetLength();
-	void UpdateOffset();
+
+	UFUNCTION()
+	void MakeArrays();
+
+	UFUNCTION()
 	void FObjectFinderInputManager();
 
 public:
@@ -75,10 +77,10 @@ public:
 
 	// 용병의 종류를 숫자로 표현 : 0은 없음, 종류는 한 5가지 : 1~5 숫자로 표현
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	TArray<class ACharacter*> HeroBoxArray;
+	TArray<ACharacter*> HeroBoxArray;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
-	float CameraLevel;
+	TArray<float> CameraLevelArr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float MaxHero = 15;
@@ -87,9 +89,9 @@ public:
 	class UArrowComponent* HeroSpawnLocation;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<class ACharacter> HeroBoxSpawner;
+	TSubclassOf<ACharacter> HeroBoxSpawner;
 
 	UPROPERTY(EditAnywhere)
-	FVector Offset = FVector(0,0,0);
+	TArray<FVector> OffsetArr;
 	
 };
