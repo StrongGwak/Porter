@@ -2,25 +2,47 @@
 
 
 #include "Hero/PHero.h"
-
 #include "Hero/PHeroStruct.h"
 #include "Hero/PHeroAIController.h"
 
 // Sets default values
 APHero::APHero()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> TempMesh(TEXT("/Script/Engine.SkeletalMesh'/Game/MarketAssets/KoreanTraditionalMartialArts/Meshs/Characters/Meshs/SKM_Soldier_1.SKM_Soldier_1'"));
-	if (TempMesh.Object)
-	{
-		GetMesh()->SetSkeletalMesh(TempMesh.Object);
-	}
-	GetMesh()->SetRelativeLocation(FVector3d(0.0f, 0.0f, -90.0f));
-	GetMesh()->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
+}
 
+
+APHero::APHero(const FPHeroStruct& HeroInfo)
+{
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+
+	if (HeroInfo.SkeletalMesh)
+	{
+		GetMesh()->SetSkeletalMesh(HeroInfo.SkeletalMesh);
+		GetMesh()->SetRelativeLocation(FVector3d(0.0f, 0.0f, -90.0f));
+		GetMesh()->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
+	}
+
+	// 매개변수로 온 구조체의 정보를 영웅 멤버변수에 할당
+	Damage = HeroInfo.Damage;
+	AttackSpeed = HeroInfo.AttackSpeed;
+	AttackAnim = HeroInfo.AttackAnim;
+	SightRadius = HeroInfo.SightRadius;
+	VisionAngle = HeroInfo.VisionAngle;
+	
+	// AI Controller 할당
 	AIControllerClass = APHeroAIController::StaticClass();
+	// AI Controller 캐스팅
+	AIController = Cast<APHeroAIController>(GetController());
+    if (AIController)
+	{
+    	// AI Controller의 시야 정보 설정 (적 인식 거리)
+		AIController->SetSightConfig(SightRadius, SightRadius + 10.0f, VisionAngle);
+	}
+	
 	
 }
 
@@ -28,30 +50,6 @@ APHero::APHero()
 void APHero::BeginPlay()
 {
 	Super::BeginPlay();
-
-	name = GetActorLabel();
-	APHeroAIController* AIController = Cast<APHeroAIController>(GetController());
-	if (AIController)
-	{
-		UDataTable* DT_Hero = LoadObject<UDataTable>(nullptr, TEXT("DataTable'/Game/Hero/DT_Hero.DT_Hero'"));
-		FPHeroStruct* HeroData = nullptr;
-		TArray<FPHeroStruct*> AllRows;
-		DT_Hero->GetAllRows(TEXT(""),AllRows);
-		for (FPHeroStruct* data : AllRows)
-		{
-			if (data->HeroName == name)
-			{
-				HeroData = data;
-				break;
-			}
-		}
-		
-		if (HeroData != nullptr)
-		{
-			UE_LOG(LogTemp, Log, TEXT("Sight Radius :: %f"), HeroData->SightRadius);
-			AIController->SetSightConfig(HeroData->SightRadius, HeroData->SightRadius + 10.0f, HeroData->PeripheralVisionAngle);
-		}
-	}
 	
 }
 
