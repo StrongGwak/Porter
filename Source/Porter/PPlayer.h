@@ -73,17 +73,26 @@ public:
 
 	// 용병을 NPC로 표현했지만, 나중에 고쳐야 할 듯
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	float CurrentHero;
+	float HeroNum;
 
 	// 용병의 종류를 숫자로 표현 : 0은 없음, 종류는 한 5가지 : 1~5 숫자로 표현
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<ACharacter*> HeroBoxArray;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	TArray<float> PorterFloorArray;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
-	TArray<float> CameraLevelArr;
+	float AddCameraLength = 300;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float MaxHero = 15;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	float PorterHeight = 100;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	float PorterWidth = 100;
 
 	UPROPERTY(EditAnywhere)
 	class UArrowComponent* HeroSpawnLocation;
@@ -91,7 +100,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<ACharacter> HeroBoxSpawner;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<FVector> OffsetArr;
+
+	
 	
 };

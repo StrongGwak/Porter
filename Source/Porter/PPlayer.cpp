@@ -37,12 +37,10 @@ APPlayer::APPlayer()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
-
 	bUseControllerRotationYaw = true;
 
 	FObjectFinderInputManager();
 	MakeArrays();
-	
 }
 
 
@@ -58,23 +56,18 @@ void APPlayer::BeginPlay()
 			subSystem->AddMappingContext(IMC, 0);
 		}
 	}
-
-	
-	
 }
 
 // Called every frame
 void APPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
 void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 
 	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 
@@ -109,31 +102,27 @@ void APPlayer::Look(const FInputActionValue& Value)
 
 void APPlayer::Up()
 {
-	if (CurrentHero < MaxHero)
+	if (HeroNum < MaxHero)
 	{
-		CurrentHero++;
-		//UpdateSpringArmTargetLength();
-		SpringArm->TargetArmLength = 400 + CameraLevelArr[CurrentHero] * 300;
-		//UpdateOffset();
-
-		ACharacter* TestHeroBox = GetWorld()->SpawnActor<ACharacter>(HeroBoxSpawner, HeroSpawnLocation->GetComponentLocation() + OffsetArr[CurrentHero], HeroSpawnLocation->GetComponentRotation());
+		HeroNum++;
+		SpringArm->TargetArmLength = 400 + PorterFloorArray[HeroNum] * AddCameraLength;
+		
+		ACharacter* TestHeroBox = GetWorld()->SpawnActor<ACharacter>(HeroBoxSpawner, HeroSpawnLocation->GetComponentLocation() + OffsetArr[HeroNum], HeroSpawnLocation->GetComponentRotation());
 
 		if(TestHeroBox)
 		{
-			HeroBoxArray.Add(TestHeroBox);
+			HeroBoxArray.Emplace(TestHeroBox);
 		}
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHero));
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(HeroNum));
 	}
-
-	
 }
 
 void APPlayer::Down()
 {
-	if (CurrentHero > 0)
+	if (HeroNum > 0)
 	{
-		CurrentHero--;
-		SpringArm->TargetArmLength = 400 + CameraLevelArr[CurrentHero] * 300;
+		HeroNum--;
+		SpringArm->TargetArmLength = 400 + PorterFloorArray[HeroNum] * AddCameraLength;
 
 		if(HeroBoxArray.Num() > 0)
 		{
@@ -145,90 +134,66 @@ void APPlayer::Down()
 				HeroBoxArray.Pop();
 			}
 		}
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHero));
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(HeroNum));
 	}
-
-	
 }
 
 void APPlayer::MakeArrays()
 {
-	int TempCameraLevel = 0;
-	for(int HeroNum=0; HeroNum<MaxHero+1; HeroNum++)
+	int PorterFloor = 0;
+	for(int TempHeroNum=0; TempHeroNum<MaxHero+1; TempHeroNum++)
 	{
 		// Hero 수에 따른 카메라 레벨 == 쌓은 층 수
-		TempCameraLevel = 0;
+		PorterFloor = 0;
 		while (true)
 		{
-			if (HeroNum <= TempCameraLevel * (TempCameraLevel + 1) / 2)
-			{
-				break;
-			}
-			else
-			{
-				TempCameraLevel++;
-			}
+			if (TempHeroNum <= PorterFloor * (PorterFloor + 1) / 2) break;
+			else PorterFloor++;
 		}
 		// 배열 추가
-		CameraLevelArr.Add(TempCameraLevel);
-
-		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CameraLevelArr[HeroNum]));
-
-
+		PorterFloorArray.Emplace(PorterFloor);
 		
 		// 층수로 계산하는 스폰 위치 Offset
 		float OffsetY = 0;
-		float CurrentSpawnNum = HeroNum - (TempCameraLevel-1)*TempCameraLevel / 2;
-		int ForCount = round(TempCameraLevel);
+		float CurrentSpawnNum = TempHeroNum - (PorterFloor-1)*PorterFloor / 2;
+		int ForCount = round(PorterFloor);
 		for(int i = 0; i<round(CurrentSpawnNum); i++)
 		{
-			if(i%2 == 1)
-			{
-				OffsetY = -1 * OffsetY - 200;
-			}
-			else
-			{
-				OffsetY *= -1;
-			}
+			if (i%2 == 1) OffsetY = -1*OffsetY - 2*PorterWidth;
+			else OffsetY *= -1;
 		}
-		if (ForCount%2 == 0)
-		{
-			OffsetY += 100;
-		}
-		// 배열 추가
-		OffsetArr.Add(FVector(-100, OffsetY, TempCameraLevel*100));
-
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(OffsetArr[HeroNum].Y));
+		if (ForCount%2 == 0) OffsetY += PorterWidth;
+		OffsetArr.Emplace(FVector(-100, OffsetY, PorterFloor*PorterHeight));
 	}
 }
 
 void APPlayer::FObjectFinderInputManager()
 {
-	static ConstructorHelpers::FObjectFinder<UInputMappingContext>InputMappingContext(TEXT("/Script/EnhancedInput.InputMappingContext'/Game/Player/Inputs/IMC_Player.IMC_Player'"));
+	static ConstructorHelpers::FObjectFinder<UInputMappingContext>InputMappingContext(TEXT("/Script/EnhancedInput.InputMappingContext'/Game/Core/Inputs/IMC_Player.IMC_Player'"));
 	if (InputMappingContext.Object != nullptr)
 	{
 		IMC = InputMappingContext.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UInputAction>InputMove(TEXT("/Script/EnhancedInput.InputAction'/Game/Player/Inputs/IA_Move.IA_Move'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction>InputMove(TEXT("/Script/EnhancedInput.InputAction'/Game/Core/Inputs/IA_Move.IA_Move'"));
 	if (InputMove.Object != nullptr)
 	{
 		MoveAction = InputMove.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UInputAction>InputLook(TEXT("/Script/EnhancedInput.InputAction'/Game/Player/Inputs/IA_Look.IA_Look'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction>InputLook(TEXT("/Script/EnhancedInput.InputAction'/Game/Core/Inputs/IA_Look.IA_Look'"));
 	if (InputLook.Object != nullptr)
 	{
 		LookAction = InputLook.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UInputAction>InputUp(TEXT("/Script/EnhancedInput.InputAction'/Game/Player/Inputs/IA_TestUp.IA_TestUp'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction>InputUp(TEXT("/Script/EnhancedInput.InputAction'/Game/Core/Inputs/IA_TestUp.IA_TestUp'"));
 	if (InputLook.Object != nullptr)
 	{
 		TestUpAction = InputUp.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UInputAction>InputDown(TEXT("/Script/EnhancedInput.InputAction'/Game/Player/Inputs/IA_TestDown.IA_TestDown'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction>InputDown(TEXT("/Script/EnhancedInput.InputAction'/Game/Core/Inputs/IA_TestDown.IA_TestDown'"));
 	if (InputLook.Object != nullptr)
 	{
 		TestDownAction = InputDown.Object;
