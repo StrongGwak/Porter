@@ -55,30 +55,41 @@ public:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 
+	UFUNCTION()
 	void Up();
+
+	UFUNCTION()
 	void Down();
+	
 	void UpdateSpringArmTargetLength();
+	void UpdateOffset();
 	void FObjectFinderInputManager();
 
 public:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
 	float mouseSpeed = 30;
 
 	// 용병을 NPC로 표현했지만, 나중에 고쳐야 할 듯
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float CurrentHero;
 
 	// 용병의 종류를 숫자로 표현 : 0은 없음, 종류는 한 5가지 : 1~5 숫자로 표현
-	UPROPERTY()
-	TArray<int32> HeroArray;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	TArray<class ACharacter*> HeroBoxArray;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
 	float CameraLevel;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float MaxHero = 15;
 
-private:
-	int32 TempNum;
+	UPROPERTY(EditAnywhere)
+	class UArrowComponent* HeroSpawnLocation;
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class ACharacter> HeroBoxSpawner;
+
+	UPROPERTY(EditAnywhere)
+	FVector Offset = FVector(0,0,0);
+	
 };
