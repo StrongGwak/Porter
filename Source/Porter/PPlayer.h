@@ -55,6 +55,7 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UCameraComponent* Camera;
 
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
 	float mouseSpeed = 30;
@@ -63,7 +64,7 @@ public:
 	float AddCameraLength = 300;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	float HeroNum;
+	int32 HeroNum;
 
 	// 용병의 종류를 숫자로 표현 : 0은 없음, 종류는 한 5가지 : 1~5 숫자로 표현
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
@@ -94,6 +95,39 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Stats")
 	void UpdateStats(FPlayerStatsStruct UpdateStat);
+	
+	UFUNCTION(Category="Stats")
+	void PlusHP(int32 Heal);
+
+	UFUNCTION(Category="Stats")
+	void MinusHP(int32 Damage);
+	
+	// HP
+	UPROPERTY(EditAnywhere)
+	int32 MaxHp = 5;
+	UPROPERTY(EditAnywhere)
+	int32 CurrentHP = 5;
+	UPROPERTY(EditAnywhere)
+	int32 MaxHeroHP = 5;
+	UPROPERTY(EditAnywhere)
+	int32 LastHeroHP = 2;	// 항상 1~5의 int값  
+
+	// 스태미나
+	UPROPERTY(EditAnywhere)
+	float MaxStamina = 100;
+	UPROPERTY(EditAnywhere)
+	float DecreaseStamina = 33; // 속력
+	UPROPERTY(EditAnywhere)
+	float IncreaseStamina = 20; // 속력
+	UPROPERTY()
+	float ZeroToHundredIncreaseSteamin = 10; // 속력
+	UPROPERTY(EditAnywhere)
+	float CurrentStamina = 100;
+	UPROPERTY()
+	bool bIsRun = false;
+	UPROPERTY()
+	bool bCanRun = true;
+	
 
 public:
 	void Move(const FInputActionValue& Value);
@@ -117,6 +151,6 @@ public:
 	UFUNCTION()
 	void FObjectFinderInputManager();
 
-	
-	
+	UFUNCTION()
+	void Die();
 };

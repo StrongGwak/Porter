@@ -63,6 +63,38 @@ void APPlayer::BeginPlay()
 void APPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	// 달릴 수 없으면, 달리지 못한다 -> !끼리 묶는건 의미 x
+	if (bIsRun && bCanRun)	// 달리고 있고, 달리기 누를 수 있는 상태
+	{
+		CurrentStamina -= DecreaseStamina * DeltaTime;
+		if (CurrentStamina <= 0)
+		{
+			bCanRun = false;
+			StopRun();
+			CurrentStamina = 0;
+		}
+	}
+	else if (!bIsRun && bCanRun && CurrentStamina < MaxStamina) // 달리고 있지 않은데, 달리기 누를 수는 있는 상태 == 휴식타임
+	{
+		CurrentStamina += IncreaseStamina * DeltaTime;
+		if (CurrentStamina > MaxStamina)
+		{
+			CurrentStamina = MaxStamina;
+		}
+	}
+	else if (!bCanRun)
+	{
+		CurrentStamina += ZeroToHundredIncreaseSteamin * DeltaTime;
+		if (CurrentStamina > MaxStamina)
+		{
+			CurrentStamina = MaxStamina;
+			bCanRun = true;
+		}
+	}
+
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentStamina));
+	
 }
 
 // Called to bind functionality to input
@@ -80,6 +112,7 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Completed, this, &APPlayer::StopRun);
 }
 
+// 블루프린트에서 업데이트 할 사항
 void APPlayer::UpdateStats(FPlayerStatsStruct UpdateStat)
 {
 	PlayerAndHeroStats = UpdateStat;
@@ -89,10 +122,61 @@ void APPlayer::UpdateStats(FPlayerStatsStruct UpdateStat)
 	GetCharacterMovement()->MaxWalkSpeed = PlayerAndHeroStats.PlayerWalkSpeed;
 
 	// 현재 용병 수가 max를 넘게 될 경우 없애버리기
-	while (HeroNum > PlayerAndHeroStats.PlayerHeroNumber)
+	while (HeroNum > PlayerAndHeroStats.MaxHeroNum)
 	{
 		Down();
 	}
+
+	MaxHeroHP += PlayerAndHeroStats.PlusMaxHeroHP;
+	MaxStamina = PlayerAndHeroStats.PlayerMaxStamina;
+	DecreaseStamina = PlayerAndHeroStats.PlayerDecreaseStamina;
+	IncreaseStamina = PlayerAndHeroStats.PlayerIncreaseStamina;
+	ZeroToHundredIncreaseSteamin = PlayerAndHeroStats.PlayerZeroToHundredIncreaseSteamin;
+}
+
+void APPlayer::PlusHP(int32 Heal)
+{
+	if (LastHeroHP == MaxHeroHP) LastHeroHP = MaxHeroHP; 
+	else if (Heal + LastHeroHP >= MaxHeroHP) LastHeroHP = MaxHeroHP;
+	else LastHeroHP += Heal;
+	CurrentHP = MaxHeroHP * (HeroNum - 1) + LastHeroHP;
+}
+
+void APPlayer::MinusHP(int32 Damage)
+{
+	if (Damage > MaxHp)
+	{
+		MaxHp = 0;
+		CurrentHP = 0;
+		Die();
+		return;
+	}
+	int32 NumHeroDie = Damage / MaxHeroHP;
+	int32 UpdateLastHeroHP = Damage % MaxHeroHP;
+	
+	if (LastHeroHP > Damage)
+	{
+		LastHeroHP -= Damage;
+		CurrentHP = MaxHeroHP * (HeroNum - 1) + LastHeroHP;
+	}
+	else if (LastHeroHP > UpdateLastHeroHP)
+	{
+		LastHeroHP -= UpdateLastHeroHP;
+		for(int i=0; i<NumHeroDie; i++)
+		{
+			Down();
+		}
+	}
+	else
+	{
+		LastHeroHP = LastHeroHP + MaxHeroHP - UpdateLastHeroHP;
+		for(int i=0; i<NumHeroDie+1; i++)
+		{
+			Down();
+		}
+	}
+
+	// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
 }
 
 void APPlayer::Move(const FInputActionValue& Value)
@@ -118,18 +202,23 @@ void APPlayer::Look(const FInputActionValue& Value)
 
 void APPlayer::Run()
 {
-	GetCharacterMovement()->MaxWalkSpeed = PlayerAndHeroStats.PlayerRunSpeed;
+	if(bCanRun)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = PlayerAndHeroStats.PlayerRunSpeed;
+		bIsRun = true;
+	}
 }
 
 void APPlayer::StopRun()
 {
+	bIsRun = false;
 	GetCharacterMovement()->MaxWalkSpeed = PlayerAndHeroStats.PlayerWalkSpeed;
 }
 
 // Hero 1개 생성
 void APPlayer::Up()
 {
-	if (HeroNum < PlayerAndHeroStats.PlayerHeroNumber)
+	if (HeroNum < PlayerAndHeroStats.MaxHeroNum)
 	{
 		HeroNum++;
 		SpringArm->TargetArmLength = 400 + PorterFloorArray[HeroNum] * AddCameraLength;
@@ -140,7 +229,11 @@ void APPlayer::Up()
 		{
 			HeroBoxArray.Emplace(TestHeroBox);
 		}
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(HeroNum));
+		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(HeroNum));
+		// MaxHp 업데이트
+		MaxHp = MaxHeroHP * HeroNum;
+		CurrentHP = MaxHeroHP * (HeroNum - 1) + LastHeroHP;
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
 	}
 }
 
@@ -162,7 +255,10 @@ void APPlayer::Down()
 				HeroBoxArray.Pop();
 			}
 		}
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(HeroNum));
+		// MaxHp 업데이트
+		MaxHp = MaxHeroHP * HeroNum;
+		CurrentHP = MaxHeroHP * (HeroNum - 1) + LastHeroHP;
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
 	}
 }
 
@@ -170,7 +266,7 @@ void APPlayer::Down()
 void APPlayer::MakeArrays()
 {
 	int PorterFloor = 0;
-	for(int TempHeroNum=0; TempHeroNum<PlayerAndHeroStats.PlayerHeroNumber+1; TempHeroNum++)
+	for(int TempHeroNum=0; TempHeroNum<15+1; TempHeroNum++)
 	{
 		// Hero 수에 따른 카메라 레벨 == 쌓은 층 수
 		PorterFloor = 0;
@@ -233,5 +329,10 @@ void APPlayer::FObjectFinderInputManager()
 	{
 		RunAction = InputRun.Object;
 	}
+}
+
+void APPlayer::Die()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("YOU DIE"));
 }
 
