@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "InputActionValue.h"
 #include "GameFramework/Character.h"
+#include "PlayerStatStruct.h"
 #include "PPlayer.generated.h"
 
 UCLASS()
@@ -44,6 +45,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputAction* TestDownAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
+	class UInputAction* RunAction;
+
 public:
 	UPROPERTY(EditAnywhere)
 	class USpringArmComponent* SpringArm;
@@ -52,26 +56,12 @@ public:
 	class UCameraComponent* Camera;
 
 public:
-	void Move(const FInputActionValue& Value);
-	void Look(const FInputActionValue& Value);
-
-	UFUNCTION()
-	void Up();
-
-	UFUNCTION()
-	void Down();
-
-	UFUNCTION()
-	void MakeArrays();
-
-	UFUNCTION()
-	void FObjectFinderInputManager();
-
-public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
 	float mouseSpeed = 30;
-
-	// 용병을 NPC로 표현했지만, 나중에 고쳐야 할 듯
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
+	float AddCameraLength = 300;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float HeroNum;
 
@@ -81,12 +71,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<float> PorterFloorArray;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
-	float AddCameraLength = 300;
-
+\
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	float MaxHero = 15;
+	TArray<FVector> OffsetArr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float PorterHeight = 100;
@@ -100,8 +87,35 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<ACharacter> HeroBoxSpawner;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	TArray<FVector> OffsetArr;
+public:
+	// Player가 가지고 있는 스텟들
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
+	FPlayerStatsStruct PlayerAndHeroStats;
+
+	UFUNCTION(BlueprintCallable, Category="Stats")
+	void UpdateStats(FPlayerStatsStruct UpdateStat);
+
+public:
+	void Move(const FInputActionValue& Value);
+	void Look(const FInputActionValue& Value);
+
+	UFUNCTION()
+	void Run();
+	
+	UFUNCTION()
+	void StopRun();
+
+	UFUNCTION()
+	void Up();
+
+	UFUNCTION()
+	void Down();
+
+	UFUNCTION()
+	void MakeArrays();
+
+	UFUNCTION()
+	void FObjectFinderInputManager();
 
 	
 	
