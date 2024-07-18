@@ -26,13 +26,20 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION()
+	void ChangeOffset(int32 BeforeHeroIndex, int32 AfterHeroIndex, FVector SwapOffset);
+
 	UPROPERTY(EditAnywhere)
-	class APawn* Player;
+	APawn* Player;
+
+	UPROPERTY(EditAnywhere)
+	class APPlayer* PPlayer;
 
 	UPROPERTY(EditAnywhere)
 	FVector Offset;
 
 	UPROPERTY()
 	int32 HeroNum;
-
+	
+	
 };

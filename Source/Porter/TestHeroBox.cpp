@@ -25,7 +25,7 @@ void ATestHeroBox::BeginPlay()
 	Super::BeginPlay();
 
 	Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	APPlayer* PPlayer = Cast<APPlayer>(Player);
+	PPlayer = Cast<APPlayer>(Player);
 	if(PPlayer)
 	{
 		HeroNum = PPlayer->HeroNum;
@@ -40,7 +40,7 @@ void ATestHeroBox::Tick(float DeltaTime)
 
 	if(Player)
 	{
-		SetActorLocation(Player->GetActorLocation() + Offset); //GetActorForwardVector를 사용하기  
+		SetActorLocation(Player->GetActorLocation() + Offset); //GetActorForwardVector를 사용하기
 	}
 }
 
@@ -49,4 +49,18 @@ void ATestHeroBox::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
+
+void ATestHeroBox::ChangeOffset(int32 BeforeHeroIndex, int32 AfterHeroIndex, FVector SwapOffset)
+{
+	// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(BeforeHeroIndex));
+	// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Blue, FString::FromInt(HeroNum));
+	if(BeforeHeroIndex == HeroNum)
+	{
+		Offset = SwapOffset;
+		HeroNum = AfterHeroIndex;
+		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(HeroNum));
+	}
+}
+
+
 
