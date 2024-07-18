@@ -363,6 +363,5 @@ void APPlayer::Die()
 
 void APPlayer::PlaySwap()
 {
-	SwapHeroes(2, 4);
+	if(HeroNum > 4) SwapHeroes(2, 4);
 }
-
