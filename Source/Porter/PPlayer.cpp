@@ -42,6 +42,7 @@ APPlayer::APPlayer()
 
 	FObjectFinderInputManager();
 	MakeArrays();
+	UpdateStats(PlayerAndHeroStats);
 }
 
 
