@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "InputActionValue.h"
 #include "GameFramework/Character.h"
+#include "PlayerStatStruct.h"
 #include "PPlayer.generated.h"
 
 UCLASS()
@@ -44,6 +45,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputAction* TestDownAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
+	class UInputAction* RunAction;
+
 public:
 	UPROPERTY(EditAnywhere)
 	class USpringArmComponent* SpringArm;
@@ -51,34 +55,102 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UCameraComponent* Camera;
 
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
+	float mouseSpeed = 30;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
+	float AddCameraLength = 300;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	int32 HeroNum;
+
+	// 용병의 종류를 숫자로 표현 : 0은 없음, 종류는 한 5가지 : 1~5 숫자로 표현
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	TArray<ACharacter*> HeroBoxArray;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	TArray<float> PorterFloorArray;
+\
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	TArray<FVector> OffsetArr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	float PorterHeight = 100;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	float PorterWidth = 100;
+
+	UPROPERTY(EditAnywhere)
+	class UArrowComponent* HeroSpawnLocation;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ACharacter> HeroBoxSpawner;
+
+public:
+	// Player가 가지고 있는 스텟들
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
+	FPlayerStatsStruct PlayerAndHeroStats;
+
+	UFUNCTION(BlueprintCallable, Category="Stats")
+	void UpdateStats(FPlayerStatsStruct UpdateStat);
+	
+	UFUNCTION(Category="Stats")
+	void PlusHP(int32 Heal);
+
+	UFUNCTION(Category="Stats")
+	void MinusHP(int32 Damage);
+	
+	// HP
+	UPROPERTY(EditAnywhere)
+	int32 MaxHp = 5;
+	UPROPERTY(EditAnywhere)
+	int32 CurrentHP = 5;
+	UPROPERTY(EditAnywhere)
+	int32 MaxHeroHP = 5;
+	UPROPERTY(EditAnywhere)
+	int32 LastHeroHP = 2;	// 항상 1~5의 int값  
+
+	// 스태미나
+	UPROPERTY(EditAnywhere)
+	float MaxStamina = 100;
+	UPROPERTY(EditAnywhere)
+	float DecreaseStamina = 33; // 속력
+	UPROPERTY(EditAnywhere)
+	float IncreaseStamina = 20; // 속력
+	UPROPERTY()
+	float ZeroToHundredIncreaseSteamin = 10; // 속력
+	UPROPERTY(EditAnywhere)
+	float CurrentStamina = 100;
+	UPROPERTY()
+	bool bIsRun = false;
+	UPROPERTY()
+	bool bCanRun = true;
+	
+
 public:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 
+	UFUNCTION()
+	void Run();
+	
+	UFUNCTION()
+	void StopRun();
+
+	UFUNCTION()
 	void Up();
+
+	UFUNCTION()
 	void Down();
-	void UpdateSpringArmTargetLength();
+
+	UFUNCTION()
+	void MakeArrays();
+
+	UFUNCTION()
 	void FObjectFinderInputManager();
 
-public:
-	UPROPERTY(EditAnywhere)
-	float mouseSpeed = 30;
-
-	// 용병을 NPC로 표현했지만, 나중에 고쳐야 할 듯
-	UPROPERTY()
-	float CurrentHero;
-
-	// 용병의 종류를 숫자로 표현 : 0은 없음, 종류는 한 5가지 : 1~5 숫자로 표현
-	UPROPERTY()
-	TArray<int32> HeroArray;
-
-	UPROPERTY()
-	float CameraLevel;
-
-	UPROPERTY(EditAnywhere)
-	float MaxHero = 15;
-
-private:
-	int32 TempNum;
-
+	UFUNCTION()
+	void Die();
 };
