@@ -43,19 +43,20 @@ APPlayer::APPlayer()
 	FObjectFinderInputManager();
 	MakeArrays();
 	UpdateStats(PlayerAndHeroStats);
-}
 
+	
+}
 
 // Called when the game starts or when spawned
 void APPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (APlayerController* playerController = Cast<APlayerController>(GetController()))
+	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
 	{
-		if (UEnhancedInputLocalPlayerSubsystem* subSystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(playerController->GetLocalPlayer()))
+		if (UEnhancedInputLocalPlayerSubsystem* SubSystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
-			subSystem->AddMappingContext(IMC, 0);
+			SubSystem->AddMappingContext(IMC, 0);
 		}
 	}
 }
@@ -86,16 +87,14 @@ void APPlayer::Tick(float DeltaTime)
 	}
 	else if (!bCanRun)
 	{
-		CurrentStamina += ZeroToHundredIncreaseSteamin * DeltaTime;
+		CurrentStamina += ZeroToHundredIncreaseStamina * DeltaTime;
 		if (CurrentStamina > MaxStamina)
 		{
 			CurrentStamina = MaxStamina;
 			bCanRun = true;
 		}
 	}
-
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentStamina));
-	
+	// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentStamina));
 }
 
 // Called to bind functionality to input
@@ -111,6 +110,24 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	EnhancedInputComponent->BindAction(TestDownAction, ETriggerEvent::Started, this, &APPlayer::Down);
 	EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Started, this, &APPlayer::Run);
 	EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Completed, this, &APPlayer::StopRun);
+	EnhancedInputComponent->BindAction(SwapAction, ETriggerEvent::Started, this, &APPlayer::PlaySwap);
+}
+
+void APPlayer::SwapHeroes(int32 SwapHeroFirstIndex, int32 SwapHeroSecondIndex)
+{
+	ACharacter* TempHeroBox = HeroBoxArray[SwapHeroFirstIndex];
+	HeroBoxArray.Emplace(HeroBoxArray[SwapHeroSecondIndex]);
+	HeroBoxArray.RemoveAtSwap(SwapHeroFirstIndex);
+	HeroBoxArray.Emplace(TempHeroBox);
+	HeroBoxArray.RemoveAtSwap(SwapHeroSecondIndex);
+
+	// SwapHeroFirsIndex에 있던 녀석에게 2번째, 그리고 반대는 반대로 위치를 줘야 한다.
+	ATestHeroBox* FirstTestHeroBox = Cast<ATestHeroBox>(HeroBoxArray[SwapHeroFirstIndex]);
+	if(FirstTestHeroBox)
+	FirstTestHeroBox->ChangeOffset(SwapHeroSecondIndex+1, SwapHeroFirstIndex+1, OffsetArr[SwapHeroFirstIndex+1]);
+
+	ATestHeroBox* SecondTestHeroBox = Cast<ATestHeroBox>(HeroBoxArray[SwapHeroSecondIndex]);
+	SecondTestHeroBox->ChangeOffset(SwapHeroFirstIndex+1, SwapHeroSecondIndex+1, OffsetArr[SwapHeroSecondIndex+1]);
 }
 
 // 블루프린트에서 업데이트 할 사항
@@ -132,7 +149,7 @@ void APPlayer::UpdateStats(FPlayerStatsStruct UpdateStat)
 	MaxStamina = PlayerAndHeroStats.PlayerMaxStamina;
 	DecreaseStamina = PlayerAndHeroStats.PlayerDecreaseStamina;
 	IncreaseStamina = PlayerAndHeroStats.PlayerIncreaseStamina;
-	ZeroToHundredIncreaseSteamin = PlayerAndHeroStats.PlayerZeroToHundredIncreaseSteamin;
+	ZeroToHundredIncreaseStamina = PlayerAndHeroStats.PlayerZeroToHundredIncreaseStamina;
 }
 
 void APPlayer::PlusHP(int32 Heal)
@@ -182,15 +199,15 @@ void APPlayer::MinusHP(int32 Damage)
 
 void APPlayer::Move(const FInputActionValue& Value)
 {
-	const FVector2D movementVector = Value.Get<FVector2D>();
+	const FVector2D MovementVector = Value.Get<FVector2D>();
 	const FRotator Rotation = Controller->GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 
 	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
-	AddMovementInput(ForwardDirection, movementVector.Y);
-	AddMovementInput(RightDirection, movementVector.X);
+	AddMovementInput(ForwardDirection, MovementVector.Y);
+	AddMovementInput(RightDirection, MovementVector.X);
 }
 
 void APPlayer::Look(const FInputActionValue& Value)
@@ -231,10 +248,10 @@ void APPlayer::Up()
 			HeroBoxArray.Emplace(TestHeroBox);
 		}
 		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(HeroNum));
-		// MaxHp 업데이트
+		// MaxHp, CurrentHP 업데이트
 		MaxHp = MaxHeroHP * HeroNum;
 		CurrentHP = MaxHeroHP * (HeroNum - 1) + LastHeroHP;
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
+		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
 	}
 }
 
@@ -253,13 +270,13 @@ void APPlayer::Down()
 			if(LastHeroBox)
 			{
 				LastHeroBox->Destroy();
-				HeroBoxArray.Pop();
+				HeroBoxArray.RemoveAt(HeroNum);
 			}
 		}
-		// MaxHp 업데이트
+		// MaxHp, CurrentHP 업데이트
 		MaxHp = MaxHeroHP * HeroNum;
 		CurrentHP = MaxHeroHP * (HeroNum - 1) + LastHeroHP;
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
+		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
 	}
 }
 
@@ -267,7 +284,8 @@ void APPlayer::Down()
 void APPlayer::MakeArrays()
 {
 	int PorterFloor = 0;
-	for(int TempHeroNum=0; TempHeroNum<15+1; TempHeroNum++)
+	// 첫 값이 0이 들어가고, swap을 위한 임시 칸이 있어야 하므로 17개 제작
+	for(int TempHeroNum=0; TempHeroNum<15+2; TempHeroNum++)
 	{
 		// Hero 수에 따른 카메라 레벨 == 쌓은 층 수
 		PorterFloor = 0;
@@ -330,10 +348,21 @@ void APPlayer::FObjectFinderInputManager()
 	{
 		RunAction = InputRun.Object;
 	}
+
+	static ConstructorHelpers::FObjectFinder<UInputAction>InputSwap(TEXT("/Script/EnhancedInput.InputAction'/Game/Porter/Develop/Inputs/IA_Swap24.IA_Swap24'"));
+	if (InputLook.Object != nullptr)
+	{
+		SwapAction = InputSwap.Object;
+	}
 }
 
 void APPlayer::Die()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("YOU DIE"));
+}
+
+void APPlayer::PlaySwap()
+{
+	SwapHeroes(2, 4);
 }
 

@@ -9,6 +9,12 @@
 #include "PPlayer.generated.h"
 
 UCLASS()
+
+/*
+ 1. Up과 Down 함수는 테스트 용이며, 결국 Damage에 따라 종속적으로 실행되어야 한다.
+ - Up과 Down에 있는 HP최신화를 Damage에 옮기는 작업 필요
+ 2. 배열 바꾸는 함수를 만들어 두자 : 
+ */
 class PORTER_API APPlayer : public ACharacter
 {
 	GENERATED_BODY()
@@ -29,6 +35,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	// 입력
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputMappingContext* IMC;
@@ -48,6 +55,11 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputAction* RunAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
+	class UInputAction* SwapAction;
+
+	
+	// 스프링 암과 카메라
 public:
 	UPROPERTY(EditAnywhere)
 	class USpringArmComponent* SpringArm;
@@ -56,6 +68,7 @@ public:
 	class UCameraComponent* Camera;
 
 
+	// 용병 소환 밑 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
 	float mouseSpeed = 30;
@@ -67,12 +80,13 @@ public:
 	int32 HeroNum;
 
 	// 용병의 종류를 숫자로 표현 : 0은 없음, 종류는 한 5가지 : 1~5 숫자로 표현
+	// 아래는 용병이 들어간 TArray. 예시 : [nullptr, 1번 용병 주소, 4번 용병 주소, 2번 용병 주소, 3번 용병 주소, 1번 용병 주소, 1번 용병 주소]
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<ACharacter*> HeroBoxArray;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<float> PorterFloorArray;
-\
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<FVector> OffsetArr;
 
@@ -87,6 +101,16 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<ACharacter> HeroBoxSpawner;
+
+	UFUNCTION()
+	void SwapHeroes(int32 SwapHeroFirstIndex, int32 SwapHeroSecondIndex);
+
+	// 용병에게 줄 스왑 정보
+	UPROPERTY()
+	int32 HeroFirstIndex;
+
+	UPROPERTY()
+	int32 HeroSecondIndex;
 
 public:
 	// Player가 가지고 있는 스텟들
@@ -120,7 +144,7 @@ public:
 	UPROPERTY(EditAnywhere)
 	float IncreaseStamina = 20; // 속력
 	UPROPERTY()
-	float ZeroToHundredIncreaseSteamin = 10; // 속력
+	float ZeroToHundredIncreaseStamina = 10; // 속력
 	UPROPERTY(EditAnywhere)
 	float CurrentStamina = 100;
 	UPROPERTY()
@@ -128,7 +152,7 @@ public:
 	UPROPERTY()
 	bool bCanRun = true;
 	
-
+// 이동 관련 함수거나, 초기화거나, 나중에 버려야할 함수(테스트용 함수)들
 public:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
@@ -153,4 +177,7 @@ public:
 
 	UFUNCTION()
 	void Die();
+
+	UFUNCTION()
+	void PlaySwap();
 };
