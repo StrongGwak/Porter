@@ -84,6 +84,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<ACharacter*> HeroBoxArray;
 
+	// 메모리 관리용으로 임시 주소 저장 Arr
+	UPROPERTY()
+	TArray<ACharacter*> TempSwapArray;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<float> PorterFloorArray;
 
@@ -97,13 +101,10 @@ public:
 	float PorterWidth = 100;
 
 	UPROPERTY(EditAnywhere)
-	class UArrowComponent* HeroSpawnLocation;
-
-	UPROPERTY(EditAnywhere)
 	TSubclassOf<ACharacter> HeroBoxSpawner;
 
 	UFUNCTION()
-	void SwapHeroes(int32 SwapHeroFirstIndex, int32 SwapHeroSecondIndex);
+	void SwapHeroesByArr(TArray<int32> SwapArray);
 
 	// 용병에게 줄 스왑 정보
 	UPROPERTY()

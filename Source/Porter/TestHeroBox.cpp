@@ -3,7 +3,6 @@
 
 #include "TestHeroBox.h"
 #include "PPlayer.h"
-#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ATestHeroBox::ATestHeroBox()
@@ -23,25 +22,12 @@ ATestHeroBox::ATestHeroBox()
 void ATestHeroBox::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	PPlayer = Cast<APPlayer>(Player);
-	if(PPlayer)
-	{
-		HeroNum = PPlayer->HeroNum;
-		Offset = PPlayer->OffsetArr[HeroNum];
-	}
 }
 
 // Called every frame
 void ATestHeroBox::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	if(Player)
-	{
-		SetActorLocation(Player->GetActorLocation() + Offset); //GetActorForwardVector를 사용하기
-	}
 }
 
 // Called to bind functionality to input
@@ -50,17 +36,6 @@ void ATestHeroBox::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-void ATestHeroBox::ChangeOffset(int32 BeforeHeroIndex, int32 AfterHeroIndex, FVector SwapOffset)
-{
-	// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(BeforeHeroIndex));
-	// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Blue, FString::FromInt(HeroNum));
-	if(BeforeHeroIndex == HeroNum)
-	{
-		Offset = SwapOffset;
-		HeroNum = AfterHeroIndex;
-		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(HeroNum));
-	}
-}
 
 
 
