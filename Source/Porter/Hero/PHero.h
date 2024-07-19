@@ -54,4 +54,24 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	float VisionAngle;
 
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	bool bIsAttack;
+
+	UPROPERTY()
+	int currentTime = 0;
+
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	FPHeroStruct TestStruct;
+
+	UPROPERTY()
+	AActor* AttackTarget;
+
+public:
+	void FindTarget(AActor* Target);
+	void StartAttack();
+	void StopAttack();
+
+private:
+	FTimerHandle AttackTimerHandle;
+	
 };

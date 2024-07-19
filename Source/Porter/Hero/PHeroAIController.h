@@ -21,22 +21,18 @@ public:
 	void SetSightConfig(float SightRadius, float LoseSightRadius, float PeripheralVisionAngle) const;
 
 protected:
-	virtual void BeginPlay() override;
-
 	UPROPERTY(VisibleAnywhere, Category="Awareness")
 	class UAIPerceptionComponent* AIPerception;
 
 	UPROPERTY(VisibleAnywhere, Category="Awareness")
 	class UAISenseConfig_Sight* SightConfig;
 
+	float CalculateDistanceToActor(AActor* OtherActor) const; 
+
 public:
-	virtual void Tick(float DeltaSeconds) override;
-
-	UPROPERTY(VisibleAnywhere, Category="Awareness")
-	UObject* Target;
-
+	virtual void OnPossess(APawn* InPawn) override;
+	
 	UFUNCTION()
 	void OnPerceptionUpdated(const TArray<AActor*>& Actors);
-	
 	
 };
