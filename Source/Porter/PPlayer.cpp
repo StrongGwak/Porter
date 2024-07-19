@@ -93,8 +93,6 @@ void APPlayer::Tick(float DeltaTime)
 			bCanRun = true;
 		}
 	}
-
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentStamina));
 	
 }
 
@@ -234,7 +232,7 @@ void APPlayer::Up()
 		// MaxHp 업데이트
 		MaxHp = MaxHeroHP * HeroNum;
 		CurrentHP = MaxHeroHP * (HeroNum - 1) + LastHeroHP;
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
+		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
 	}
 }
 
@@ -259,7 +257,7 @@ void APPlayer::Down()
 		// MaxHp 업데이트
 		MaxHp = MaxHeroHP * HeroNum;
 		CurrentHP = MaxHeroHP * (HeroNum - 1) + LastHeroHP;
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
+		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
 	}
 }
 
@@ -334,6 +332,6 @@ void APPlayer::FObjectFinderInputManager()
 
 void APPlayer::Die()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("YOU DIE"));
+	// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("YOU DIE"));
 }
 
