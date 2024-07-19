@@ -10,6 +10,7 @@
 #include "InputMappingContext.h"
 #include "Engine/Engine.h"
 #include "TestHeroBox.h"
+#include "VectorTypes.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
@@ -27,9 +28,6 @@ APPlayer::APPlayer()
 		GetMesh()->SetRelativeLocationAndRotation(FVector(0, 0, -90), FRotator(0, -90, 0));
 	}
 
-	HeroSpawnLocation = CreateDefaultSubobject<UArrowComponent>(TEXT("HeroSpawnLocation"));
-	HeroSpawnLocation->SetupAttachment(RootComponent);
-
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(RootComponent);
 	SpringArm->SetWorldLocation(FVector(0, 0, 70));
@@ -38,13 +36,11 @@ APPlayer::APPlayer()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
-	bUseControllerRotationYaw = true;
+	bUseControllerRotationYaw = true; 
 
 	FObjectFinderInputManager();
 	MakeArrays();
 	UpdateStats(PlayerAndHeroStats);
-
-	
 }
 
 // Called when the game starts or when spawned
@@ -66,6 +62,9 @@ void APPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	//
+	// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(HeroSpawnLocation->GetForwardVector().X * 100));
+	
 	// 달릴 수 없으면, 달리지 못한다 -> !끼리 묶는건 의미 x
 	if (bIsRun && bCanRun)	// 달리고 있고, 달리기 누를 수 있는 상태
 	{
@@ -113,21 +112,22 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	EnhancedInputComponent->BindAction(SwapAction, ETriggerEvent::Started, this, &APPlayer::PlaySwap);
 }
 
-void APPlayer::SwapHeroes(int32 SwapHeroFirstIndex, int32 SwapHeroSecondIndex)
+// 반드시 같은 크기의 행렬만 온다는 가정하기 -> 따로 함수로 만들어야 함
+void APPlayer::SwapHeroesByArr(TArray<int32> SwapArray)
 {
-	ACharacter* TempHeroBox = HeroBoxArray[SwapHeroFirstIndex];
-	HeroBoxArray.Emplace(HeroBoxArray[SwapHeroSecondIndex]);
-	HeroBoxArray.RemoveAtSwap(SwapHeroFirstIndex);
-	HeroBoxArray.Emplace(TempHeroBox);
-	HeroBoxArray.RemoveAtSwap(SwapHeroSecondIndex);
+	// SwapArray : 5 4 3 2 1 == 위치한 HeroNum. 1번부터 시작한다. 1~연속된 숫자가 들어가있어야 한다. 
+	int32 ArrayLength = SwapArray.Num();
+	// 비우기
+	TempSwapArray.Empty();
+	TempSwapArray.Append(HeroBoxArray);	// 0~4에 1~5번 히어로 들어가 있음 -> 위치 배치할 때만 +1 해주기. HeroNum이 1부터 시작하니까
+	for (int i=0; i<ArrayLength; ++i)
+	{
+		HeroBoxArray.Emplace(TempSwapArray[SwapArray[i]-1]);
+		HeroBoxArray.RemoveAtSwap(i);
 
-	// SwapHeroFirsIndex에 있던 녀석에게 2번째, 그리고 반대는 반대로 위치를 줘야 한다.
-	ATestHeroBox* FirstTestHeroBox = Cast<ATestHeroBox>(HeroBoxArray[SwapHeroFirstIndex]);
-	if(FirstTestHeroBox)
-	FirstTestHeroBox->ChangeOffset(SwapHeroSecondIndex+1, SwapHeroFirstIndex+1, OffsetArr[SwapHeroFirstIndex+1]);
-
-	ATestHeroBox* SecondTestHeroBox = Cast<ATestHeroBox>(HeroBoxArray[SwapHeroSecondIndex]);
-	SecondTestHeroBox->ChangeOffset(SwapHeroFirstIndex+1, SwapHeroSecondIndex+1, OffsetArr[SwapHeroSecondIndex+1]);
+		// 실체 위치 변경
+		HeroBoxArray[i]->SetActorLocation(GetActorLocation() + GetActorForwardVector()*OffsetArr[i+1].X + GetActorRightVector()*OffsetArr[i+1].Y + FVector(0, 0, OffsetArr[i+1].Z));
+	}
 }
 
 // 블루프린트에서 업데이트 할 사항
@@ -240,13 +240,18 @@ void APPlayer::Up()
 	{
 		HeroNum++;
 		SpringArm->TargetArmLength = 400 + PorterFloorArray[HeroNum] * AddCameraLength;
+		FVector RelativeOffset = GetActorForwardVector()*OffsetArr[HeroNum].X + GetActorRightVector()*OffsetArr[HeroNum].Y + FVector(0, 0, OffsetArr[HeroNum].Z);
+		FVector SpawnLocation = GetActorLocation() + RelativeOffset; 
 		
-		ACharacter* TestHeroBox = GetWorld()->SpawnActor<ACharacter>(HeroBoxSpawner, HeroSpawnLocation->GetComponentLocation() + OffsetArr[HeroNum], HeroSpawnLocation->GetComponentRotation());
+		ACharacter* TestHeroBox = GetWorld()->SpawnActor<ACharacter>(HeroBoxSpawner, SpawnLocation, GetActorRotation());
 
 		if(TestHeroBox)
 		{
 			HeroBoxArray.Emplace(TestHeroBox);
+			TestHeroBox->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 		}
+
+		TestHeroBox->SetActorEnableCollision(false);
 		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(HeroNum));
 		// MaxHp, CurrentHP 업데이트
 		MaxHp = MaxHeroHP * HeroNum;
@@ -363,5 +368,7 @@ void APPlayer::Die()
 
 void APPlayer::PlaySwap()
 {
-	if(HeroNum > 4) SwapHeroes(2, 4);
+	// 반드시 처음에는 0이 있어야 함 <- 아님. 그냥 생각하기
+	SwapHeroesByArr(TArray<int32>{5, 4, 3, 2, 1});
 }
+
