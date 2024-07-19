@@ -100,8 +100,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float PorterWidth = 100;
 
+	//UPROPERTY(EditAnywhere)
+	//TSubclassOf<ACharacter> HeroBoxSpawner;
+
+	// 배열로 대체
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<ACharacter> HeroBoxSpawner;
+	TArray<TSubclassOf<ACharacter>> Heroes;
 
 	UFUNCTION()
 	void SwapHeroesByArr(TArray<int32> SwapArray);
@@ -166,6 +170,9 @@ public:
 
 	UFUNCTION()
 	void Up();
+	
+	UFUNCTION()
+	void UpInt(int32 Value);
 
 	UFUNCTION()
 	void Down();

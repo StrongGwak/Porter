@@ -6,14 +6,11 @@
 #include "Camera/CameraComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "Components/ArrowComponent.h"
 #include "InputMappingContext.h"
 #include "Engine/Engine.h"
 #include "TestHeroBox.h"
 #include "VectorTypes.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Kismet/KismetSystemLibrary.h"
-#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APPlayer::APPlayer()
@@ -116,11 +113,10 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void APPlayer::SwapHeroesByArr(TArray<int32> SwapArray)
 {
 	// SwapArray : 5 4 3 2 1 == 위치한 HeroNum. 1번부터 시작한다. 1~연속된 숫자가 들어가있어야 한다. 
-	int32 ArrayLength = SwapArray.Num();
 	// 비우기
 	TempSwapArray.Empty();
 	TempSwapArray.Append(HeroBoxArray);	// 0~4에 1~5번 히어로 들어가 있음 -> 위치 배치할 때만 +1 해주기. HeroNum이 1부터 시작하니까
-	for (int i=0; i<ArrayLength; ++i)
+	for (int i=0; i<HeroNum; ++i)
 	{
 		HeroBoxArray.Emplace(TempSwapArray[SwapArray[i]-1]);
 		HeroBoxArray.RemoveAtSwap(i);
@@ -233,8 +229,12 @@ void APPlayer::StopRun()
 	GetCharacterMovement()->MaxWalkSpeed = PlayerAndHeroStats.PlayerWalkSpeed;
 }
 
-// Hero 1개 생성
 void APPlayer::Up()
+{
+	UpInt(0);
+}
+// Hero 1개 생성
+void APPlayer::UpInt(int32 Value)
 {
 	if (HeroNum < PlayerAndHeroStats.MaxHeroNum)
 	{
@@ -243,8 +243,9 @@ void APPlayer::Up()
 		FVector RelativeOffset = GetActorForwardVector()*OffsetArr[HeroNum].X + GetActorRightVector()*OffsetArr[HeroNum].Y + FVector(0, 0, OffsetArr[HeroNum].Z);
 		FVector SpawnLocation = GetActorLocation() + RelativeOffset; 
 		
-		ACharacter* TestHeroBox = GetWorld()->SpawnActor<ACharacter>(HeroBoxSpawner, SpawnLocation, GetActorRotation());
-
+		//ACharacter* TestHeroBox = GetWorld()->SpawnActor<ACharacter>(HeroBoxSpawner, SpawnLocation, GetActorRotation());
+		ACharacter* TestHeroBox = GetWorld()->SpawnActor<ACharacter>(Heroes[Value], SpawnLocation, GetActorRotation());
+		
 		if(TestHeroBox)
 		{
 			HeroBoxArray.Emplace(TestHeroBox);
@@ -368,7 +369,7 @@ void APPlayer::Die()
 
 void APPlayer::PlaySwap()
 {
-	// 반드시 처음에는 0이 있어야 함 <- 아님. 그냥 생각하기
+	// 1~HeroNum
 	SwapHeroesByArr(TArray<int32>{5, 4, 3, 2, 1});
 }
 
