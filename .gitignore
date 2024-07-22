@@ -94,7 +94,9 @@ Plugins/**/Binaries/*
 Plugins/**/Intermediate/*
 
 # Content
-Content/MarketAssets/*
-Content/Image
+Content/*
+!Content/Porter/
+Content/Porter/*
+!Content/Porter/Develop/
 
 # End of https://www.toptal.com/developers/gitignore/api/unrealengine
