@@ -130,49 +130,62 @@ public:
 
 	UFUNCTION(Category="Stats")
 	void MinusHP(int32 Damage);
+
+	UFUNCTION()
+	void Boost();
+	
+	UFUNCTION()
+	void StopBoost();
+
+	UFUNCTION()
+	void UpdateBoost();
+
+	UFUNCTION()
+	void UpInt(int32 Value);
 	
 	// HP
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	int32 MaxHp = 5;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	int32 CurrentHP = 5;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	int32 MaxHeroHP = 5;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	int32 LastHeroHP = 2;	// 항상 1~5의 int값  
 
 	// 스태미나
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	float MaxStamina = 100;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	float DecreaseStamina = 33; // 속력
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	float IncreaseStamina = 20; // 속력
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	float ZeroToHundredIncreaseStamina = 10; // 속력
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	float CurrentStamina = 100;
 	UPROPERTY()
-	bool bIsRun = false;
+	float TempStamina = 100;
 	UPROPERTY()
-	bool bCanRun = true;
+	bool bIsBoost = false;
+	UPROPERTY()
+	bool bCanBoost = true;
+	UPROPERTY()
+	FTimerHandle BoostTimeHandle;
+	UPROPERTY()
+	FTimerHandle RestTimeHandle;
+	UPROPERTY()
+	float StartBoostTime;
+	UPROPERTY()
+	float RestTime;
 	
 // 이동 관련 함수거나, 초기화거나, 나중에 버려야할 함수(테스트용 함수)들
 public:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
-
-	UFUNCTION()
-	void Run();
 	
-	UFUNCTION()
-	void StopRun();
-
 	UFUNCTION()
 	void Up();
-	
-	UFUNCTION()
-	void UpInt(int32 Value);
 
 	UFUNCTION()
 	void Down();
