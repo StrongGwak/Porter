@@ -35,4 +35,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float VisionAngle;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UStaticMesh* BulletMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float BulletSpeed;
 };
