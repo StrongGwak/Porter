@@ -14,9 +14,8 @@ class PORTER_API APHero : public ACharacter
 	GENERATED_BODY()
 
 public:
-	APHero();
 	// Sets default values for this character's properties
-	APHero(const FPHeroStruct& HeroInfo);
+	APHero();
 
 protected:
 	// Called when the game starts or when spawned
@@ -25,10 +24,6 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Test")
-	FString name;
 
 private:
 	UPROPERTY()
@@ -66,10 +61,17 @@ protected:
 	UPROPERTY()
 	AActor* AttackTarget;
 
+	UPROPERTY()
+	class USceneComponent* RangeAttackPosition;
+
 public:
+	void Initialize(FPHeroStruct HeroStruct);
 	void FindTarget(AActor* Target);
 	void StartAttack();
 	void StopAttack();
+	void LookTarget();
+	void LookForward();
+	void RangeAttack();
 
 private:
 	FTimerHandle AttackTimerHandle;
