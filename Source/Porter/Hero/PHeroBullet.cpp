@@ -16,12 +16,19 @@ APHeroBullet::APHeroBullet()
 
 	BulletBoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
 	BulletBoxCollision->BodyInstance.SetCollisionProfileName("BlockAllDynamic");
+	BulletBoxCollision->SetCollisionResponseToChannel(ECC_GameTraceChannel2, ECR_Ignore);
 	BulletBoxCollision->OnComponentHit.AddDynamic(this, &APHeroBullet::OnBoxHit);
+	BulletBoxCollision->SetBoxExtent(FVector3d(4.0f, 4.0f, 32.0f));
 	RootComponent = BulletBoxCollision;
 
-	UArrowComponent* Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Arrow"));
-	RootComponent->SetupAttachment(Arrow);
-	Arrow->SetRelativeRotation(FRotator(0, 90.0f, 0));
+	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
+	StaticMesh->SetupAttachment(RootComponent);
+
+	Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Arrow"));
+	Arrow->SetupAttachment(RootComponent);
+	Arrow->SetRelativeRotation(FRotator(90.0f, 0, 0));
+	Arrow->SetRelativeLocation(FVector3d(0, 0, 20.0f));
+	Arrow->SetArrowLength(40);
 
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile"));
 	ProjectileMovementComponent->SetUpdatedComponent(GetRootComponent());
@@ -47,16 +54,21 @@ void APHeroBullet::Tick(float DeltaTime)
 void APHeroBullet::OnBoxHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	FVector NormalImpulse, const FHitResult& Hit)
 {
-	Destroy();
+	UE_LOG(LogTemp, Log, TEXT("Hit"));
 }
 
-void APHeroBullet::Initilize(UStaticMeshComponent* NewStaticMesh, float NewSpeed, float NewDamage)
+void APHeroBullet::Initialize(UStaticMesh* NewStaticMesh, float NewSpeed, float NewDamage)
 {
-	StaticMesh = NewStaticMesh;
-	RootComponent->SetupAttachment(StaticMesh);
+	
+	StaticMesh->SetStaticMesh(NewStaticMesh);
 	Speed = NewSpeed;
 	Damage = NewDamage;
 
 	ProjectileMovementComponent->InitialSpeed = Speed;
+	ProjectileMovementComponent->MaxSpeed = 3000;
+	// Test
+	ProjectileMovementComponent->Velocity = GetActorForwardVector() * Speed;
+	UE_LOG(LogTemp, Log, TEXT("Forward : %f, %f, %f"), GetActorForwardVector().X, GetActorForwardVector().Y, GetActorForwardVector().Z);
+	UE_LOG(LogTemp, Log, TEXT("Velocity : %f, %f, %f"), ProjectileMovementComponent->Velocity.X, ProjectileMovementComponent->Velocity.Y, ProjectileMovementComponent->Velocity.Z);
 	
 }

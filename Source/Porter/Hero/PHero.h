@@ -52,16 +52,19 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	bool bIsAttack;
 
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	int32 Index;
+
 	UPROPERTY()
 	int currentTime = 0;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	FPHeroStruct TestStruct;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	AActor* AttackTarget;
-
-	UPROPERTY()
+	
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	class USceneComponent* RangeAttackPosition;
 
 public:
