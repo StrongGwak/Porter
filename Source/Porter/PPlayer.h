@@ -74,27 +74,27 @@ public:
 	UPROPERTY()
 	TArray<ACharacter*> TempSwapArray;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	TArray<ACharacter*> ExistPoterArray;
+	TArray<ACharacter*> PortArray;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	int32 HeroNum;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	int32 HeroIndex;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	int32 PorterNum;
+	int32 PortNum;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	TArray<float> PorterFloorArray;
+	TArray<int32> PortFloorArray;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<FVector> OffsetArray;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	float PorterHeight = 100;
+	float PortHeight = 100;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	float PorterWidth = 100;
+	float PortWidth = 100;
 	
 	// 배열로 대체 - 에디터 상에서 결정  
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<TSubclassOf<ACharacter>> HeroType;
-	UPROPERTY(EditAnywhere)
-	TArray<TSubclassOf<ACharacter>> PorterType;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	TArray<TSubclassOf<ACharacter>> PortType;
 	UFUNCTION()
 	void SwapHeroesByArr(TArray<int32> SwapArray);
 	// 용병에게 줄 스왑 정보
@@ -120,7 +120,7 @@ public:
 	UFUNCTION()
 	void UpdateBoost();
 	UFUNCTION()
-	void MakeHero(int32 Value);
+	void MakePort(int32 Value);
 	
 	// HP
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
@@ -159,9 +159,9 @@ public:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 	UFUNCTION()
-	void Up();
+	void UpPort();
 	UFUNCTION()
-	void Down();
+	void DownPort();
 	UFUNCTION()
 	void MakeArrays();
 	UFUNCTION()
@@ -171,5 +171,5 @@ public:
 	UFUNCTION()
 	void PlaySwap();
 	UFUNCTION()
-	void CheckArrayNum(TArray<ACharacter*> CheckCharacterArray);
+	int32 CheckArrayNum(TArray<ACharacter*> CheckCharacterArray);
 };

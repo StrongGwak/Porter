@@ -45,7 +45,7 @@ public:
 
 	// 최대 히어로 수, 절대로 15를 넘기지 말 것
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 MaxHeroNum = 5;
+	int32 MaxPortNum = 5;
 
 	// 용병 스탯 관련
 public:

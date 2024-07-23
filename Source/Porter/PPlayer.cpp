@@ -8,7 +8,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
 #include "Engine/Engine.h"
-#include "TestHeroBox.h"
+//#include "TestHeroBox.h"
 #include "VectorTypes.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -70,27 +70,28 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APPlayer::Move);
 	EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &APPlayer::Look);
-	EnhancedInputComponent->BindAction(TestUpAction, ETriggerEvent::Started, this, &APPlayer::Up);
-	EnhancedInputComponent->BindAction(TestDownAction, ETriggerEvent::Started, this, &APPlayer::Down);
+	EnhancedInputComponent->BindAction(TestUpAction, ETriggerEvent::Started, this, &APPlayer::UpPort);
+	EnhancedInputComponent->BindAction(TestDownAction, ETriggerEvent::Started, this, &APPlayer::DownPort);
 	EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Started, this, &APPlayer::Boost);
 	EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Completed, this, &APPlayer::StopBoost);
 	EnhancedInputComponent->BindAction(SwapAction, ETriggerEvent::Started, this, &APPlayer::PlaySwap);
 }
 
 // 반드시 같은 크기의 행렬만 온다는 가정하기 -> 따로 함수로 만들어야 함
+// 일단 포트로 해놨는데, 플레이어로만 가능하게 바꿔야함. 플레이어 제작 후 생각
 void APPlayer::SwapHeroesByArr(TArray<int32> SwapArray)
 {
-	// SwapArray : 5 4 3 2 1 == 위치한 HeroNum. 1번부터 시작한다. 1~연속된 숫자가 들어가있어야 한다. 
+	// SwapArray : 5 4 3 2 1 == 위치한 PortNum. 1번부터 시작한다. 1~연속된 숫자가 들어가있어야 한다. 
 	// 비우기
 	TempSwapArray.Empty();
-	TempSwapArray.Append(HeroBoxArray);	// 0~4에 1~5번 히어로 들어가 있음 -> 위치 배치할 때만 +1 해주기. HeroNum이 1부터 시작하니까
-	for (int i=0; i<HeroNum; ++i)
+	TempSwapArray.Append(PortArray);	// 0~4에 1~5번 히어로 들어가 있음 -> 위치 배치할 때만 +1 해주기. PortNum 1부터 시작하니까
+	for (int i=0; i<PortNum; ++i)
 	{
-		HeroBoxArray.Emplace(TempSwapArray[SwapArray[i]-1]);
-		HeroBoxArray.RemoveAtSwap(i);
+		PortArray.Emplace(TempSwapArray[SwapArray[i]-1]);
+		PortArray.RemoveAtSwap(i);
 
 		// 실체 위치 변경
-		HeroBoxArray[i]->SetActorLocation(GetActorLocation() + GetActorForwardVector()*OffsetArray[i+1].X + GetActorRightVector()*OffsetArray[i+1].Y + FVector(0, 0, OffsetArray[i+1].Z));
+		PortArray[i]->SetActorLocation(GetActorLocation() + GetActorForwardVector()*OffsetArray[i+1].X + GetActorRightVector()*OffsetArray[i+1].Y + FVector(0, 0, OffsetArray[i+1].Z));
 	}
 }
 
@@ -103,10 +104,10 @@ void APPlayer::UpdateStats(FPlayerStatsStruct UpdateStat)
 	// 틱에서 검사하는게 아니니까 이 과정이 필요하다. 
 	GetCharacterMovement()->MaxWalkSpeed = PlayerAndHeroStats.PlayerWalkSpeed;
 
-	// 현재 용병 수가 max를 넘게 될 경우 없애버리기
-	while (HeroNum > PlayerAndHeroStats.MaxHeroNum)
+	// 현재 지게 수가 max를 넘게 될 경우 없애버리기
+	while (PortNum > PlayerAndHeroStats.MaxPortNum)
 	{
-		Down();
+		DownPort();
 	}
 	MaxStamina = PlayerAndHeroStats.PlayerMaxStamina;
 	DecreaseStamina = PlayerAndHeroStats.PlayerDecreaseStamina;
@@ -134,7 +135,7 @@ void APPlayer::MinusHP(int32 Damage)
 	}
 	else
 	{
-		Down();
+		DownPort();
 		CurrentHP = MaxHp;
 	}
 }
@@ -232,87 +233,88 @@ void APPlayer::UpdateBoost()
 }
 
 // 나중에 변수로 빼야함
-void APPlayer::Up()
+void APPlayer::UpPort()
 {
-	MakeHero(0);
+	MakePort(0);
 }
 
 // Hero 1개 생성 + 종류 추가
-// HeroNum과 PorterNum를 구분해서 써야함
+// HeroNum과 PortNum 구분해서 써야함
 // 또한, HeroIndex라는 변수도 생각해야함 - 이 Index는 1부터 시작하고 ... <- 그냥 0부터 시작하게 하면 안돼? 다른걸 고쳐서
 // 
-void APPlayer::MakeHero(int32 Value)
+void APPlayer::MakePort(int32 Value)
 {
-	if (HeroNum < PlayerAndHeroStats.MaxHeroNum)
+	if (PortNum < PlayerAndHeroStats.MaxPortNum)
 	{
-		HeroNum++;
-		SpringArm->TargetArmLength = 400 + PorterFloorArray[HeroNum] * AddCameraLength;
-		FVector RelativeOffset = GetActorForwardVector()*OffsetArray[HeroNum].X + GetActorRightVector()*OffsetArray[HeroNum].Y + FVector(0, 0, OffsetArray[HeroNum].Z);
+		PortNum++;
+		SpringArm->TargetArmLength = 400 + PortFloorArray[PortNum] * AddCameraLength;
+		FVector RelativeOffset = GetActorForwardVector()*OffsetArray[PortNum].X + GetActorRightVector()*OffsetArray[PortNum].Y + FVector(0, 0, OffsetArray[PortNum].Z);
 		FVector SpawnLocation = GetActorLocation() + RelativeOffset; 
-		ACharacter* TestHeroBox = GetWorld()->SpawnActor<ACharacter>(HeroType[Value], SpawnLocation, GetActorRotation());
+		ACharacter* Port = GetWorld()->SpawnActor<ACharacter>(PortType[Value], SpawnLocation, GetActorRotation());
 		
-		if(TestHeroBox)
+		if(Port)
 		{
-			HeroBoxArray.Emplace(TestHeroBox);
-			TestHeroBox->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
+			PortArray.Emplace(Port);
+			Port->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 		}
 
-		TestHeroBox->SetActorEnableCollision(false);
-		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(HeroNum));
+		Port->SetActorEnableCollision(false);
 		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
-		// CheckArrayNum(HeroBoxArray);
+		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(PortNum));
 	}
 }
 
 // Hero 1개 파괴(가장 끝) - 지게의 수만큼 돌리며 서치 필요함
 // HeroNum에 위치하지 않을 수 있다. <- 이부분이 가장 중요. 가장 큰 변경점
 // 빈자리에 nullptr이 들어가있어야 한다. -> 거꾸로 검색하기
-void APPlayer::Down()
+// 이거 포트 파괴가 아니라 Hero 파괴여야함. port는 남아있어야 한다.
+void APPlayer::DownPort()
 {
-	if (HeroNum > 0)
+	if (PortNum > 0)
 	{
-		HeroNum--;
-		SpringArm->TargetArmLength = 400 + PorterFloorArray[HeroNum] * AddCameraLength;
+		PortNum--;
+		SpringArm->TargetArmLength = 400 + PortFloorArray[PortNum] * AddCameraLength;
 
-		ACharacter* LastHeroBox = HeroBoxArray.Last();
+		ACharacter* LastPort = PortArray.Last();
 
-		if(LastHeroBox)
+		if(LastPort)
 		{
-			LastHeroBox->Destroy();
-			HeroBoxArray.RemoveAt(HeroNum);
+			LastPort->Destroy();
+			PortArray.RemoveAt(PortNum);
 		}
 		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
 	}
 }
 
 // 생성자에서 미리 배열 만들어두기
+// 여기 offset은 1부터 시작한다.  
 void APPlayer::MakeArrays()
 {
-	int PorterFloor = 0;
+	int PortFloor = 0;
 	// 첫 값이 0이 들어가고, swap을 위한 임시 칸이 있어야 하므로 17개 제작
-	for(int TempHeroNum=0; TempHeroNum<15+2; TempHeroNum++)
+	for(int TempPortNum=0; TempPortNum<15+2; TempPortNum++)
 	{
-		// Hero 수에 따른 카메라 레벨 == 쌓은 층 수
-		PorterFloor = 0;
+		// PortNum 수에 따른 카메라 레벨 == 쌓은 층 수
+		PortFloor = 0;
 		while (true)
 		{
-			if (TempHeroNum <= PorterFloor * (PorterFloor + 1) / 2) break;
-			else PorterFloor++;
+			if (TempPortNum <= PortFloor * (PortFloor + 1) / 2) break;
+			else PortFloor++;
 		}
 		// 배열 추가
-		PorterFloorArray.Emplace(PorterFloor);
+		PortFloorArray.Emplace(PortFloor);
 		
 		// 층수로 계산하는 스폰 위치 Offset
 		float OffsetY = 0;
-		float CurrentSpawnNum = TempHeroNum - (PorterFloor-1)*PorterFloor / 2;
-		int ForCount = round(PorterFloor);
+		float CurrentSpawnNum = TempPortNum - (PortFloor-1)*PortFloor / 2;
+		int ForCount = round(PortFloor);
 		for(int i = 0; i<round(CurrentSpawnNum); i++)
 		{
-			if (i%2 == 1) OffsetY = -1*OffsetY - 2*PorterWidth;
+			if (i%2 == 1) OffsetY = -1*OffsetY - 2*PortWidth;
 			else OffsetY *= -1;
 		}
-		if (ForCount%2 == 0) OffsetY += PorterWidth;
-		OffsetArray.Emplace(FVector(-100, OffsetY, PorterFloor*PorterHeight));
+		if (ForCount%2 == 0) OffsetY += PortWidth;
+		OffsetArray.Emplace(FVector(-100, OffsetY, PortFloor*PortHeight));
 	}
 }
 
@@ -336,13 +338,13 @@ void APPlayer::FObjectFinderInputManager()
 		LookAction = InputLook.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UInputAction>InputUp(TEXT("/Script/EnhancedInput.InputAction'/Game/Porter/Develop/Inputs/IA_TestUp.IA_TestUp'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction>InputUp(TEXT("/Script/EnhancedInput.InputAction'/Game/Porter/Develop/Inputs/IA_UpPortTest.IA_UpPortTest'"));
 	if (InputLook.Object != nullptr)
 	{
 		TestUpAction = InputUp.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UInputAction>InputDown(TEXT("/Script/EnhancedInput.InputAction'/Game/Porter/Develop/Inputs/IA_TestDown.IA_TestDown'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction>InputDown(TEXT("/Script/EnhancedInput.InputAction'/Game/Porter/Develop/Inputs/IA_DownPortTest.IA_DownPortTest'"));
 	if (InputLook.Object != nullptr)
 	{
 		TestDownAction = InputDown.Object;
@@ -368,23 +370,23 @@ void APPlayer::Die()
 
 void APPlayer::PlaySwap()
 {
-	// 1~HeroNum
+	// 1~PortNum
 	SwapHeroesByArr(TArray<int32>{5, 4, 3, 2, 1});
 }
 
 // 특정 이벤트에서 배치했을 때 사용하자
-void APPlayer::CheckArrayNum(TArray<ACharacter*> CheckCharacterArray)
+int32 APPlayer::CheckArrayNum(TArray<ACharacter*> CheckCharacterArray)
 {
 	int32 EntireArrayNum = CheckCharacterArray.Num();
-	HeroNum = 0;
+	int32 Count = 0;
 	for (int i=0;i<EntireArrayNum;++i)
 	{
 		if (CheckCharacterArray[i] != nullptr)
 		{
-			HeroNum++;
+			Count++;
 		}
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(HeroNum));
+	return Count;
 }
 
 
