@@ -35,85 +35,71 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	// 입력
 protected:
+	// 입력
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputMappingContext* IMC;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputAction* MoveAction;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputAction* LookAction;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputAction* TestUpAction;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputAction* TestDownAction;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputAction* RunAction;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputAction* SwapAction;
 
-	
-	// 스프링 암과 카메라
 public:
+	// 스프링 암과 카메라
 	UPROPERTY(EditAnywhere)
 	class USpringArmComponent* SpringArm;
-
 	UPROPERTY(EditAnywhere)
 	class UCameraComponent* Camera;
 
-
-	// 용병 소환 밑 
 public:
+	// 용병 소환 및 지게 -> 행렬로 만들기.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
 	float mouseSpeed = 30;
-	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
 	float AddCameraLength = 300;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	int32 HeroNum;
 
 	// 용병의 종류를 숫자로 표현 : 0은 없음, 종류는 한 5가지 : 1~5 숫자로 표현
 	// 아래는 용병이 들어간 TArray. 예시 : [nullptr, 1번 용병 주소, 4번 용병 주소, 2번 용병 주소, 3번 용병 주소, 1번 용병 주소, 1번 용병 주소]
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<ACharacter*> HeroBoxArray;
-
-	// 메모리 관리용으로 임시 주소 저장 Arr
+	// 메모리 관리용으로 임시 주소 저장 Array
 	UPROPERTY()
 	TArray<ACharacter*> TempSwapArray;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	TArray<ACharacter*> ExistPoterArray;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	int32 HeroNum;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	int32 HeroIndex;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	int32 PorterNum;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<float> PorterFloorArray;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	TArray<FVector> OffsetArr;
-
+	TArray<FVector> OffsetArray;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float PorterHeight = 100;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float PorterWidth = 100;
-
-	//UPROPERTY(EditAnywhere)
-	//TSubclassOf<ACharacter> HeroBoxSpawner;
-
-	// 배열로 대체
+	
+	// 배열로 대체 - 에디터 상에서 결정  
 	UPROPERTY(EditAnywhere)
-	TArray<TSubclassOf<ACharacter>> Heroes;
-
+	TArray<TSubclassOf<ACharacter>> HeroType;
+	UPROPERTY(EditAnywhere)
+	TArray<TSubclassOf<ACharacter>> PorterType;
 	UFUNCTION()
 	void SwapHeroesByArr(TArray<int32> SwapArray);
-
 	// 용병에게 줄 스왑 정보
 	UPROPERTY()
 	int32 HeroFirstIndex;
-
 	UPROPERTY()
 	int32 HeroSecondIndex;
 
@@ -121,37 +107,26 @@ public:
 	// Player가 가지고 있는 스텟들
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	FPlayerStatsStruct PlayerAndHeroStats;
-
 	UFUNCTION(BlueprintCallable, Category="Stats")
 	void UpdateStats(FPlayerStatsStruct UpdateStat);
-	
 	UFUNCTION(Category="Stats")
 	void PlusHP(int32 Heal);
-
 	UFUNCTION(Category="Stats")
 	void MinusHP(int32 Damage);
-
 	UFUNCTION()
 	void Boost();
-	
 	UFUNCTION()
 	void StopBoost();
-
 	UFUNCTION()
 	void UpdateBoost();
-
 	UFUNCTION()
-	void UpInt(int32 Value);
+	void MakeHero(int32 Value);
 	
 	// HP
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	int32 MaxHp = 5;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	int32 CurrentHP = 5;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
-	int32 MaxHeroHP = 5;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
-	int32 LastHeroHP = 2;	// 항상 1~5의 int값  
 
 	// 스태미나
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
@@ -183,22 +158,18 @@ public:
 public:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
-	
 	UFUNCTION()
 	void Up();
-
 	UFUNCTION()
 	void Down();
-
 	UFUNCTION()
 	void MakeArrays();
-
 	UFUNCTION()
 	void FObjectFinderInputManager();
-
 	UFUNCTION()
 	void Die();
-
 	UFUNCTION()
 	void PlaySwap();
+	UFUNCTION()
+	void CheckArrayNum(TArray<ACharacter*> CheckCharacterArray);
 };

@@ -8,18 +8,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEditor.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEditor.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_AC.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_Hero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_Hero.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_HeroAIController.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_Test.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_Hero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_Hero.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_Player.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_Player.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Maps/Test.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Maps/Test.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAIController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAIController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAIController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PPlayer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/PlayerStatStruct.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PlayerStatStruct.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +45,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Uproject.Porter.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Gwak-Hero&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Yang-Player&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -76,7 +70,7 @@
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
         <option name="EXECUTABLE_PATH" value="C:\Program Files\Epic Games\UE_5.4\Engine\Binaries\Win64\UnrealEditor.exe" />
-        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\UE5\Porter\Porter.uproject&quot;" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\Users\12345\Documents\Unreal Projects\Porter\Porter.uproject&quot;" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
         <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
         <option name="PASS_PARENT_ENVS" value="1" />
@@ -89,7 +83,7 @@
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
         <option name="EXECUTABLE_PATH" value="C:\Program Files\Epic Games\UE_5.4\Engine\Binaries\Win64\UnrealEditor-Win64-DebugGame.exe" />
-        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\UE5\Porter\Porter.uproject&quot;" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\Users\12345\Documents\Unreal Projects\Porter\Porter.uproject&quot;" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
         <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
         <option name="PASS_PARENT_ENVS" value="1" />
@@ -101,7 +95,7 @@
         <option name="PLATFORM" value="Win64" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
-        <option name="EXECUTABLE_PATH" value="C:\UE5\Porter\Binaries\Win64\Porter-Win64-DebugGame.exe" />
+        <option name="EXECUTABLE_PATH" value="C:\Users\12345\Documents\Unreal Projects\Porter\Binaries\Win64\Porter-Win64-DebugGame.exe" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
         <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
@@ -114,7 +108,7 @@
         <option name="PLATFORM" value="Win64" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
-        <option name="EXECUTABLE_PATH" value="C:\UE5\Porter\Binaries\Win64\Porter.exe" />
+        <option name="EXECUTABLE_PATH" value="C:\Users\12345\Documents\Unreal Projects\Porter\Binaries\Win64\Porter.exe" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
         <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
@@ -127,7 +121,7 @@
         <option name="PLATFORM" value="Win64" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
-        <option name="EXECUTABLE_PATH" value="C:\UE5\Porter\Binaries\Win64\Porter-Win64-Shipping.exe" />
+        <option name="EXECUTABLE_PATH" value="C:\Users\12345\Documents\Unreal Projects\Porter\Binaries\Win64\Porter-Win64-Shipping.exe" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
         <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
@@ -157,6 +151,9 @@
       <workItem from="1721272915872" duration="6128000" />
       <workItem from="1721288391499" duration="4749000" />
       <workItem from="1721349353847" duration="7969000" />
+      <workItem from="1721614720378" duration="509000" />
+      <workItem from="1721616265576" duration="8570000" />
+      <workItem from="1721688300227" duration="8609000" />
     </task>
     <servers />
   </component>
