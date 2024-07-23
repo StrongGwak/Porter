@@ -46,9 +46,6 @@ public:
 	// 최대 히어로 수, 절대로 15를 넘기지 말 것
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 MaxHeroNum = 5;
-	// 증감값. 1넣으면 용병 체력이 5+1=6이 됨
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 PlusMaxHeroHP = 0;	
 
 	// 용병 스탯 관련
 public:

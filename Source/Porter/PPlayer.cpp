@@ -90,7 +90,7 @@ void APPlayer::SwapHeroesByArr(TArray<int32> SwapArray)
 		HeroBoxArray.RemoveAtSwap(i);
 
 		// 실체 위치 변경
-		HeroBoxArray[i]->SetActorLocation(GetActorLocation() + GetActorForwardVector()*OffsetArr[i+1].X + GetActorRightVector()*OffsetArr[i+1].Y + FVector(0, 0, OffsetArr[i+1].Z));
+		HeroBoxArray[i]->SetActorLocation(GetActorLocation() + GetActorForwardVector()*OffsetArray[i+1].X + GetActorRightVector()*OffsetArray[i+1].Y + FVector(0, 0, OffsetArray[i+1].Z));
 	}
 }
 
@@ -108,8 +108,6 @@ void APPlayer::UpdateStats(FPlayerStatsStruct UpdateStat)
 	{
 		Down();
 	}
-
-	MaxHeroHP += PlayerAndHeroStats.PlusMaxHeroHP;
 	MaxStamina = PlayerAndHeroStats.PlayerMaxStamina;
 	DecreaseStamina = PlayerAndHeroStats.PlayerDecreaseStamina;
 	IncreaseStamina = PlayerAndHeroStats.PlayerIncreaseStamina;
@@ -118,47 +116,27 @@ void APPlayer::UpdateStats(FPlayerStatsStruct UpdateStat)
 
 void APPlayer::PlusHP(int32 Heal)
 {
-	if (LastHeroHP == MaxHeroHP) LastHeroHP = MaxHeroHP; 
-	else if (Heal + LastHeroHP >= MaxHeroHP) LastHeroHP = MaxHeroHP;
-	else LastHeroHP += Heal;
-	CurrentHP = MaxHeroHP * (HeroNum - 1) + LastHeroHP;
+	if (CurrentHP + Heal >= MaxHp )
+	{
+		CurrentHP = MaxHp;
+	}
+	else
+	{
+		CurrentHP += Heal;
+	}
 }
 
 void APPlayer::MinusHP(int32 Damage)
 {
-	if (Damage > MaxHp)
+	if (CurrentHP > Damage)
 	{
-		MaxHp = 0;
-		CurrentHP = 0;
-		Die();
-		return;
-	}
-	int32 NumHeroDie = Damage / MaxHeroHP;
-	int32 UpdateLastHeroHP = Damage % MaxHeroHP;
-	
-	if (LastHeroHP > Damage)
-	{
-		LastHeroHP -= Damage;
-		CurrentHP = MaxHeroHP * (HeroNum - 1) + LastHeroHP;
-	}
-	else if (LastHeroHP > UpdateLastHeroHP)
-	{
-		LastHeroHP -= UpdateLastHeroHP;
-		for(int i=0; i<NumHeroDie; i++)
-		{
-			Down();
-		}
+		CurrentHP -= Damage;
 	}
 	else
 	{
-		LastHeroHP = LastHeroHP + MaxHeroHP - UpdateLastHeroHP;
-		for(int i=0; i<NumHeroDie+1; i++)
-		{
-			Down();
-		}
+		Down();
+		CurrentHP = MaxHp;
 	}
-
-	// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
 }
 
 void APPlayer::Move(const FInputActionValue& Value)
@@ -256,19 +234,22 @@ void APPlayer::UpdateBoost()
 // 나중에 변수로 빼야함
 void APPlayer::Up()
 {
-	UpInt(0);
+	MakeHero(0);
 }
 
 // Hero 1개 생성 + 종류 추가
-void APPlayer::UpInt(int32 Value)
+// HeroNum과 PorterNum를 구분해서 써야함
+// 또한, HeroIndex라는 변수도 생각해야함 - 이 Index는 1부터 시작하고 ... <- 그냥 0부터 시작하게 하면 안돼? 다른걸 고쳐서
+// 
+void APPlayer::MakeHero(int32 Value)
 {
 	if (HeroNum < PlayerAndHeroStats.MaxHeroNum)
 	{
 		HeroNum++;
 		SpringArm->TargetArmLength = 400 + PorterFloorArray[HeroNum] * AddCameraLength;
-		FVector RelativeOffset = GetActorForwardVector()*OffsetArr[HeroNum].X + GetActorRightVector()*OffsetArr[HeroNum].Y + FVector(0, 0, OffsetArr[HeroNum].Z);
+		FVector RelativeOffset = GetActorForwardVector()*OffsetArray[HeroNum].X + GetActorRightVector()*OffsetArray[HeroNum].Y + FVector(0, 0, OffsetArray[HeroNum].Z);
 		FVector SpawnLocation = GetActorLocation() + RelativeOffset; 
-		ACharacter* TestHeroBox = GetWorld()->SpawnActor<ACharacter>(Heroes[Value], SpawnLocation, GetActorRotation());
+		ACharacter* TestHeroBox = GetWorld()->SpawnActor<ACharacter>(HeroType[Value], SpawnLocation, GetActorRotation());
 		
 		if(TestHeroBox)
 		{
@@ -278,14 +259,14 @@ void APPlayer::UpInt(int32 Value)
 
 		TestHeroBox->SetActorEnableCollision(false);
 		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(HeroNum));
-		// MaxHp, CurrentHP 업데이트
-		MaxHp = MaxHeroHP * HeroNum;
-		CurrentHP = MaxHeroHP * (HeroNum - 1) + LastHeroHP;
 		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
+		// CheckArrayNum(HeroBoxArray);
 	}
 }
 
-// Hero 1개 파괴
+// Hero 1개 파괴(가장 끝) - 지게의 수만큼 돌리며 서치 필요함
+// HeroNum에 위치하지 않을 수 있다. <- 이부분이 가장 중요. 가장 큰 변경점
+// 빈자리에 nullptr이 들어가있어야 한다. -> 거꾸로 검색하기
 void APPlayer::Down()
 {
 	if (HeroNum > 0)
@@ -300,10 +281,6 @@ void APPlayer::Down()
 			LastHeroBox->Destroy();
 			HeroBoxArray.RemoveAt(HeroNum);
 		}
-	
-		// MaxHp, CurrentHP 업데이트
-		MaxHp = MaxHeroHP * HeroNum;
-		CurrentHP = MaxHeroHP * (HeroNum - 1) + LastHeroHP;
 		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
 	}
 }
@@ -335,7 +312,7 @@ void APPlayer::MakeArrays()
 			else OffsetY *= -1;
 		}
 		if (ForCount%2 == 0) OffsetY += PorterWidth;
-		OffsetArr.Emplace(FVector(-100, OffsetY, PorterFloor*PorterHeight));
+		OffsetArray.Emplace(FVector(-100, OffsetY, PorterFloor*PorterHeight));
 	}
 }
 
@@ -394,4 +371,21 @@ void APPlayer::PlaySwap()
 	// 1~HeroNum
 	SwapHeroesByArr(TArray<int32>{5, 4, 3, 2, 1});
 }
+
+// 특정 이벤트에서 배치했을 때 사용하자
+void APPlayer::CheckArrayNum(TArray<ACharacter*> CheckCharacterArray)
+{
+	int32 EntireArrayNum = CheckCharacterArray.Num();
+	HeroNum = 0;
+	for (int i=0;i<EntireArrayNum;++i)
+	{
+		if (CheckCharacterArray[i] != nullptr)
+		{
+			HeroNum++;
+		}
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(HeroNum));
+}
+
+
 
