@@ -26,7 +26,7 @@ public:
 	UFUNCTION()
 	void OnBoxHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
-	void Initilize(UStaticMeshComponent* NewStaticMesh, float NewSpeed, float NewDamage);
+	void Initialize(UStaticMesh* NewStaticMesh, float NewSpeed, float NewDamage);
 
 protected:
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
@@ -43,5 +43,8 @@ protected:
 	
 	UPROPERTY(EditAnywhere, Category = Projectile, Meta = (AllowPrivateAccess = "true"))
 	class UProjectileMovementComponent* ProjectileMovementComponent;
+
+	UPROPERTY(EditAnywhere, Category = Projectile, Meta = (AllowPrivateAccess = "true"))
+	class UArrowComponent* Arrow;
 	
 };

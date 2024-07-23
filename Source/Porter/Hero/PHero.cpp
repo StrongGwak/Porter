@@ -18,6 +18,11 @@ APHero::APHero()
 	{
 		GetMesh()->SetAnimInstanceClass(AnimInstance.Class);
 	}
+
+	RangeAttackPosition = CreateDefaultSubobject<USceneComponent>(TEXT("RangeAttackPosition"));
+	RangeAttackPosition->SetupAttachment(GetMesh());
+	RangeAttackPosition->SetRelativeLocation(FVector3d(95.0f, 0.0f, 30.0f));
+	
 }
 
 // Called when the game starts or when spawned
@@ -33,9 +38,8 @@ void APHero::BeginPlay()
 		GetMesh()->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 	}
 
-	RangeAttackPosition = CreateDefaultSubobject<USceneComponent>(TEXT("RangeAttackPosition"));
-	RangeAttackPosition->SetupAttachment(GetMesh());
-	RangeAttackPosition->SetRelativeLocation(FVector3d(25.0f, 0.0f, 30.0f));
+	
+	
 
 	// 매개변수로 온 구조체의 정보를 영웅 멤버변수에 할당
 	Damage = TestStruct.Damage;
@@ -123,7 +127,12 @@ void APHero::RangeAttack()
 {
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	APHeroBullet* Bullet = GetWorld()->SpawnActor<APHeroBullet>(APHeroBullet::StaticClass(), RangeAttackPosition->GetComponentLocation(), RangeAttackPosition->GetComponentRotation(), SpawnParams);
+	APHeroBullet* Bullet = GetWorld()->SpawnActor<APHeroBullet>(APHeroBullet::StaticClass(), RangeAttackPosition->GetComponentLocation(), FRotator(0, 0, 0), SpawnParams);
+	if (Bullet)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Make Bullet"));
+		Bullet->Initialize(TestStruct.BulletMesh,TestStruct.BulletSpeed, Damage);
+	}
 }
 
 void APHero::StopAttack()
@@ -139,31 +148,10 @@ void APHero::StopAttack()
 
 void APHero::LookTarget()
 {
-	/*FVector TargetLocation = AttackTarget->GetActorLocation();
-		FVector CurrentLocation = GetActorLocation();
-		
-		// 대상 액터를 향한 회전 각도를 계산
-		FRotator TargetRotation = UKismetMathLibrary::FindLookAtRotation(CurrentLocation, TargetLocation);
-
-		// 현재 회전을 천천히 목표 회전으로 보간
-		FRotator CurrentRotation = GetMesh()->GetComponentRotation();
-		FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 5.0f); // 5.0f는 회전 속도
-
-		// 새로운 회전 각도를 설정
-		GetMesh()->SetWorldRotation(NewRotation);
-		PlayAnimMontage(AttackAnim);*/
-	FVector TargetLocation = AttackTarget->GetActorLocation();
-	FVector CurrentLocation = GetActorLocation();
-		
-	// 대상 액터를 향한 회전 각도를 계산
-	FRotator TargetRotation = UKismetMathLibrary::FindLookAtRotation(CurrentLocation, TargetLocation);
-
-	// 현재 회전을 천천히 목표 회전으로 보간
-	FRotator CurrentRotation = GetMesh()->GetComponentRotation();
-	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 5.0f); // 5.0f는 회전 속도
-
+	FRotator LookAtRotator = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), AttackTarget->GetActorLocation());
+	FRotator NewRotator = FRotator(GetActorRotation().Pitch, LookAtRotator.Yaw, GetActorRotation().Roll);
 	// 새로운 회전 각도를 설정
-	SetActorRotation(NewRotation);
+	SetActorRotation(NewRotator);
 }
 
 void APHero::LookForward()
