@@ -3,7 +3,6 @@
 
 #include "TestHeroBox.h"
 #include "PPlayer.h"
-#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ATestHeroBox::ATestHeroBox()
@@ -23,25 +22,12 @@ ATestHeroBox::ATestHeroBox()
 void ATestHeroBox::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	APPlayer* PPlayer = Cast<APPlayer>(Player);
-	if(PPlayer)
-	{
-		HeroNum = PPlayer->HeroNum;
-		Offset = PPlayer->OffsetArr[HeroNum];
-	}
 }
 
 // Called every frame
 void ATestHeroBox::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	if(Player)
-	{
-		SetActorLocation(Player->GetActorLocation() + Offset); //GetActorForwardVector를 사용하기  
-	}
 }
 
 // Called to bind functionality to input
@@ -49,4 +35,7 @@ void ATestHeroBox::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
+
+
+
 
