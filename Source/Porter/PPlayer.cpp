@@ -8,7 +8,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
 #include "Engine/Engine.h"
-//#include "TestHeroBox.h"
+#include "PHero.h"
 #include "VectorTypes.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -79,20 +79,34 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 // 반드시 같은 크기의 행렬만 온다는 가정하기 -> 따로 함수로 만들어야 함
 // 일단 포트로 해놨는데, 플레이어로만 가능하게 바꿔야함. 플레이어 제작 후 생각
-void APPlayer::SwapHeroesByArr(TArray<int32> SwapArray)
+// 바꾸는건 무게 필요없음
+TArray<ACharacter*> APPlayer::SwapHeroesByArray(TArray<int32> SwapArray, TArray<ACharacter*> TargetArray)
 {
 	// SwapArray : 5 4 3 2 1 == 위치한 PortNum. 1번부터 시작한다. 1~연속된 숫자가 들어가있어야 한다. 
+	if(SwapArray.Num() != TargetArray.Num()) return TargetArray;
+
+	float CharacterOffsetZ = 0;
+	if(TargetArray == HeroBoxArray) CharacterOffsetZ = 50;
+	
 	// 비우기
 	TempSwapArray.Empty();
-	TempSwapArray.Append(PortArray);	// 0~4에 1~5번 히어로 들어가 있음 -> 위치 배치할 때만 +1 해주기. PortNum 1부터 시작하니까
-	for (int i=0; i<PortNum; ++i)
+	TempSwapArray.Append(TargetArray);	// 0~4에 1~5번 port 들어가 있음 -> 위치 배치할 때만 +1 해주기. PortNum 1부터 시작하니까
+	for (int32 i=0; i<TargetArray.Num(); ++i)
 	{
-		PortArray.Emplace(TempSwapArray[SwapArray[i]-1]);
-		PortArray.RemoveAtSwap(i);
+		TargetArray.Emplace(TempSwapArray[SwapArray[i]-1]);
+		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(TargetArray.Num()));
+		TargetArray.RemoveAtSwap(i);
 
 		// 실체 위치 변경
-		PortArray[i]->SetActorLocation(GetActorLocation() + GetActorForwardVector()*OffsetArray[i+1].X + GetActorRightVector()*OffsetArray[i+1].Y + FVector(0, 0, OffsetArray[i+1].Z));
+		TargetArray[i]->SetActorLocation(
+			GetActorLocation()
+			+ GetActorForwardVector()*OffsetArray[i+1].X
+			+ GetActorRightVector()*OffsetArray[i+1].Y
+			+ FVector(0, 0, OffsetArray[i+1].Z + CharacterOffsetZ)
+			);
+		
 	}
+	return TargetArray;
 }
 
 // 블루프린트에서 업데이트 할 사항
@@ -105,6 +119,7 @@ void APPlayer::UpdateStats(FPlayerStatsStruct UpdateStat)
 	GetCharacterMovement()->MaxWalkSpeed = PlayerAndHeroStats.PlayerWalkSpeed;
 
 	// 현재 지게 수가 max를 넘게 될 경우 없애버리기
+	// (수정 필요) 무게도 생각해야하는게?  
 	while (PortNum > PlayerAndHeroStats.MaxPortNum)
 	{
 		DownPort();
@@ -113,6 +128,7 @@ void APPlayer::UpdateStats(FPlayerStatsStruct UpdateStat)
 	DecreaseStamina = PlayerAndHeroStats.PlayerDecreaseStamina;
 	IncreaseStamina = PlayerAndHeroStats.PlayerIncreaseStamina;
 	ZeroToHundredIncreaseStamina = PlayerAndHeroStats.PlayerZeroToHundredIncreaseStamina;
+	MaxWeight = PlayerAndHeroStats.MaxWeight;
 }
 
 void APPlayer::PlusHP(int32 Heal)
@@ -135,6 +151,7 @@ void APPlayer::MinusHP(int32 Damage)
 	}
 	else
 	{
+		// (수정 필요) hero 없애기
 		DownPort();
 		CurrentHP = MaxHp;
 	}
@@ -163,7 +180,7 @@ void APPlayer::Look(const FInputActionValue& Value)
 
 void APPlayer::Boost()
 {
-	if(bCanBoost)
+	if(bCanBoost && GetCharacterMovement()->Velocity.Size() > 0.1)
 	{
 		bIsBoost = true;
 		StartBoostTime = GetWorld()->GetTimeSeconds();
@@ -235,22 +252,22 @@ void APPlayer::UpdateBoost()
 // 나중에 변수로 빼야함
 void APPlayer::UpPort()
 {
-	MakePort(0);
+	SpawnPort(0);
 }
 
 // Hero 1개 생성 + 종류 추가
 // HeroNum과 PortNum 구분해서 써야함
 // 또한, HeroIndex라는 변수도 생각해야함 - 이 Index는 1부터 시작하고 ... <- 그냥 0부터 시작하게 하면 안돼? 다른걸 고쳐서
 // 
-void APPlayer::MakePort(int32 Value)
+void APPlayer::SpawnPort(int32 PortTypeIndex)
 {
-	if (PortNum < PlayerAndHeroStats.MaxPortNum)
+	if (PortNum < PlayerAndHeroStats.MaxPortNum && CheckCondition())
 	{
 		PortNum++;
 		SpringArm->TargetArmLength = 400 + PortFloorArray[PortNum] * AddCameraLength;
-		FVector RelativeOffset = GetActorForwardVector()*OffsetArray[PortNum].X + GetActorRightVector()*OffsetArray[PortNum].Y + FVector(0, 0, OffsetArray[PortNum].Z);
+		FVector RelativeOffset = GetActorForwardVector()*OffsetArray[PortNum].X+ GetActorRightVector()*OffsetArray[PortNum].Y + FVector(0, 0, OffsetArray[PortNum].Z);
 		FVector SpawnLocation = GetActorLocation() + RelativeOffset; 
-		ACharacter* Port = GetWorld()->SpawnActor<ACharacter>(PortType[Value], SpawnLocation, GetActorRotation());
+		ACharacter* Port = GetWorld()->SpawnActor<ACharacter>(PortType[PortTypeIndex], SpawnLocation, GetActorRotation());
 		
 		if(Port)
 		{
@@ -260,8 +277,16 @@ void APPlayer::MakePort(int32 Value)
 
 		Port->SetActorEnableCollision(false);
 		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
-		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(PortNum));
 	}
+}
+
+
+void APPlayer::UpHerosFromArray()
+{
+}
+
+void APPlayer::SpawnHerosFromArray(int32 Value)
+{
 }
 
 // Hero 1개 파괴(가장 끝) - 지게의 수만큼 돌리며 서치 필요함
@@ -286,6 +311,8 @@ void APPlayer::DownPort()
 	}
 }
 
+
+
 // 생성자에서 미리 배열 만들어두기
 // 여기 offset은 1부터 시작한다.  
 void APPlayer::MakeArrays()
@@ -308,7 +335,7 @@ void APPlayer::MakeArrays()
 		float OffsetY = 0;
 		float CurrentSpawnNum = TempPortNum - (PortFloor-1)*PortFloor / 2;
 		int ForCount = round(PortFloor);
-		for(int i = 0; i<round(CurrentSpawnNum); i++)
+		for (int32 i = 0; i<round(CurrentSpawnNum); i++)
 		{
 			if (i%2 == 1) OffsetY = -1*OffsetY - 2*PortWidth;
 			else OffsetY *= -1;
@@ -371,15 +398,15 @@ void APPlayer::Die()
 void APPlayer::PlaySwap()
 {
 	// 1~PortNum
-	SwapHeroesByArr(TArray<int32>{5, 4, 3, 2, 1});
+	PortArray = SwapHeroesByArray(TArray<int32>{5, 4, 3, 2, 1}, PortArray);
 }
 
-// 특정 이벤트에서 배치했을 때 사용하자
+// nullptr이 아닌 원소의 수만 세는 함수
 int32 APPlayer::CheckArrayNum(TArray<ACharacter*> CheckCharacterArray)
 {
 	int32 EntireArrayNum = CheckCharacterArray.Num();
 	int32 Count = 0;
-	for (int i=0;i<EntireArrayNum;++i)
+	for (int32 i=0;i<EntireArrayNum;++i)
 	{
 		if (CheckCharacterArray[i] != nullptr)
 		{
@@ -387,6 +414,32 @@ int32 APPlayer::CheckArrayNum(TArray<ACharacter*> CheckCharacterArray)
 		}
 	}
 	return Count;
+}
+
+// 영웅 배치, 지게 늘리거나 영웅 늘릴 때 등 수시로 사용하기  
+bool APPlayer::CheckCondition()
+{
+	EntireWeight = HeroWeight * HeroNum + PortWeight * PortNum;
+	HeroNum = CheckArrayNum(HeroBoxArray);
+	PortNum = PortArray.Num();
+
+	int32 LastHeroIndex = -1;
+	for (int32 i = HeroBoxArray.Num() - 1; i>=0; --i)
+	{
+		if (HeroBoxArray[i] != nullptr)
+		{
+			LastHeroIndex = i;
+			break;
+		}
+	}
+
+	bool IsOverWeight = EntireWeight > MaxWeight;
+	bool IsOverNum = HeroNum > PortNum;
+	bool IsOverIndex = LastHeroIndex > PortNum - 1;
+	
+	// 무게 안넘고, 지게 수가 같거나 더 적고, 영웅 위치가 지게 가장 끝 위치보다 같거나 작아야 한다. 
+	if (IsOverWeight || IsOverNum || IsOverIndex) return false;
+	else return true;
 }
 
 
