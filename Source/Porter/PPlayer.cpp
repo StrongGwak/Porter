@@ -6,14 +6,11 @@
 #include "Camera/CameraComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "Components/ArrowComponent.h"
 #include "InputMappingContext.h"
 #include "Engine/Engine.h"
 #include "TestHeroBox.h"
 #include "VectorTypes.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Kismet/KismetSystemLibrary.h"
-#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APPlayer::APPlayer()
@@ -62,38 +59,6 @@ void APPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//
-	// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(HeroSpawnLocation->GetForwardVector().X * 100));
-	
-	// 달릴 수 없으면, 달리지 못한다 -> !끼리 묶는건 의미 x
-	if (bIsRun && bCanRun)	// 달리고 있고, 달리기 누를 수 있는 상태
-	{
-		CurrentStamina -= DecreaseStamina * DeltaTime;
-		if (CurrentStamina <= 0)
-		{
-			bCanRun = false;
-			StopRun();
-			CurrentStamina = 0;
-		}
-	}
-	else if (!bIsRun && bCanRun && CurrentStamina < MaxStamina) // 달리고 있지 않은데, 달리기 누를 수는 있는 상태 == 휴식타임
-	{
-		CurrentStamina += IncreaseStamina * DeltaTime;
-		if (CurrentStamina > MaxStamina)
-		{
-			CurrentStamina = MaxStamina;
-		}
-	}
-	else if (!bCanRun)
-	{
-		CurrentStamina += ZeroToHundredIncreaseStamina * DeltaTime;
-		if (CurrentStamina > MaxStamina)
-		{
-			CurrentStamina = MaxStamina;
-			bCanRun = true;
-		}
-	}
-	// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentStamina));
 }
 
 // Called to bind functionality to input
@@ -107,8 +72,8 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &APPlayer::Look);
 	EnhancedInputComponent->BindAction(TestUpAction, ETriggerEvent::Started, this, &APPlayer::Up);
 	EnhancedInputComponent->BindAction(TestDownAction, ETriggerEvent::Started, this, &APPlayer::Down);
-	EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Started, this, &APPlayer::Run);
-	EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Completed, this, &APPlayer::StopRun);
+	EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Started, this, &APPlayer::Boost);
+	EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Completed, this, &APPlayer::StopBoost);
 	EnhancedInputComponent->BindAction(SwapAction, ETriggerEvent::Started, this, &APPlayer::PlaySwap);
 }
 
@@ -116,11 +81,10 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void APPlayer::SwapHeroesByArr(TArray<int32> SwapArray)
 {
 	// SwapArray : 5 4 3 2 1 == 위치한 HeroNum. 1번부터 시작한다. 1~연속된 숫자가 들어가있어야 한다. 
-	int32 ArrayLength = SwapArray.Num();
 	// 비우기
 	TempSwapArray.Empty();
 	TempSwapArray.Append(HeroBoxArray);	// 0~4에 1~5번 히어로 들어가 있음 -> 위치 배치할 때만 +1 해주기. HeroNum이 1부터 시작하니까
-	for (int i=0; i<ArrayLength; ++i)
+	for (int i=0; i<HeroNum; ++i)
 	{
 		HeroBoxArray.Emplace(TempSwapArray[SwapArray[i]-1]);
 		HeroBoxArray.RemoveAtSwap(i);
@@ -218,23 +182,85 @@ void APPlayer::Look(const FInputActionValue& Value)
 	AddControllerYawInput(LookAxisVector.X * GetWorld()->DeltaTimeSeconds * mouseSpeed);
 }
 
-void APPlayer::Run()
+void APPlayer::Boost()
 {
-	if(bCanRun)
+	if(bCanBoost)
 	{
+		bIsBoost = true;
+		StartBoostTime = GetWorld()->GetTimeSeconds();
+		TempStamina = CurrentStamina;
+		GetWorldTimerManager().ClearTimer(RestTimeHandle);
+		GetWorldTimerManager().SetTimer(BoostTimeHandle, this, &APPlayer::UpdateBoost, 0.1f, true);
 		GetCharacterMovement()->MaxWalkSpeed = PlayerAndHeroStats.PlayerRunSpeed;
-		bIsRun = true;
 	}
 }
 
-void APPlayer::StopRun()
+void APPlayer::StopBoost()
 {
-	bIsRun = false;
+	bIsBoost = false;
+	RestTime = GetWorld()->GetTimeSeconds();
+	TempStamina = CurrentStamina;
 	GetCharacterMovement()->MaxWalkSpeed = PlayerAndHeroStats.PlayerWalkSpeed;
+	GetWorldTimerManager().ClearTimer(BoostTimeHandle);
+	// 이렇게 하지 않으면 뗐을때도 RestTimer를 Set해서 계속해서 시간 측정함
+	if (CurrentStamina < MaxStamina)
+	{
+		GetWorldTimerManager().SetTimer(RestTimeHandle, this, &APPlayer::UpdateBoost, 0.1f, true);
+	}
 }
 
-// Hero 1개 생성
+// 시간이 흐름 주의
+void APPlayer::UpdateBoost()
+{
+	// 스태미나가 남아서 달릴 수 있는 상태
+	if (bIsBoost && bCanBoost)
+	{
+		// CurrentBoostTime : 누적해서 커짐 - 1차 함수
+		float CurrentBoostTime = GetWorld()->GetTimeSeconds()-StartBoostTime;
+		CurrentStamina = TempStamina - DecreaseStamina*CurrentBoostTime;
+		if (CurrentStamina <= 0)
+		{
+			bCanBoost = false;
+			StopBoost();
+			CurrentStamina = 0;
+			RestTime = GetWorld()->GetTimeSeconds();
+		}
+	}
+	// 휴식 타임
+	else if(!bIsBoost && CurrentStamina < MaxStamina)
+	{
+		float CurrentRestTime = GetWorld()->GetTimeSeconds() - RestTime;
+		CurrentStamina = TempStamina + IncreaseStamina*CurrentRestTime;
+		if (CurrentStamina > MaxStamina)
+		{
+			bCanBoost = true;
+			GetWorldTimerManager().ClearTimer(RestTimeHandle);
+			CurrentStamina = MaxStamina;
+		}
+	}
+	// 방전
+	else if(!bCanBoost)
+	{
+		float CurrentEmptyTime = GetWorld()->GetTimeSeconds() - RestTime;
+		CurrentStamina = TempStamina + ZeroToHundredIncreaseStamina*CurrentEmptyTime;
+		if (CurrentStamina > MaxStamina)
+		{
+			bCanBoost = true;
+			GetWorldTimerManager().ClearTimer(RestTimeHandle);
+			CurrentStamina = MaxStamina;
+		}
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentStamina));
+}
+
+// 나중에 변수로 빼야함
 void APPlayer::Up()
+{
+	UpInt(0);
+}
+
+// Hero 1개 생성 + 종류 추가
+void APPlayer::UpInt(int32 Value)
 {
 	if (HeroNum < PlayerAndHeroStats.MaxHeroNum)
 	{
@@ -242,9 +268,8 @@ void APPlayer::Up()
 		SpringArm->TargetArmLength = 400 + PorterFloorArray[HeroNum] * AddCameraLength;
 		FVector RelativeOffset = GetActorForwardVector()*OffsetArr[HeroNum].X + GetActorRightVector()*OffsetArr[HeroNum].Y + FVector(0, 0, OffsetArr[HeroNum].Z);
 		FVector SpawnLocation = GetActorLocation() + RelativeOffset; 
+		ACharacter* TestHeroBox = GetWorld()->SpawnActor<ACharacter>(Heroes[Value], SpawnLocation, GetActorRotation());
 		
-		ACharacter* TestHeroBox = GetWorld()->SpawnActor<ACharacter>(HeroBoxSpawner, SpawnLocation, GetActorRotation());
-
 		if(TestHeroBox)
 		{
 			HeroBoxArray.Emplace(TestHeroBox);
@@ -268,16 +293,14 @@ void APPlayer::Down()
 		HeroNum--;
 		SpringArm->TargetArmLength = 400 + PorterFloorArray[HeroNum] * AddCameraLength;
 
-		if(HeroBoxArray.Num() > 0)
-		{
-			ACharacter* LastHeroBox = HeroBoxArray.Last();
+		ACharacter* LastHeroBox = HeroBoxArray.Last();
 
-			if(LastHeroBox)
-			{
-				LastHeroBox->Destroy();
-				HeroBoxArray.RemoveAt(HeroNum);
-			}
+		if(LastHeroBox)
+		{
+			LastHeroBox->Destroy();
+			HeroBoxArray.RemoveAt(HeroNum);
 		}
+	
 		// MaxHp, CurrentHP 업데이트
 		MaxHp = MaxHeroHP * HeroNum;
 		CurrentHP = MaxHeroHP * (HeroNum - 1) + LastHeroHP;
@@ -368,7 +391,7 @@ void APPlayer::Die()
 
 void APPlayer::PlaySwap()
 {
-	// 반드시 처음에는 0이 있어야 함 <- 아님. 그냥 생각하기
+	// 1~HeroNum
 	SwapHeroesByArr(TArray<int32>{5, 4, 3, 2, 1});
 }
 
