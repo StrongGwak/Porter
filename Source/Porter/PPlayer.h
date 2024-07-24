@@ -72,7 +72,7 @@ public:
 	TArray<ACharacter*> HeroBoxArray;
 	// 메모리 관리용으로 임시 주소 저장 Array
 	UPROPERTY()
-	TArray<ACharacter*> TempSwapArray;
+	class TArray<ACharacter*> TempSwapArray;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<ACharacter*> PortArray;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
@@ -80,7 +80,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	int32 HeroIndex;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	float HeroWeight = 0.8;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	int32 PortNum;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	float PortWeight = 0.2;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<int32> PortFloorArray;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
@@ -89,6 +93,10 @@ public:
 	float PortHeight = 100;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float PortWidth = 100;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	float EntireWeight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	float MaxWeight;
 	
 	// 배열로 대체 - 에디터 상에서 결정  
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
@@ -96,10 +104,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<TSubclassOf<ACharacter>> PortType;
 	UFUNCTION()
-	void SwapHeroesByArr(TArray<int32> SwapArray);
+	TArray<ACharacter*> SwapHeroesByArray(TArray<int32> SwapArray, TArray<ACharacter*> TargetArray);
 	// 용병에게 줄 스왑 정보
 	UPROPERTY()
-	int32 HeroFirstIndex;
+	int32 HeroFirstIdex;
 	UPROPERTY()
 	int32 HeroSecondIndex;
 
@@ -120,7 +128,9 @@ public:
 	UFUNCTION()
 	void UpdateBoost();
 	UFUNCTION()
-	void MakePort(int32 Value);
+	void SpawnPort(int32 Value);
+	UFUNCTION()
+	void SpawnHerosFromArray(int32 Value);
 	
 	// HP
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
@@ -156,12 +166,16 @@ public:
 	
 // 이동 관련 함수거나, 초기화거나, 나중에 버려야할 함수(테스트용 함수)들
 public:
+	//UPROPERTY()
+	//class ATestHeroBox* TestTest;
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 	UFUNCTION()
 	void UpPort();
 	UFUNCTION()
 	void DownPort();
+	UFUNCTION()
+	void UpHerosFromArray();
 	UFUNCTION()
 	void MakeArrays();
 	UFUNCTION()
@@ -172,4 +186,6 @@ public:
 	void PlaySwap();
 	UFUNCTION()
 	int32 CheckArrayNum(TArray<ACharacter*> CheckCharacterArray);
+	UFUNCTION()
+	bool CheckCondition();
 };

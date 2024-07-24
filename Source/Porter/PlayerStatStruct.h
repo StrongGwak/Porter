@@ -42,10 +42,12 @@ public:
 	// 0까지 가고 나서 초당 스태미나 충전값
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float PlayerZeroToHundredIncreaseStamina = 10;	
-
-	// 최대 히어로 수, 절대로 15를 넘기지 말 것
+	// 현재 플레이어의 최대 지게 수. 절대로 15를 넘기지 말 것 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 MaxPortNum = 5;
+	// 힘 스텟 : 따로 뺌
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MaxWeight = 5;
 
 	// 용병 스탯 관련
 public:

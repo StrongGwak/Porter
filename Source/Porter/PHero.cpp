@@ -1,15 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "TestHeroBox.h"
-#include "PPlayer.h"
+#include "PHero.h"
 
 // Sets default values
-ATestHeroBox::ATestHeroBox()
+APHero::APHero()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	
 	ConstructorHelpers::FObjectFinder<USkeletalMesh> SkeletalMesh(TEXT("/Script/Engine.SkeletalMesh'/Engine/EngineMeshes/SkeletalCube.SkeletalCube'"));
 	if (SkeletalMesh.Succeeded())
 	{
@@ -19,23 +18,23 @@ ATestHeroBox::ATestHeroBox()
 }
 
 // Called when the game starts or when spawned
-void ATestHeroBox::BeginPlay()
+void APHero::BeginPlay()
 {
 	Super::BeginPlay();
+	
 }
 
 // Called every frame
-void ATestHeroBox::Tick(float DeltaTime)
+void APHero::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 }
 
 // Called to bind functionality to input
-void ATestHeroBox::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void APHero::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
 }
-
-
-
 

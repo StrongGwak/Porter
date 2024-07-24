@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "TestHeroBox.generated.h"
+#include "PHero.generated.h"
 
 UCLASS()
-class PORTER_API ATestHeroBox : public ACharacter
+class PORTER_API APHero : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	ATestHeroBox();
+	APHero();
 
 protected:
 	// Called when the game starts or when spawned
@@ -26,6 +26,4 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 HeroArrayIndex;
 };
