@@ -21,6 +21,7 @@ struct FPlayerStatsStruct
 {
 	GENERATED_USTRUCT_BODY()
 
+	// 주석은 변수 위에 써야 bp 노드상에서 보임
 // 플레이어 스탯 관련
 public:
 	// 평상시 이동속도
@@ -40,7 +41,7 @@ public:
 	float PlayerIncreaseStamina = 20;
 	// 0까지 가고 나서 초당 스태미나 충전값
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float PlayerZeroToHundredIncreaseSteamin = 10;	
+	float PlayerZeroToHundredIncreaseStamina = 10;	
 
 	// 최대 히어로 수, 절대로 15를 넘기지 말 것
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
