@@ -107,7 +107,7 @@ public:
 	TArray<TSubclassOf<ACharacter>> PortType;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<int32> ItemIndexArray;
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category="Hero")
 	void SwapHeroesByArray(TArray<int32> SwapArray);
 	// 용병에게 줄 스왑 정보
 	UPROPERTY()

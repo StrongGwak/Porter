@@ -363,8 +363,8 @@ void APPlayer::MakeArrays()
 		
 		// 층수로 계산하는 스폰 위치 Offset
 		float OffsetY = 0;
-		float CurrentSpawnNum = TempPortNum - (PortFloor-1)*PortFloor / 2;
-		int ForCount = round(PortFloor);
+		float CurrentSpawnNum = TempPortNum - (PortFloor-1)*PortFloor/2;
+		int32 ForCount = round(PortFloor);
 		for (int32 i = 0; i<round(CurrentSpawnNum); i++)
 		{
 			if (i%2 == 1) OffsetY = -1*OffsetY - 2*PortWidth;
