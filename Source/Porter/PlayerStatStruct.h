@@ -44,7 +44,7 @@ public:
 	float PlayerZeroToHundredIncreaseStamina = 10;	
 	// 현재 플레이어의 최대 지게 수. 절대로 15를 넘기지 말 것 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 MaxPortNum = 5;
+	int32 MaxPortNum = 15;
 	// 힘 스텟 : 따로 뺌
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MaxWeight = 5;
