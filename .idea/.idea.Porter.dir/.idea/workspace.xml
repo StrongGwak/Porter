@@ -9,8 +9,8 @@
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Projectile/BP_Projectile_Arrow.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Projectile/BP_Projectile_Arrow.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_Hero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_Hero.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_HeroBullet.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_HeroBullet.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Maps/Test.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Maps/Test.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" afterDir="false" />
@@ -155,7 +155,9 @@
       <workItem from="1721349353847" duration="7969000" />
       <workItem from="1721610840779" duration="422000" />
       <workItem from="1721611569138" duration="14353000" />
-      <workItem from="1721693067301" duration="18588000" />
+      <workItem from="1721693067301" duration="18663000" />
+      <workItem from="1721796314658" duration="6645000" />
+      <workItem from="1721865930382" duration="24006000" />
     </task>
     <servers />
   </component>

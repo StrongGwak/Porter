@@ -55,9 +55,6 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	int32 Index;
 
-	UPROPERTY()
-	int currentTime = 0;
-
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	FPHeroStruct TestStruct;
 
@@ -66,6 +63,15 @@ protected:
 	
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	class USceneComponent* RangeAttackPosition;
+
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	bool bIsLookingTarget;
+
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	bool bIsLookingForward;
+
+	UFUNCTION()
+	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
 public:
 	void Initialize(FPHeroStruct HeroStruct);
@@ -78,5 +84,9 @@ public:
 
 private:
 	FTimerHandle AttackTimerHandle;
+
+	FTimerHandle LookForwardTimerHandle;
+
+	FTimerHandle LookTargetTimerHandle;
 	
 };
