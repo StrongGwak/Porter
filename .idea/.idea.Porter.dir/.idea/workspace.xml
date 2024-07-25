@@ -8,16 +8,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IA_DownPortTest.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IA_UpPortTest.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IA_UpHeroTest.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_Player.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_Player.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IA_TestDown.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IA_TestDown.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IA_TestUp.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IA_TestUp.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IMC_Player.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IMC_Player.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PHero.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/PHero.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PHero.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PPlayer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PlayerStatStruct.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PlayerStatStruct.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/TestHeroBox.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/TestHeroBox.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,6 +156,7 @@
       <workItem from="1721614720378" duration="509000" />
       <workItem from="1721616265576" duration="8570000" />
       <workItem from="1721688300227" duration="13264000" />
+      <workItem from="1721863132064" duration="17376000" />
     </task>
     <servers />
   </component>

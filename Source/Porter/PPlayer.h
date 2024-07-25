@@ -51,6 +51,8 @@ protected:
 	class UInputAction* RunAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputAction* SwapAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
+	class UInputAction* TestHeroUpAction;
 
 public:
 	// 스프링 암과 카메라
@@ -69,10 +71,8 @@ public:
 	// 용병의 종류를 숫자로 표현 : 0은 없음, 종류는 한 5가지 : 1~5 숫자로 표현
 	// 아래는 용병이 들어간 TArray. 예시 : [nullptr, 1번 용병 주소, 4번 용병 주소, 2번 용병 주소, 3번 용병 주소, 1번 용병 주소, 1번 용병 주소]
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	TArray<ACharacter*> HeroBoxArray;
+	TArray<class APHero*> HeroBoxArray;
 	// 메모리 관리용으로 임시 주소 저장 Array
-	UPROPERTY()
-	class TArray<ACharacter*> TempSwapArray;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<ACharacter*> PortArray;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
@@ -81,6 +81,8 @@ public:
 	int32 HeroIndex;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float HeroWeight = 0.8;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	float HeroOffset = 50;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	int32 PortNum;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
@@ -100,11 +102,13 @@ public:
 	
 	// 배열로 대체 - 에디터 상에서 결정  
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	TArray<TSubclassOf<ACharacter>> HeroType;
+	TArray<TSubclassOf<class APHero>> HeroType;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<TSubclassOf<ACharacter>> PortType;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	TArray<int32> ItemIndexArray;
 	UFUNCTION()
-	TArray<ACharacter*> SwapHeroesByArray(TArray<int32> SwapArray, TArray<ACharacter*> TargetArray);
+	void SwapHeroesByArray(TArray<int32> SwapArray);
 	// 용병에게 줄 스왑 정보
 	UPROPERTY()
 	int32 HeroFirstIdex;
@@ -130,7 +134,7 @@ public:
 	UFUNCTION()
 	void SpawnPort(int32 Value);
 	UFUNCTION()
-	void SpawnHerosFromArray(int32 Value);
+	void SpawnHero(int32 Value);
 	
 	// HP
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
@@ -185,7 +189,7 @@ public:
 	UFUNCTION()
 	void PlaySwap();
 	UFUNCTION()
-	int32 CheckArrayNum(TArray<ACharacter*> CheckCharacterArray);
+	int32 CheckArrayNum(TArray<class APHero*> CheckCharacterArray);
 	UFUNCTION()
 	bool CheckCondition();
 };
