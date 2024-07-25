@@ -26,7 +26,7 @@ public:
 	UFUNCTION()
 	void OnBoxHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
-	void Initialize(UStaticMesh* NewStaticMesh, float NewSpeed, float NewDamage);
+	void Initialize(UStaticMesh* NewStaticMesh, float NewSpeed, float NewDamage, FVector FirePosition);
 
 protected:
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
