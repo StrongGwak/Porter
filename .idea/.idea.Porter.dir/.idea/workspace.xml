@@ -8,12 +8,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IA_KillHeroTest.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_CPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_CPlayer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/Drag/WB_Hero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/Drag/WB_Hero.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_Player.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_Player.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IMC_Player.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IMC_Player.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/Drag/WB_Hero_Main.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/Drag/WB_Hero_Main.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/GameMode/GM_Porter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/GameMode/GM_Porter.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PHero.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/PHero.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PHero.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PPlayer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/PlayerStatStruct.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PlayerStatStruct.h" afterDir="false" />
@@ -159,6 +163,8 @@
       <workItem from="1721688300227" duration="13264000" />
       <workItem from="1721863132064" duration="17376000" />
       <workItem from="1721885768117" duration="4409000" />
+      <workItem from="1721890862131" duration="12292000" />
+      <workItem from="1721947447982" duration="1260000" />
     </task>
     <servers />
   </component>

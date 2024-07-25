@@ -2,6 +2,8 @@
 
 
 #include "PHero.h"
+#include "PPlayer.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APHero::APHero()
@@ -16,7 +18,7 @@ APHero::APHero()
 		GetMesh()->SetWorldScale3D(FVector(1.0f, 1.0f, 1.0f));
 	}
 
-	if (index == 1)
+	if (Index == 1)
 	{
 		ConstructorHelpers::FObjectFinder<UMaterial> Mat(TEXT("/Script/Engine.Material'/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial'"));
 		if (Mat.Succeeded())
@@ -24,7 +26,7 @@ APHero::APHero()
 			GetMesh()->SetMaterial(0, Mat.Object);
 		}
 	}
-	else if (index == 0)
+	else if (Index == 0)
 	{
 		ConstructorHelpers::FObjectFinder<UMaterial> Mat(TEXT("/Script/Engine.MaterialInstanceConstant'/Engine/BasicShapes/BasicShapeMaterial_Inst.BasicShapeMaterial_Inst'"));
 		if (Mat.Succeeded())
@@ -53,5 +55,14 @@ void APHero::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void APHero::Die()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("DEAD"));
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(Index));
+	ACharacter* player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	APPlayer* RealPlayer = Cast<APPlayer>(player);
+	RealPlayer->DestroyHero(Index);
 }
 
