@@ -26,7 +26,10 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY()
-	int32 index;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Index")
+	int32 Index = -1;
+
+	UFUNCTION()
+	void Die();
 
 };

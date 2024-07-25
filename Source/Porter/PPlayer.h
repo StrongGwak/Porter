@@ -53,6 +53,8 @@ protected:
 	class UInputAction* SwapAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputAction* TestHeroUpAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
+	class UInputAction* TestHeroKill;
 
 public:
 	// 스프링 암과 카메라
@@ -71,10 +73,10 @@ public:
 	// 용병의 종류를 숫자로 표현 : 0은 없음, 종류는 한 5가지 : 1~5 숫자로 표현
 	// 아래는 용병이 들어간 TArray. 예시 : [nullptr, 1번 용병 주소, 4번 용병 주소, 2번 용병 주소, 3번 용병 주소, 1번 용병 주소, 1번 용병 주소]
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	TArray<class APHero*> HeroBoxArray;
+	TArray<class APHero*> HeroArray;
 	// 메모리 관리용으로 임시 주소 저장 Array
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	TArray<ACharacter*> PortArray;
+	TArray<AActor*> PortArray;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	int32 HeroNum;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
@@ -104,9 +106,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<TSubclassOf<class APHero>> HeroType;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	TArray<TSubclassOf<ACharacter>> PortType;
+	TArray<TSubclassOf<AActor>> PortType;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	TArray<int32> ItemIndexArray;
+	TArray<int32> HeroIndexArray;
 	UFUNCTION(BlueprintCallable, Category="Hero")
 	void SwapHeroesByArray(TArray<int32> SwapArray);
 	// 용병에게 줄 스왑 정보
@@ -189,7 +191,15 @@ public:
 	UFUNCTION()
 	void PlaySwap();
 	UFUNCTION()
-	int32 CheckArrayNum(TArray<class APHero*> CheckCharacterArray);
+	int32 CheckHeroNum(TArray<class APHero*> CheckCharacterArray);
 	UFUNCTION()
 	bool CheckCondition();
+	UPROPERTY()
+	int32 TempIndex;
+
+	UFUNCTION()
+	void DestroyHero(int32 PHeroIndex);
+	UFUNCTION()
+	void MakeHeroHPZero();
+
 };

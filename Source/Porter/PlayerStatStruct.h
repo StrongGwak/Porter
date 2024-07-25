@@ -44,11 +44,13 @@ public:
 	float PlayerZeroToHundredIncreaseStamina = 10;	
 	// 현재 플레이어의 최대 지게 수. 절대로 15를 넘기지 말 것 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 MaxPortNum = 15;
+	int32 MaxPortNum = 5;
 	// 힘 스텟 : 따로 뺌
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MaxWeight = 5;
-
+	// Hero의 순서 저장
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
+	TArray<int32> HeroIndexArray;
 	// 용병 스탯 관련
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
