@@ -15,6 +15,23 @@ APHero::APHero()
 		GetMesh()->SetSkeletalMesh(SkeletalMesh.Object);
 		GetMesh()->SetWorldScale3D(FVector(1.0f, 1.0f, 1.0f));
 	}
+
+	if (index == 1)
+	{
+		ConstructorHelpers::FObjectFinder<UMaterial> Mat(TEXT("/Script/Engine.Material'/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial'"));
+		if (Mat.Succeeded())
+		{
+			GetMesh()->SetMaterial(0, Mat.Object);
+		}
+	}
+	else if (index == 0)
+	{
+		ConstructorHelpers::FObjectFinder<UMaterial> Mat(TEXT("/Script/Engine.MaterialInstanceConstant'/Engine/BasicShapes/BasicShapeMaterial_Inst.BasicShapeMaterial_Inst'"));
+		if (Mat.Succeeded())
+		{
+			GetMesh()->SetMaterial(0, Mat.Object);
+		}
+	}
 }
 
 // Called when the game starts or when spawned
