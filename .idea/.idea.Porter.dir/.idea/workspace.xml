@@ -8,14 +8,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Source/Porter/PGameInstance.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/Porter/PGameInstance.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PGameModeBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PGameModeBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PGameModeBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PGameModeBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PGameStateBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PGameStateBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PGameStateBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PGameStateBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PPlayer.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +156,7 @@
       <workItem from="1721890862131" duration="12292000" />
       <workItem from="1721947447982" duration="1260000" />
       <workItem from="1721948921260" duration="9800000" />
-      <workItem from="1721963118797" duration="15069000" />
+      <workItem from="1721963118797" duration="23013000" />
     </task>
     <servers />
   </component>
