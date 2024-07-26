@@ -72,27 +72,40 @@ public:
 
 	// 용병의 종류를 숫자로 표현 : 0은 없음, 종류는 한 5가지 : 1~5 숫자로 표현
 	// 아래는 용병이 들어간 TArray. 예시 : [nullptr, 1번 용병 주소, 4번 용병 주소, 2번 용병 주소, 3번 용병 주소, 1번 용병 주소, 1번 용병 주소]
+
+	//
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<class APHero*> HeroArray;
-	// 메모리 관리용으로 임시 주소 저장 Array
+	//
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<AActor*> PortArray;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	int32 HeroIndex;
+
+	//
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float HeroWeight = 0.8;
+	//
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float HeroOffset = 50;
+	//
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float PortWeight = 0.2;
+
+	//
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<int32> PortFloorArray;
+	//
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<FVector> OffsetArray;
+	//
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float PortHeight = 100;
+	//
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float PortWidth = 100;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float EntireWeight;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
