@@ -11,6 +11,9 @@
 #include "PHero.h"
 #include "VectorTypes.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "PGameModeBase.h"
+#include "PGameStateBase.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APPlayer::APPlayer()
@@ -76,6 +79,9 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	EnhancedInputComponent->BindAction(SwapAction, ETriggerEvent::Started, this, &APPlayer::PlaySwap);
 	EnhancedInputComponent->BindAction(TestHeroUpAction, ETriggerEvent::Started, this, &APPlayer::UpHerosFromArray);
 	EnhancedInputComponent->BindAction(TestHeroKill, ETriggerEvent::Started, this, &APPlayer::MakeHeroHPZero);
+
+	
+
 }
 
 // 반드시 같은 크기의 행렬(15)만 온다는 가정하기 -> 따로 함수로 만들어야 함
@@ -248,7 +254,9 @@ void APPlayer::UpdateBoost()
 // 나중에 변수로 빼야함
 void APPlayer::UpPort()
 {
-	SpawnPort(0);
+	APGameModeBase* GameManager = Cast<APGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+	GameManager->SpawnPort(0, GetActorLocation(), GetActorForwardVector(), GetActorRightVector());
+	//SpawnPort(0);
 }
 
 // Hero 1개 생성 + 종류 추가

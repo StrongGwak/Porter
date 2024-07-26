@@ -127,6 +127,8 @@ public:
 	FPlayerStatsStruct PlayerAndHeroStats;
 	UFUNCTION(BlueprintCallable, Category="Stats")
 	void UpdateStats(FPlayerStatsStruct UpdateStat);
+
+	// 나중에 옮기기
 	UFUNCTION(Category="Stats")
 	void PlusHP(int32 Heal);
 	UFUNCTION(Category="Stats")
@@ -145,6 +147,7 @@ public:
 	// HP
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	int32 MaxHp = 5;
+	// 얘는 플레이어가 가지고 있어야지
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	int32 CurrentHP = 5;
 
@@ -207,5 +210,9 @@ public:
 	void DestroyHero(int32 PHeroIndex);
 	UFUNCTION()
 	void MakeHeroHPZero();
+
+	// 옮기는 작업에 필요
+	//UPROPERTY()
+	//class APGameModeBase* GameManager;
 
 };
