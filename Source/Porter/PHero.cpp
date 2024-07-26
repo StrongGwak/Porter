@@ -59,10 +59,10 @@ void APHero::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void APHero::Die()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("DEAD"));
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(Index));
-	ACharacter* player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	APPlayer* RealPlayer = Cast<APPlayer>(player);
+	//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("DEAD"));
+	//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(Index));
+	ACharacter* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	APPlayer* RealPlayer = Cast<APPlayer>(Player);
 	RealPlayer->DestroyHero(Index);
 }
 
