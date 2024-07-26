@@ -83,14 +83,11 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 // 바꾸는건 무게 필요없음
 void APPlayer::SwapHeroesByArray(TArray<int32> SwapArray)
 {
-	// SwapArray : 4 3 2 1 0 5~14 == 위치한 PortNum. 1번부터 시작한다. 0~14가 들어가있어야 한다.
-	// SwapArray에는 index를 어떻게 바꾸어야 하는지가 들어가 있음
+	// SwapArray에는 index를 어떻게 바꾸어야 하는지가 들어가 있음. 0~14가 들어가있어야 한다.
 	TArray<APHero*> TempSwapArray;
-	// TempSwapArray.Empty();
 	TempSwapArray.Append(HeroArray);
 	for (int32 i=0; i<HeroArray.Num(); ++i)
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(SwapArray[i]));
 		HeroArray[i] = TempSwapArray[SwapArray[i]];
 		
 		// 실체 위치 변경
@@ -102,6 +99,7 @@ void APPlayer::SwapHeroesByArray(TArray<int32> SwapArray)
 			   + GetActorRightVector()*OffsetArray[i].Y
 			   + FVector(0, 0, OffsetArray[i].Z + HeroOffset)
 			   );
+			HeroArray[i]->Index = i;
 		}
 	}
 }
@@ -117,7 +115,7 @@ void APPlayer::UpdateStats(FPlayerStatsStruct UpdateStat)
 
 	// 현재 지게 수가 max를 넘게 될 경우 없애버리기
 	// (수정 필요) 무게도 생각해야하는게?  
-	while (PortNum > PlayerAndHeroStats.MaxPortNum)
+	while (CheckPortNum() > PlayerAndHeroStats.MaxPortNum)
 	{
 		DownPort();
 	}
@@ -254,11 +252,10 @@ void APPlayer::UpPort()
 }
 
 // Hero 1개 생성 + 종류 추가
-// HeroNum과 PortNum 구분해서 써야함
 // 또한, HeroIndex라는 변수도 생각해야함 - 이 Index는 1부터 시작하고 ... <- 그냥 0부터 시작하게 하면 안돼? 다른걸 고쳐서
-// 
 void APPlayer::SpawnPort(int32 PortTypeIndex)
 {
+	int32 PortNum = CheckPortNum();
 	if (PortNum < PlayerAndHeroStats.MaxPortNum)
 	{
 		FVector RelativeOffset = GetActorForwardVector()*OffsetArray[PortNum].X+ GetActorRightVector()*OffsetArray[PortNum].Y + FVector(0, 0, OffsetArray[PortNum].Z);
@@ -281,7 +278,6 @@ void APPlayer::SpawnPort(int32 PortTypeIndex)
 
 void APPlayer::UpHerosFromArray()
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("spawn"));
 	SpawnHero(0);
 }
 
@@ -289,7 +285,7 @@ void APPlayer::UpHerosFromArray()
 void APPlayer::SpawnHero(int32 HeroTypeIndex)
 {
 	
-	if (HeroNum < PlayerAndHeroStats.MaxPortNum && HeroNum < PortNum)
+	if (CheckHeroNum() < PlayerAndHeroStats.MaxPortNum && CheckHeroNum() < CheckPortNum())
 	{
 		int32 TempPosition = -1;
 		for (int32 i=0; i < HeroArray.Num(); i++)
@@ -315,8 +311,6 @@ void APPlayer::SpawnHero(int32 HeroTypeIndex)
 			Heroes->Index = TempPosition;
 		}
 		Heroes->SetActorEnableCollision(false);
-		HeroNum++;
-		
 		//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("spawn"));
 	}
 	
@@ -329,6 +323,7 @@ void APPlayer::SpawnHero(int32 HeroTypeIndex)
 // 이거 포트 파괴가 아니라 Hero 파괴여야함. port는 남아있어야 한다.
 void APPlayer::DownPort()
 {
+	int32 PortNum = CheckPortNum();
 	if (PortNum > 0)
 	{
 		PortNum--;
@@ -344,16 +339,12 @@ void APPlayer::DownPort()
 		{
 			HeroArray[PortNum]->Destroy();
 			HeroArray[PortNum] = nullptr;
-			HeroNum--;
 		}
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(PortNum));
+	//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(PortNum));
 }
 
-
-
 // 생성자에서 미리 배열 만들어두기
-// 여기 offset은 1부터 시작한다.  
 void APPlayer::MakeArrays()
 {
 	int PortFloor = 0;
@@ -450,14 +441,25 @@ void APPlayer::PlaySwap()
 	SwapHeroesByArray(HeroIndexArray);
 }
 
-// nullptr이 아닌 원소의 수만 세는 함수
-int32 APPlayer::CheckHeroNum(TArray<APHero*> CheckCharacterArray)
+int32 APPlayer::CheckHeroNum()
 {
-	int32 EntireArrayNum = CheckCharacterArray.Num();
 	int32 Count = 0;
-	for (int32 i=0;i<EntireArrayNum;++i)
+	for (APHero* i : HeroArray)
 	{
-		if (CheckCharacterArray[i] != nullptr)
+		if (i != nullptr)
+		{
+			Count++;
+		}
+	}
+	return Count;
+}
+
+int32 APPlayer::CheckPortNum()
+{
+	int32 Count = 0;
+	for (AActor* i : PortArray)
+	{
+		if (i != nullptr)
 		{
 			Count++;
 		}
@@ -468,8 +470,7 @@ int32 APPlayer::CheckHeroNum(TArray<APHero*> CheckCharacterArray)
 // 영웅 배치, 지게 늘리거나 영웅 늘릴 때 등 수시로 사용하기  
 bool APPlayer::CheckCondition()
 {
-	EntireWeight = HeroWeight * HeroNum + PortWeight * PortNum;
-	HeroNum = CheckHeroNum(HeroArray);
+	EntireWeight = HeroWeight * CheckHeroNum() + PortWeight * CheckPortNum();
 
 	int32 LastHeroIndex = -1;
 	for (int32 i = HeroArray.Num() - 1; i>=0; --i)
@@ -482,7 +483,7 @@ bool APPlayer::CheckCondition()
 	}
 
 	bool IsOverWeight = EntireWeight > MaxWeight;
-	bool IsOverIndex = LastHeroIndex > PortNum - 1;
+	bool IsOverIndex = LastHeroIndex > CheckPortNum() - 1;
 	
 	// 무게 안넘고, 지게 수가 같거나 더 적고, 영웅 위치가 지게 가장 끝 위치보다 같거나 작아야 한다. 
 	if (IsOverWeight || IsOverIndex) return false;
@@ -496,7 +497,6 @@ void APPlayer::DestroyHero(int32 PHeroIndex)
 	{
 		HeroArray[PHeroIndex]->Destroy();
 		HeroArray[PHeroIndex] = nullptr;
-		HeroNum--;
 	}
 }
 
@@ -508,7 +508,7 @@ void APPlayer::MakeHeroHPZero()
 		if (HeroArray[i] != nullptr)
 		{
 			IndexChecker = HeroArray[i]->Index;
-			if (IndexChecker == 4)
+			if (IndexChecker == 3)
 			{
 				//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Index : 4"));
 				HeroArray[i]->Die();

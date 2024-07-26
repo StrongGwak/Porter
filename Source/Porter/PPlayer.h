@@ -78,15 +78,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<AActor*> PortArray;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	int32 HeroNum;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	int32 HeroIndex;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float HeroWeight = 0.8;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float HeroOffset = 50;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	int32 PortNum;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	float PortWeight = 0.2;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
@@ -111,12 +107,7 @@ public:
 	TArray<int32> HeroIndexArray;
 	UFUNCTION(BlueprintCallable, Category="Hero")
 	void SwapHeroesByArray(TArray<int32> SwapArray);
-	// 용병에게 줄 스왑 정보
-	UPROPERTY()
-	int32 HeroFirstIdex;
-	UPROPERTY()
-	int32 HeroSecondIndex;
-
+	
 public:
 	// Player가 가지고 있는 스텟들
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
@@ -191,7 +182,9 @@ public:
 	UFUNCTION()
 	void PlaySwap();
 	UFUNCTION()
-	int32 CheckHeroNum(TArray<class APHero*> CheckCharacterArray);
+	int32 CheckHeroNum();
+	UFUNCTION()
+	int32 CheckPortNum();
 	UFUNCTION()
 	bool CheckCondition();
 	UPROPERTY()
