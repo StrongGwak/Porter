@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Hero/PHeroBulletPoolManager.h"
 #include "Hero/PHeroStruct.h"
 #include "Hero/PHeroAIController.h"
 #include "GameFramework/Character.h"
@@ -49,9 +50,7 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	float VisionAngle;
 
-	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	bool bIsAttack;
-
+protected:
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	int32 Index;
 
@@ -70,6 +69,12 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	bool bIsLookingForward;
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class APHeroBulletPoolManager> BulletPoolManagerClass;
+
+	UPROPERTY(EditAnywhere)
+	APHeroBulletPoolManager* BulletPoolManager;
+
 	UFUNCTION()
 	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
@@ -80,7 +85,7 @@ public:
 	void StopAttack();
 	void LookTarget();
 	void LookForward();
-	void RangeAttack();
+	void RangeAttack() const;
 
 private:
 	FTimerHandle AttackTimerHandle;

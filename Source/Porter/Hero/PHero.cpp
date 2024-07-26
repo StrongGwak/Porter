@@ -6,6 +6,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Hero/PHeroStruct.h"
 #include "Hero/PHeroAIController.h"
+#include "Hero/PHeroBulletPoolManager.h"
 #include "Hero/PHeroBullet.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -17,16 +18,27 @@ APHero::APHero()
 
 	// Bullet이 Player Type을 무시하기 때문에 Hero도 Object Type을 Player로 설정
 	GetCapsuleComponent()->SetCollisionObjectType(ECC_GameTraceChannel2);
-	
+
+	// 애니메이션 인스턴스 설정
 	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_PHeroAnimation.ABP_PHeroAnimation_C"));
 	if (AnimInstance.Succeeded()) 
 	{
 		GetMesh()->SetAnimInstanceClass(AnimInstance.Class);
 	}
 
+	// 투사체 생성 위치
 	RangeAttackPosition = CreateDefaultSubobject<USceneComponent>(TEXT("RangeAttackPosition"));
 	RangeAttackPosition->SetupAttachment(GetMesh());
 	RangeAttackPosition->SetRelativeLocation(FVector3d(0, 50.0f, 120.0f));
+
+	// AI Controller 할당
+	AIControllerClass = APHeroAIController::StaticClass();
+	// 월드에 배치되거나 스폰될 때 AI Controller에 의해 제어되도록 설정
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+	// AI Controller 캐스팅
+	AIController = Cast<APHeroAIController>(GetController());
+
+	BulletPoolManagerClass = APHeroBulletPoolManager::StaticClass();
 	
 }
 
@@ -35,6 +47,10 @@ void APHero::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if (BulletPoolManagerClass) {
+		BulletPoolManager = GetWorld()->SpawnActor<APHeroBulletPoolManager>(BulletPoolManagerClass);
+	}
+	
 	// Bullet이 Player Type을 무시하기 때문에 Hero도 Object Type을 Player로 설정
 	GetCapsuleComponent()->SetCollisionObjectType(ECC_GameTraceChannel2);
 	// 스켈레탈 메시 할당
@@ -73,10 +89,13 @@ void APHero::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// 정면을 바라보는 함수
 	if (bIsLookingForward)
 	{
 		LookForward();
 	}
+
+	// 타겟을 바라보는 함수
 	if (bIsLookingTarget)
 	{
 		LookTarget();
@@ -102,13 +121,7 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 	SightRadius = HeroStruct.SightRadius;
 	VisionAngle = HeroStruct.VisionAngle;
 	AttackAnim = HeroStruct.AttackAnim;
-
-	// AI Controller 할당
-	AIControllerClass = APHeroAIController::StaticClass();
-	// 월드에 배치되거나 스폰될 때 AI Controller에 의해 제어되도록 설정
-	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
-	// AI Controller 캐스팅
-	AIController = Cast<APHeroAIController>(GetController());
+	
 	if (AIController)
 	{
 		// AI Controller의 시야 정보 설정 (적 인식 거리)
@@ -118,9 +131,12 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 
 void APHero::FindTarget(AActor* Target)
 {
+	// 타겟 할당
 	AttackTarget = Target;
+	// 공격 타이머가 비활성화라면
 	if (!GetWorld()->GetTimerManager().IsTimerActive(AttackTimerHandle))
 	{
+		//이 오브젝트의 StartAttack 함수를 AttackSpeed 간격으로 반복 실행
 		GetWorld()->GetTimerManager().SetTimer(AttackTimerHandle, this, &APHero::StartAttack, AttackSpeed, true);
 	}
 }
@@ -129,8 +145,6 @@ void APHero::StartAttack()
 {
 	if (AttackTarget)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Attack: %s"), *AttackTarget->GetName());
-
 		bIsLookingTarget = true;
 		float AnimTime = PlayAnimMontage(AttackAnim);
 		RangeAttack();
@@ -154,18 +168,23 @@ void APHero::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 	}
 }
 
-void APHero::RangeAttack()
+void APHero::RangeAttack() const
 {
 	if (AttackTarget)
 	{
-		FActorSpawnParameters SpawnParams;
-		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		FRotator LookAtRotator = UKismetMathLibrary::FindLookAtRotation(RangeAttackPosition->GetComponentLocation(), AttackTarget->GetActorLocation());
-		APHeroBullet* Bullet = GetWorld()->SpawnActor<APHeroBullet>(APHeroBullet::StaticClass(), RangeAttackPosition->GetComponentLocation(), FRotator(LookAtRotator.Pitch - 90, LookAtRotator.Yaw, LookAtRotator.Roll), SpawnParams);
-		if (Bullet)
+		UE_LOG(LogTemp, Log, TEXT("Attack"));
+		if (BulletPoolManager)
 		{
-			Bullet->Initialize(TestStruct.BulletMesh,TestStruct.BulletSpeed, Damage, RangeAttackPosition->GetRightVector());
+			APHeroBullet* Bullet = BulletPoolManager->GetBullet();
+			if (Bullet)
+			{
+				FRotator LookAtRotator = UKismetMathLibrary::FindLookAtRotation(RangeAttackPosition->GetComponentLocation(), AttackTarget->GetActorLocation());
+				Bullet->SetActorRotation(FRotator(LookAtRotator.Pitch - 90, LookAtRotator.Yaw, LookAtRotator.Roll));
+				Bullet->SetActorLocation(RangeAttackPosition->GetComponentLocation());
+				Bullet->Initialize(TestStruct.BulletMesh, TestStruct.BulletSpeed, Damage, RangeAttackPosition->GetRightVector());
+			}
 		}
+		
 	}
 }
 
@@ -173,7 +192,7 @@ void APHero::StopAttack()
 {
 	if (GetWorld()->GetTimerManager().IsTimerActive(AttackTimerHandle))
 	{
-		AttackTarget = nullptr;
+		//AttackTarget = nullptr;
 		GetWorld()->GetTimerManager().ClearTimer(AttackTimerHandle);
 		bIsLookingForward = true;
 	}
