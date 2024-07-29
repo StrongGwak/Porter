@@ -31,7 +31,7 @@ private:
 	APHeroAIController* AIController = nullptr;
 	
 // Hero Stat
-protected:
+protected:	
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	FString HName;
 
@@ -49,8 +49,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	float VisionAngle;
-
-protected:
+	
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	int32 Index;
 
@@ -59,6 +58,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	AActor* AttackTarget;
+
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"));
+	class USceneComponent* GunPosition;
 	
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	class USceneComponent* RangeAttackPosition;
@@ -74,7 +76,7 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	APHeroBulletPoolManager* BulletPoolManager;
-
+	
 	UFUNCTION()
 	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
