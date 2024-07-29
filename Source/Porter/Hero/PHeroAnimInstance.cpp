@@ -7,3 +7,17 @@ UPHeroAnimInstance::UPHeroAnimInstance()
 {
 	
 }
+
+void UPHeroAnimInstance::NativeInitializeAnimation()
+{
+	Super::NativeInitializeAnimation();
+
+	Hero = Cast<APHero>(GetOwningActor());
+}
+
+void UPHeroAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
+{
+	Super::NativeUpdateAnimation(DeltaSeconds);
+
+	
+}
