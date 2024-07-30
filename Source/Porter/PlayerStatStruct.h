@@ -22,45 +22,33 @@ struct FPlayerStatsStruct
 	GENERATED_USTRUCT_BODY()
 
 	// 주석은 변수 위에 써야 bp 노드상에서 보임
-// 플레이어 스탯 관련
 public:
-	// 평상시 이동속도
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float PlayerWalkSpeed = 400;
-	// 달릴 때 이동속도
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float PlayerRunSpeed = 1000;
-	// 스태미나 최댓값		
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float PlayerMaxStamina = 100;
-	// 달릴 때 초당 스태미나 소모값
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float PlayerDecreaseStamina = 33;
-	// 0까지 가지 않았을 때 초당 스태미나 충전값
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float PlayerIncreaseStamina = 20;
-	// 0까지 가고 나서 초당 스태미나 충전값
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float PlayerZeroToHundredIncreaseStamina = 10;	
-	// 현재 플레이어의 최대 지게 수. 절대로 15를 넘기지 말 것 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 MaxPortNum = 5;
-	// 힘 스텟 : 따로 뺌
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float MaxWeight = 5;
-	// Hero의 순서 저장
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
-	TArray<int32> HeroIndexArray;
-	// 용병 스탯 관련
-public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float HeroAttackSpeed = 0;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float HeroMeleeDamage = 0;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float HeroCasterDamage = 0;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float HeroCriticalChance = 0;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float HeroCriticalDamage = 0;
+	// 플레이어
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
+	float mouseSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
+	float AddCameraLength;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
+	int32 MaxHp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
+	float MaxStamina;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
+	float DecreaseStamina; // 속력
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
+	float IncreaseStamina; // 속력
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
+	float ZeroToHundredIncreaseStamina; // 속력
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
+	float PlayerWalkSpeed ;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
+	float PlayerBoostSpeed;
+
+	UPROPERTY(EditAnywhere, Category="Stats|Port")
+	int32 MaxPortNum = 10;
+	UPROPERTY(EditAnywhere, Category="Stats|Port")
+	int32 MaxWeight = 10;
+	
+	FPlayerStatsStruct()
+		: mouseSpeed(30), AddCameraLength(300), MaxHp(5), MaxStamina(100), DecreaseStamina(33), IncreaseStamina(20), \
+			ZeroToHundredIncreaseStamina(10), PlayerWalkSpeed(400), PlayerBoostSpeed(1000) {}
 };

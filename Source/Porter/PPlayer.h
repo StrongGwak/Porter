@@ -121,8 +121,8 @@ public:
 	TArray<TSubclassOf<AActor>> PortType;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hero")
 	TArray<int32> HeroIndexArray;
-	UFUNCTION(BlueprintCallable, Category="Hero")
-	void SwapHeroesByArray(TArray<int32> SwapArray);
+	//UFUNCTION(BlueprintCallable, Category="Hero")
+	//void SwapHeroesByArray(TArray<int32> SwapArray);
 	
 public:
 	// Player가 가지고 있는 스텟들
@@ -191,26 +191,26 @@ public:
 	UFUNCTION()
 	void DownPort();
 	UFUNCTION()
-	void UpHerosFromArray();
-	UFUNCTION()
-	void MakeArrays();
+	void UpHeroesFromArray();
+	//UFUNCTION()
+	//void MakeArrays();
 	UFUNCTION()
 	void FObjectFinderInputManager();
 	UFUNCTION()
 	void Die();
 	UFUNCTION()
 	void PlaySwap();
-	UFUNCTION()
-	int32 CheckHeroNum();
-	UFUNCTION()
-	int32 CheckPortNum();
+	//UFUNCTION()
+	//int32 CheckHeroNum();
+	//UFUNCTION()
+	//int32 CheckPortNum();
 	UFUNCTION()
 	bool CheckCondition();
 	UPROPERTY()
 	int32 TempIndex;
 
-	UFUNCTION()
-	void DestroyHero(int32 PHeroIndex);
+	//UFUNCTION()
+	//void DestroyHero(int32 PHeroIndex);
 	UFUNCTION()
 	void MakeHeroHPZero();
 
