@@ -9,14 +9,16 @@
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/ABP_PHeroAnimation.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/ABP_PHeroAnimation.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/IK_Source.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/IK_Source.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/IK_TestHero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/IK_TestHero.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/RTG_NewRetargeter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/RTG_NewRetargeter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/SittingIdle_UE1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/SittingIdle_UE1.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_Hero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_Hero.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAnimInstance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAnimInstance.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAnimInstance.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAnimInstance.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PHero.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PHero.h" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,6 +182,10 @@
       <workItem from="1721885768117" duration="4409000" />
       <workItem from="1722218339473" duration="3391000" />
       <workItem from="1722232423452" duration="7842000" />
+      <workItem from="1722298551753" duration="1169000" />
+      <workItem from="1722300450222" duration="32000" />
+      <workItem from="1722301226828" duration="21000" />
+      <workItem from="1722302125004" duration="5591000" />
     </task>
     <servers />
   </component>
