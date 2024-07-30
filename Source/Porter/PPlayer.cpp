@@ -13,6 +13,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "PGameModeBase.h"
 #include "PGameStateBase.h"
+#include "PGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -41,6 +42,8 @@ APPlayer::APPlayer()
 	FObjectFinderInputManager();
 	MakeArrays();
 	UpdateStats(PlayerAndHeroStats);
+
+	
 }
 
 // Called when the game starts or when spawned
@@ -48,6 +51,8 @@ void APPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// 생성자에서 쓰면 안됨
+	GI = Cast<UPGameInstance>(GetGameInstance());
 	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* SubSystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
@@ -79,9 +84,6 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	EnhancedInputComponent->BindAction(SwapAction, ETriggerEvent::Started, this, &APPlayer::PlaySwap);
 	EnhancedInputComponent->BindAction(TestHeroUpAction, ETriggerEvent::Started, this, &APPlayer::UpHerosFromArray);
 	EnhancedInputComponent->BindAction(TestHeroKill, ETriggerEvent::Started, this, &APPlayer::MakeHeroHPZero);
-
-	
-
 }
 
 // 반드시 같은 크기의 행렬(15)만 온다는 가정하기 -> 따로 함수로 만들어야 함
@@ -254,13 +256,14 @@ void APPlayer::UpdateBoost()
 // 나중에 변수로 빼야함
 void APPlayer::UpPort()
 {
-	APGameModeBase* GameManager = Cast<APGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
-	GameManager->SpawnPort(0, GetActorLocation(), GetActorForwardVector(), GetActorRightVector());
-	//SpawnPort(0);
+	
+	SpringArm->TargetArmLength = 400 + GI->SpawnPort(0);
+
 }
 
 // Hero 1개 생성 + 종류 추가
 // 또한, HeroIndex라는 변수도 생각해야함 - 이 Index는 1부터 시작하고 ... <- 그냥 0부터 시작하게 하면 안돼? 다른걸 고쳐서
+/*
 void APPlayer::SpawnPort(int32 PortTypeIndex)
 {
 	int32 PortNum = CheckPortNum();
@@ -282,14 +285,15 @@ void APPlayer::SpawnPort(int32 PortTypeIndex)
 	}
 	// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(PortNum));
 }
+*/
 
 
 void APPlayer::UpHerosFromArray()
 {
-	SpawnHero(0);
+	GI->SpawnHero(0);
 }
 
-
+/*
 void APPlayer::SpawnHero(int32 HeroTypeIndex)
 {
 	
@@ -323,7 +327,7 @@ void APPlayer::SpawnHero(int32 HeroTypeIndex)
 	}
 	
 }
-
+*/
 
 // Hero 1개 파괴(가장 끝) - 지게의 수만큼 돌리며 서치 필요함
 // HeroNum에 위치하지 않을 수 있다. <- 이부분이 가장 중요. 가장 큰 변경점
@@ -331,6 +335,8 @@ void APPlayer::SpawnHero(int32 HeroTypeIndex)
 // 이거 포트 파괴가 아니라 Hero 파괴여야함. port는 남아있어야 한다.
 void APPlayer::DownPort()
 {
+	SpringArm->TargetArmLength = 400 + GI->DestroyPort();
+	/*
 	int32 PortNum = CheckPortNum();
 	if (PortNum > 0)
 	{
@@ -350,6 +356,7 @@ void APPlayer::DownPort()
 		}
 	}
 	//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(PortNum));
+*/
 }
 
 // 생성자에서 미리 배열 만들어두기

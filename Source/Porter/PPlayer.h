@@ -57,6 +57,9 @@ protected:
 	class UInputAction* TestHeroKill;
 
 public:
+	UPROPERTY()
+	class UPGameInstance* GI;
+	
 	// 스프링 암과 카메라
 	UPROPERTY(EditAnywhere)
 	class USpringArmComponent* SpringArm;
@@ -139,10 +142,10 @@ public:
 	void StopBoost();
 	UFUNCTION()
 	void UpdateBoost();
-	UFUNCTION()
-	void SpawnPort(int32 Value);
-	UFUNCTION()
-	void SpawnHero(int32 Value);
+	//UFUNCTION()
+	//void SpawnPort(int32 Value);
+	//UFUNCTION()
+	//void SpawnHero(int32 Value);
 	
 	// HP
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
