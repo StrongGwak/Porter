@@ -19,5 +19,9 @@ void UPHeroAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
+	if (Hero)
+	{
+		RotationToTarget = Hero->AnimRotation;
+	}
 	
 }

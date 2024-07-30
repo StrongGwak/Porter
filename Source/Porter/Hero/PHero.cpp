@@ -150,7 +150,7 @@ void APHero::StartAttack()
 	{
 		bIsLookingForward = false;
 		bIsLookingTarget = true;
-		float AnimTime = PlayAnimMontage(AttackAnim);
+		PlayAnimMontage(AttackAnim);
 		RangeAttack();
 		/*FOnMontageEnded MontageEndedDelegate;
 		MontageEndedDelegate.BindUObject(this, &APHero::OnAttackMontageEnded);*/
@@ -185,7 +185,7 @@ void APHero::RangeAttack() const
 				FRotator LookAtRotator = UKismetMathLibrary::FindLookAtRotation(RangeAttackPosition->GetComponentLocation(), AttackTarget->GetActorLocation());
 				Bullet->SetActorRotation(FRotator(LookAtRotator.Pitch - 90, LookAtRotator.Yaw, LookAtRotator.Roll));
 				Bullet->SetActorLocation(RangeAttackPosition->GetComponentLocation());
-				Bullet->Initialize(TestStruct.BulletMesh, TestStruct.BulletSpeed, Damage, RangeAttackPosition->GetRightVector());
+				Bullet->Initialize(TestStruct.BulletMesh, TestStruct.BulletSpeed, Damage, RangeAttackPosition->GetForwardVector());
 			}
 		}
 		
@@ -211,10 +211,11 @@ void APHero::LookTarget()
 		FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(GunPosition->GetComponentLocation(), AttackTarget->GetActorLocation());
 		FRotator TargetRotation = FRotator(0, LookAtRotation.Yaw, 0);
 		FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 10.0f); // 5.0f는 회전 속도
+		AnimRotation = NewRotation + FRotator(0, 90, 0);
 
 		// 새로운 회전 각도를 설정
 		GunPosition->SetRelativeRotation(NewRotation);
-
+		
 		if (NewRotation.Equals(TargetRotation, 0.1f))
 		{
 			bIsLookingTarget = false;
@@ -226,9 +227,9 @@ void APHero::LookForward()
 {
 	// 현재 회전을 천천히 목표 회전으로 보간
 	FRotator CurrentRotation = GunPosition->GetRelativeRotation();
-	FRotator TargetRotation = FRotator(0.0f, 0.0f, 0.0f);
+	FRotator TargetRotation = FRotator(0, 0, 0);
 	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 5.0f); // 5.0f는 회전 속도
-	
+	AnimRotation = NewRotation + FRotator(0, 90, 0);
 	// 새로운 회전 각도를 설정
 	GunPosition->SetRelativeRotation(NewRotation);
 

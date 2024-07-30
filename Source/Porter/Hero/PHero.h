@@ -76,6 +76,10 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	APHeroBulletPoolManager* BulletPoolManager;
+
+public:
+	UPROPERTY(EditAnywhere)
+	FRotator AnimRotation;
 	
 	UFUNCTION()
 	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
