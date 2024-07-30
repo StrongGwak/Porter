@@ -4,6 +4,7 @@
 #include "PHero.h"
 #include "PPlayer.h"
 #include "Kismet/GameplayStatics.h"
+#include "PGameInstance.h"
 
 // Sets default values
 APHero::APHero()
@@ -40,6 +41,8 @@ APHero::APHero()
 void APHero::BeginPlay()
 {
 	Super::BeginPlay();
+
+	GI = Cast<UPGameInstance>(GetGameInstance());
 	
 }
 
@@ -61,8 +64,11 @@ void APHero::Die()
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("DEAD"));
 	//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(Index));
-	ACharacter* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	APPlayer* RealPlayer = Cast<APPlayer>(Player);
-	RealPlayer->DestroyHero(Index);
+	//ACharacter* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	//APPlayer* RealPlayer = Cast<APPlayer>(Player);
+	//RealPlayer->DestroyHero(Index);
+
+	GI->GetPlayerManager()->DestroyHero(Index);
+	
 }
 
