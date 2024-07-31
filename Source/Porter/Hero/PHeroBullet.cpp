@@ -82,5 +82,5 @@ void APHeroBullet::Initialize(UStaticMesh* NewStaticMesh, float NewSpeed, float 
 
 bool APHeroBullet::IsActorActive() const
 {
-	return IsActorTickEnabled() && !IsHiddenEd() && !IsActorBeingDestroyed() && GetActorEnableCollision();
+	return IsActorTickEnabled() && !IsHidden() && !IsActorBeingDestroyed() && GetActorEnableCollision();
 }
