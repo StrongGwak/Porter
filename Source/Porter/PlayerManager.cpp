@@ -31,23 +31,69 @@ UPlayerManager::UPlayerManager()
 	OffsetArray.RemoveAt(0);
 	PortArray.Init(nullptr,MaximumArraySize);
 	HeroArray.Init(nullptr,MaximumArraySize);
+
+	// 레벨 넘어갈 떄 출력되는지? - 여기선 안되는듯
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Player Manager")));
 }
 
 void UPlayerManager::Initialize(TArray<TSubclassOf<AActor>> Port, TArray<TSubclassOf<APHero>> Hero)
 {
 	PortTypeArray = Port;
 	HeroTypeArray = Hero;
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Player Manager")));
 }
 
-void UPlayerManager::SetPlayerStats(const FPlayerStatsStruct& UpdateStats)
+void UPlayerManager::SetSpawnInformation(const FSpawnInformation& UpdateStats)
 {
-	PlayerStats = UpdateStats;
+	SpawnInformation = UpdateStats;
 }
 
-FPlayerStatsStruct UPlayerManager::GetPlayerStats() const
+FSpawnInformation UPlayerManager::GetSpawnInformation() const
 {
-	return PlayerStats;
+	return SpawnInformation;
 }
+
+// 레벨 넘어가기 전 저장
+void UPlayerManager::SaveSpawnInformation()
+{
+	FSpawnInformation SpawnInfo = GetSpawnInformation();
+	SpawnInfo.SavedPortNum = CheckPortNum();
+	for (auto Hero : HeroArray)
+	{
+		if(Hero == nullptr)
+		{
+			SpawnInfo.SavedHeroTypeArray.Emplace(-1);
+		}
+		else
+		{
+			SpawnInfo.SavedHeroTypeArray.Emplace(Hero->HeroType);
+		}
+	}
+	SetSpawnInformation(SpawnInfo);
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Save Success!")));
+}
+
+// 레벨 넘어간 후 불러오기
+void UPlayerManager::OpenSpawnInformation()
+{
+	FSpawnInformation SpawnInfo = GetSpawnInformation();
+	for (int32 i=0; i<SpawnInfo.SavedPortNum; ++i)
+	{
+		SpawnPort(0);
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("Open Success!")));
+
+	/*
+	for (int32 i=0; i<SpawnInfo.SavedHeroTypeArray.Num(); ++i)
+	{
+		if (SpawnInfo.SavedHeroTypeArray[i] != -1)
+		{
+			SpawnHero(i);
+		}
+	}
+	*/
+}
+
 
 int32 UPlayerManager::SpawnPort(int32 PortType)
 {
@@ -68,6 +114,8 @@ int32 UPlayerManager::SpawnPort(int32 PortType)
 			SpringArmLength = AddCameraLength*PortFloorArray[PortNum+1];
 		}
 	}
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red,  FString::Printf(TEXT("PortNum : %d"), PortNum));
+	
 	return SpringArmLength;
 }
 
@@ -134,6 +182,7 @@ void UPlayerManager::SpawnHero(int32 HeroType)
 			// 카메라 안가리게 바꾸는 법 알아보기
 			Hero->SetActorEnableCollision(false);
 			Hero->Index = FirstEmptyIndex;
+			Hero->HeroType = HeroType;
 		}
 	}
 }

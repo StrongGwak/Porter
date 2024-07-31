@@ -11,7 +11,6 @@
 #include "PHero.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "PGameInstance.h"
-#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APPlayer::APPlayer()
@@ -78,6 +77,9 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	EnhancedInputComponent->BindAction(SwapAction, ETriggerEvent::Started, this, &APPlayer::PlaySwap);
 	EnhancedInputComponent->BindAction(TestHeroUpAction, ETriggerEvent::Started, this, &APPlayer::UpHeroesFromArray);
 	EnhancedInputComponent->BindAction(TestHeroKill, ETriggerEvent::Started, this, &APPlayer::MakeHeroHPZero);
+	EnhancedInputComponent->BindAction(TestDamage, ETriggerEvent::Started, this, &APPlayer::GetDamage);
+	EnhancedInputComponent->BindAction(TestSave, ETriggerEvent::Started, this, &APPlayer::SaveSpawn);
+	EnhancedInputComponent->BindAction(TestOpen, ETriggerEvent::Started, this, &APPlayer::OpenSpawn);
 }
 
 // 블루프린트에서 업데이트 할 사항
@@ -117,7 +119,6 @@ void APPlayer::PlusHP(int32 Heal)
 
 void APPlayer::MinusHP(int32 Damage)
 {
-	int32 LastNum = 0;
 	if (CurrentHP > Damage)
 	{
 		CurrentHP -= Damage;
@@ -125,10 +126,19 @@ void APPlayer::MinusHP(int32 Damage)
 	else
 	{
 		// (수정 필요) hero 없애기
-		LastNum = GI->GetPlayerManager()->LastHeroNum();
-		GI->GetPlayerManager()->DestroyHero(LastNum);
-		CurrentHP = MaxHp;
+		int32 LastNum = GI->GetPlayerManager()->LastHeroNum();
+		if (LastNum == -1)
+		{
+			// 플레이어의 스테이트를 나누자 : 달리기 / 걷기 / 죽음
+			Die();
+		}
+		else
+		{
+			GI->GetPlayerManager()->DestroyHero(LastNum);
+			CurrentHP = MaxHp;
+		}
 	}
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Debug %d"), CurrentHP));
 }
 
 void APPlayer::Move(const FInputActionValue& Value)
@@ -223,7 +233,6 @@ void APPlayer::UpdateBoost()
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentStamina));
 }
 
-// 나중에 변수로 빼야함
 void APPlayer::UpPort()
 {
 	SpringArm->TargetArmLength = 400 + GI->GetPlayerManager()->SpawnPort(0);
@@ -286,6 +295,21 @@ void APPlayer::FObjectFinderInputManager()
 	{
 		TestHeroKill = InputHeroKillTest.Object;
 	}
+	static ConstructorHelpers::FObjectFinder<UInputAction>InputTestDamage(TEXT("/Script/EnhancedInput.InputAction'/Game/Porter/Develop/Inputs/IA_Damage.IA_Damage'"));
+	if (InputTestDamage.Object != nullptr)
+	{
+		TestDamage = InputTestDamage.Object;
+	}
+	static ConstructorHelpers::FObjectFinder<UInputAction>InputSave(TEXT("/Script/EnhancedInput.InputAction'/Game/Porter/Develop/Inputs/IA_SaveTest.IA_SaveTest'"));
+	if (InputSave.Object != nullptr)
+	{
+		TestSave = InputSave.Object;
+	}
+	static ConstructorHelpers::FObjectFinder<UInputAction>InputOpen(TEXT("/Script/EnhancedInput.InputAction'/Game/Porter/Develop/Inputs/IA_OpenTest.IA_OpenTest'"));
+	if (InputOpen.Object != nullptr)
+	{
+		TestOpen = InputOpen.Object;
+	}
 }
 
 void APPlayer::Die()
@@ -323,6 +347,11 @@ bool APPlayer::CheckCondition()
 	else return true;
 }
 
+void APPlayer::GetDamage()
+{
+	MinusHP(3);
+}
+
 void APPlayer::MakeHeroHPZero()
 {
 	TArray<APHero*> Heroes = GI->GetPlayerManager()->HeroArray;
@@ -338,4 +367,15 @@ void APPlayer::MakeHeroHPZero()
 			}
 		}
 	}
+}
+
+void APPlayer::SaveSpawn()
+{
+	GI->GetPlayerManager()->SaveSpawnInformation();
+}
+
+void APPlayer::OpenSpawn()
+{
+	GI->GetPlayerManager()->OpenSpawnInformation();
+	SpringArm->TargetArmLength = 400 + GI->GetPlayerManager()->AddCameraLength * GI->GetPlayerManager()->PortFloorArray[GI->GetPlayerManager()->CheckPortNum()];
 }

@@ -29,6 +29,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Index")
 	int32 Index = -1;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Index")
+	int32 HeroType = -1;
+
 	UPROPERTY()
 	class UPGameInstance* GI;
 	
