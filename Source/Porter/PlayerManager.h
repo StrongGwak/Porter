@@ -11,6 +11,17 @@ class APHero;
 /**
  * 
  */
+USTRUCT(BlueprintType)
+struct FSpawnInformation
+{
+	GENERATED_BODY()
+
+	int32 SavedPortNum;
+	//TArray<int32> SavedHeroIndexArray;	// 빈자리와 차있는 자리로 표현가능하지 않나. TArray의 index가 곧 위치이므로.
+	TArray<int32> SavedHeroTypeArray;
+	TArray<int32> TempHeroStatsArray;
+};
+
 UCLASS()
 class PORTER_API UPlayerManager : public UObject
 {
@@ -25,10 +36,17 @@ public:
 	void Initialize(TArray<TSubclassOf<AActor>> Port, TArray<TSubclassOf<APHero>> Hero);
 
 	// 플레이어 각종 스텟 get set 함수
-	void SetPlayerStats(const FPlayerStatsStruct& UpdateStats);
-	FPlayerStatsStruct GetPlayerStats() const;
+	void SetSpawnInformation(const FSpawnInformation& UpdateStats);
+	FSpawnInformation GetSpawnInformation() const;
+	void SaveSpawnInformation();
+	UFUNCTION()
+	void OpenSpawnInformation();
 
-		
+private:
+	UPROPERTY(EditAnywhere)
+	FSpawnInformation SpawnInformation;
+
+public:
 	// 지게 관련
 	UFUNCTION()
 	int32 SpawnPort(int32 PortType);
@@ -53,9 +71,6 @@ public:
 
 public:
 	// 플레이어
-	UPROPERTY(EditAnywhere, Category = "Player Stats")
-	FPlayerStatsStruct PlayerStats;
-	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
 	float mouseSpeed = 30;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
@@ -81,7 +96,7 @@ public:
 
 public:
 	// 지게 관련
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	TArray<TSubclassOf<AActor>> PortTypeArray;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Port")
 	TArray<AActor*> PortArray;
@@ -101,7 +116,7 @@ public:
 	
 public:
 	// 영웅 관련
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	TArray<TSubclassOf<class APHero>> HeroTypeArray;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Hero")
 	TArray<class APHero*> HeroArray;
@@ -109,6 +124,4 @@ public:
 	float HeroWeight = 0.8;
 	UPROPERTY()
 	float HeroOffset = 50;
-
-	
 };

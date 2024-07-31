@@ -62,13 +62,7 @@ void APHero::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void APHero::Die()
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("DEAD"));
-	//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(Index));
-	//ACharacter* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	//APPlayer* RealPlayer = Cast<APPlayer>(Player);
-	//RealPlayer->DestroyHero(Index);
-
+	// 이것도 Manager에서 관리해야 하지 않나???  
 	GI->GetPlayerManager()->DestroyHero(Index);
-	
 }
 

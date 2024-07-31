@@ -55,6 +55,13 @@ protected:
 	class UInputAction* TestHeroUpAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
 	class UInputAction* TestHeroKill;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
+	class UInputAction* TestDamage;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
+	class UInputAction* TestSave;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess=true))
+	class UInputAction* TestOpen;
+	
 
 public:
 	UPROPERTY()
@@ -182,8 +189,6 @@ public:
 	
 // 이동 관련 함수거나, 초기화거나, 나중에 버려야할 함수(테스트용 함수)들
 public:
-	//UPROPERTY()
-	//class ATestHeroBox* TestTest;
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 	UFUNCTION()
@@ -192,30 +197,23 @@ public:
 	void DownPort();
 	UFUNCTION()
 	void UpHeroesFromArray();
-	//UFUNCTION()
-	//void MakeArrays();
 	UFUNCTION()
 	void FObjectFinderInputManager();
 	UFUNCTION()
 	void Die();
 	UFUNCTION()
 	void PlaySwap();
-	//UFUNCTION()
-	//int32 CheckHeroNum();
-	//UFUNCTION()
-	//int32 CheckPortNum();
 	UFUNCTION()
 	bool CheckCondition();
 	UPROPERTY()
 	int32 TempIndex;
-
-	//UFUNCTION()
-	//void DestroyHero(int32 PHeroIndex);
+	void GetDamage();
 	UFUNCTION()
 	void MakeHeroHPZero();
-
-	// 옮기는 작업에 필요
-	//UPROPERTY()
-	//class APGameModeBase* GameManager;
+	UFUNCTION()
+	void SaveSpawn();
+	UFUNCTION()
+	void OpenSpawn();
+	
 
 };

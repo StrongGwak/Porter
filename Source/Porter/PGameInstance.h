@@ -19,10 +19,10 @@ public:
 	UPGameInstance();
 
 	virtual void Init() override;
-
+	
 	UPlayerManager* GetPlayerManager() const;
 
-private:
+protected:
 	UPROPERTY()
 	UPlayerManager* PlayerManager;
 

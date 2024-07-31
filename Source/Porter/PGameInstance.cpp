@@ -2,8 +2,6 @@
 
 
 #include "PGameInstance.h"
-#include "PPlayer.h"
-#include "PHero.h"
 
 UPGameInstance::UPGameInstance()
 {
@@ -16,6 +14,7 @@ void UPGameInstance::Init()
 	PlayerManager = NewObject<UPlayerManager>(this);
 	if (PlayerManager)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Game Instance")));
 		PlayerManager->Initialize(PortTypeArray, HeroTypeArray);
 	}
 }
