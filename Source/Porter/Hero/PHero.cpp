@@ -18,6 +18,7 @@ APHero::APHero()
 
 	// Bullet이 Player Type을 무시하기 때문에 Hero도 Object Type을 Player로 설정
 	GetCapsuleComponent()->SetCollisionObjectType(ECC_GameTraceChannel2);
+	GetCapsuleComponent()->SetCapsuleHalfHeight(60);
 
 	// 애니메이션 인스턴스 설정
 	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_PHeroAnimation.ABP_PHeroAnimation_C"));
@@ -60,7 +61,7 @@ void APHero::BeginPlay()
 	if (TestStruct.SkeletalMesh)
 	{
 		GetMesh()->SetSkeletalMesh(TestStruct.SkeletalMesh);
-		GetMesh()->SetRelativeLocation(FVector3d(0.0f, 0.0f, -90.0f));
+		GetMesh()->SetRelativeLocation(FVector3d(-20.0f, 0.0f, -120.0f));
 		GetMesh()->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 		GetMesh()->SetCollisionObjectType(ECC_GameTraceChannel2);
 	}
@@ -152,23 +153,6 @@ void APHero::StartAttack()
 		bIsLookingTarget = true;
 		PlayAnimMontage(AttackAnim);
 		RangeAttack();
-		/*FOnMontageEnded MontageEndedDelegate;
-		MontageEndedDelegate.BindUObject(this, &APHero::OnAttackMontageEnded);*/
-		//FTimerHandle AnimTimerHandle;
-		//GetWorld()->GetTimerManager().SetTimer(AnimTimerHandle, this, &APHero::RangeAttack, AnimTime / 2, false);
-		//GetMesh()->GetAnimInstance()->Montage_SetEndDelegate(MontageEndedDelegate, AttackAnim);
-	}
-}
-
-void APHero::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
-{
-	if (Montage == AttackAnim)
-	{
-		// 애니메이션이 끝났을 때 불렛 생성
-		RangeAttack();
-
-		// 애니메이션이 끝난 후 다시 공격 함수 호출
-		GetWorld()->GetTimerManager().SetTimer(AttackTimerHandle, this, &APHero::StartAttack, AttackSpeed, false);
 	}
 }
 
@@ -186,6 +170,7 @@ void APHero::RangeAttack() const
 				Bullet->SetActorRotation(FRotator(LookAtRotator.Pitch - 90, LookAtRotator.Yaw, LookAtRotator.Roll));
 				Bullet->SetActorLocation(RangeAttackPosition->GetComponentLocation());
 				Bullet->Initialize(TestStruct.BulletMesh, TestStruct.BulletSpeed, Damage, RangeAttackPosition->GetForwardVector());
+				UE_LOG(LogTemp, Log, TEXT("Position %f, %f ,%f"), RangeAttackPosition->GetForwardVector().X, RangeAttackPosition->GetForwardVector().Y, RangeAttackPosition->GetForwardVector().Z);
 			}
 		}
 		
@@ -207,14 +192,14 @@ void APHero::LookTarget()
 {
 	if(AttackTarget)
 	{
-		FRotator CurrentRotation = GunPosition->GetRelativeRotation();
+		FRotator CurrentRotation = GunPosition->GetComponentRotation();
 		FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(GunPosition->GetComponentLocation(), AttackTarget->GetActorLocation());
-		FRotator TargetRotation = FRotator(0, LookAtRotation.Yaw, 0);
+		FRotator TargetRotation = FRotator(LookAtRotation.Pitch, LookAtRotation.Yaw, 0);
 		FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 10.0f); // 5.0f는 회전 속도
 		AnimRotation = NewRotation + FRotator(0, 90, 0);
 
 		// 새로운 회전 각도를 설정
-		GunPosition->SetRelativeRotation(NewRotation);
+		GunPosition->SetWorldRotation(NewRotation);
 		
 		if (NewRotation.Equals(TargetRotation, 0.1f))
 		{
@@ -226,12 +211,12 @@ void APHero::LookTarget()
 void APHero::LookForward()
 {
 	// 현재 회전을 천천히 목표 회전으로 보간
-	FRotator CurrentRotation = GunPosition->GetRelativeRotation();
+	FRotator CurrentRotation = GunPosition->GetComponentRotation();
 	FRotator TargetRotation = FRotator(0, 0, 0);
 	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 5.0f); // 5.0f는 회전 속도
 	AnimRotation = NewRotation + FRotator(0, 90, 0);
 	// 새로운 회전 각도를 설정
-	GunPosition->SetRelativeRotation(NewRotation);
+	GunPosition->SetWorldRotation(NewRotation);
 
 	if (NewRotation.Equals(TargetRotation, 0.1f))
 	{

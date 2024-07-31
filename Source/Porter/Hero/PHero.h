@@ -80,11 +80,7 @@ protected:
 public:
 	UPROPERTY(EditAnywhere)
 	FRotator AnimRotation;
-	
-	UFUNCTION()
-	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
-public:
 	void Initialize(FPHeroStruct HeroStruct);
 	void FindTarget(AActor* Target);
 	void StartAttack();
