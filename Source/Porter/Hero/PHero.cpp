@@ -170,7 +170,8 @@ void APHero::RangeAttack() const
 				Bullet->SetActorRotation(FRotator(LookAtRotator.Pitch - 90, LookAtRotator.Yaw, LookAtRotator.Roll));
 				Bullet->SetActorLocation(RangeAttackPosition->GetComponentLocation());
 				Bullet->Initialize(TestStruct.BulletMesh, TestStruct.BulletSpeed, Damage, RangeAttackPosition->GetForwardVector());
-				UE_LOG(LogTemp, Log, TEXT("Position %f, %f ,%f"), RangeAttackPosition->GetForwardVector().X, RangeAttackPosition->GetForwardVector().Y, RangeAttackPosition->GetForwardVector().Z);
+				DrawDebugBox(GetWorld(), RangeAttackPosition->GetComponentLocation(), FVector(10, 10, 10), FColor::Purple, true, -1, 0, 10);
+				UE_LOG(LogTemp, Log, TEXT("Position %f, %f ,%f"), AttackTarget->GetActorLocation().X, AttackTarget->GetActorLocation().Y, AttackTarget->GetActorLocation().Z);
 			}
 		}
 		

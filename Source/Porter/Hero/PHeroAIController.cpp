@@ -51,10 +51,10 @@ void APHeroAIController::OnPerceptionUpdated(const TArray<AActor*>& Actors)
 		for (AActor* Actor : Knowns)
 		{
 			// Enemy인 액터만 탐색
-			/*if (!Actor->ActorHasTag("Enemy"))
+			if (!Actor->ActorHasTag("Enemy"))
 			{
 				continue;
-			}*/
+			}
 			// 액터와의 거리 계산
 			float Distance = CalculateDistanceToActor(Actor);
 			// 가장 가까운 액터 탐색
