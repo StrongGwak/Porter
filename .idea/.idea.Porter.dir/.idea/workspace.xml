@@ -9,14 +9,13 @@
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_CPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_CPlayer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/Drag/WB_Hero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/Drag/WB_Hero.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/Drag/WB_Hero_Main.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/Drag/WB_Hero_Main.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PPlayer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PlayerStatStruct.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PlayerStatStruct.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/AM_BowAttack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/AM_BowAttack.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_Hero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_Hero.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/SM_Port.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/SM_Port.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAnimInstance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAnimInstance.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAnimInstance.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAnimInstance.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +25,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;StrongGwak&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/StrongGwak/Porter.git&quot;,
+    &quot;accountId&quot;: &quot;84e3bbe4-cb68-4e00-a951-b6ede8c68089&quot;
+  }
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
@@ -48,7 +59,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Uproject.Porter.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Yang-Player&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Gwak-Hero&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -73,7 +84,7 @@
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
         <option name="EXECUTABLE_PATH" value="C:\Program Files\Epic Games\UE_5.4\Engine\Binaries\Win64\UnrealEditor.exe" />
-        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\Users\12345\Documents\Unreal Projects\Porter\Porter.uproject&quot;" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\UE5\Porter\Porter.uproject&quot;" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
         <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
         <option name="PASS_PARENT_ENVS" value="1" />
@@ -86,7 +97,7 @@
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
         <option name="EXECUTABLE_PATH" value="C:\Program Files\Epic Games\UE_5.4\Engine\Binaries\Win64\UnrealEditor-Win64-DebugGame.exe" />
-        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\Users\12345\Documents\Unreal Projects\Porter\Porter.uproject&quot;" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\UE5\Porter\Porter.uproject&quot;" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
         <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
         <option name="PASS_PARENT_ENVS" value="1" />
@@ -98,7 +109,7 @@
         <option name="PLATFORM" value="Win64" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
-        <option name="EXECUTABLE_PATH" value="C:\Users\12345\Documents\Unreal Projects\Porter\Binaries\Win64\Porter-Win64-DebugGame.exe" />
+        <option name="EXECUTABLE_PATH" value="C:\UE5\Porter\Binaries\Win64\Porter-Win64-DebugGame.exe" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
         <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
@@ -111,7 +122,7 @@
         <option name="PLATFORM" value="Win64" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
-        <option name="EXECUTABLE_PATH" value="C:\Users\12345\Documents\Unreal Projects\Porter\Binaries\Win64\Porter.exe" />
+        <option name="EXECUTABLE_PATH" value="C:\UE5\Porter\Binaries\Win64\Porter.exe" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
         <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
@@ -124,7 +135,7 @@
         <option name="PLATFORM" value="Win64" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
-        <option name="EXECUTABLE_PATH" value="C:\Users\12345\Documents\Unreal Projects\Porter\Binaries\Win64\Porter-Win64-Shipping.exe" />
+        <option name="EXECUTABLE_PATH" value="C:\UE5\Porter\Binaries\Win64\Porter-Win64-Shipping.exe" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
         <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
@@ -154,11 +165,27 @@
       <workItem from="1721272915872" duration="6128000" />
       <workItem from="1721288391499" duration="4749000" />
       <workItem from="1721349353847" duration="7969000" />
+      <workItem from="1721610840779" duration="422000" />
+      <workItem from="1721611569138" duration="14353000" />
+      <workItem from="1721693067301" duration="18663000" />
+      <workItem from="1721796314658" duration="6645000" />
+      <workItem from="1721865930382" duration="24006000" />
+      <workItem from="1721954136670" duration="20832000" />
+      <workItem from="1721983263281" duration="134000" />
       <workItem from="1721614720378" duration="509000" />
       <workItem from="1721616265576" duration="8570000" />
       <workItem from="1721688300227" duration="13264000" />
       <workItem from="1721863132064" duration="17376000" />
       <workItem from="1721885768117" duration="4409000" />
+      <workItem from="1722218339473" duration="3391000" />
+      <workItem from="1722232423452" duration="7842000" />
+      <workItem from="1722298551753" duration="1169000" />
+      <workItem from="1722300450222" duration="32000" />
+      <workItem from="1722301226828" duration="21000" />
+      <workItem from="1722302125004" duration="5591000" />
+      <workItem from="1722404626792" duration="3475000" />
+      <workItem from="1722582719377" duration="4188000" />
+      <workItem from="1722821365935" duration="15625000" />
     </task>
     <servers />
   </component>
