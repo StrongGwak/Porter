@@ -22,15 +22,6 @@ struct FSpawnInformation
 	TArray<int32> TempHeroStatsArray;
 };
 
-USTRUCT(BlueprintType)
-struct FPlayerStats
-{
-	GENERATED_BODY()
-
-	
-	
-};
-
 UCLASS()
 class PORTER_API UPlayerManager : public UObject
 {
@@ -104,7 +95,6 @@ public:
 
 	TArray<FVector> OffsetArray;
 	float OffsetX = -100;
-	
 
 public:
 	// 지게 관련
