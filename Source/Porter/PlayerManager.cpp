@@ -25,7 +25,7 @@ UPlayerManager::UPlayerManager()
 			else OffsetY *= -1;
 		}
 		if (PortFloor%2 == 0) OffsetY += PortWidth;
-		OffsetArray.Emplace(FVector(OffsetX, OffsetY, PortFloor*PortHeight));
+		OffsetArray.Emplace(FVector(OffsetX, OffsetY, PortFloor*PortHeight - 100));
 	}
 	OffsetArray.RemoveAt(0);
 	PortArray.Init(nullptr,MaximumArraySize);
@@ -100,7 +100,9 @@ int32 UPlayerManager::SpawnPort(int32 PortType, ACharacter* PlayerCharacter)
 	if(PortNum < MaxPortNum)
 	{
 		FVector SocketLocation = MeshComp->GetSocketLocation(FName("PortSocket"));
-		FVector RelativeOffset = SocketLocation.ForwardVector*OffsetArray[PortNum].X + SocketLocation.RightVector*OffsetArray[PortNum].Y + FVector(0,0,OffsetArray[PortNum].Z);
+		FVector RelativeOffset = SocketLocation.ForwardVector*OffsetArray[PortNum].X
+								+ SocketLocation.RightVector*OffsetArray[PortNum].Y
+								+ SocketLocation.UpVector*OffsetArray[PortNum].Z;
 		FVector SpawnLocation = SocketLocation + RelativeOffset;
 		AActor* Port = GetWorld()->SpawnActor<AActor>(PortTypeArray[PortType], SpawnLocation, PlayerCharacter->GetActorRotation());
 
@@ -177,7 +179,9 @@ void UPlayerManager::SpawnHero(int32 HeroType, ACharacter* PlayerCharacter, bool
 	}
 
 	FVector SocketLocation = MeshComp->GetSocketLocation(FName("PortSocket"));
-	FVector RelativeOffset = SocketLocation.ForwardVector*OffsetArray[HeroIndex].X + SocketLocation.RightVector*OffsetArray[HeroIndex].Y + FVector(0,0,OffsetArray[HeroIndex].Z + HeroOffset);
+	FVector RelativeOffset = SocketLocation.ForwardVector*OffsetArray[HeroIndex].X
+							+ SocketLocation.RightVector*OffsetArray[HeroIndex].Y
+							+ SocketLocation.UpVector*(OffsetArray[HeroIndex].Z + HeroOffset);
 	FVector SpawnLocation = SocketLocation + RelativeOffset;
 	APHero* Hero = GetWorld()->SpawnActor<APHero>(HeroTypeArray[HeroType], SpawnLocation, PlayerCharacter->GetActorRotation());
 
@@ -209,21 +213,21 @@ void UPlayerManager::SwapHeroes(TArray<int32> IndexArray, ACharacter* PlayerChar
 	TArray<APHero*> BeforeHeroArray;
 	SpawnInfo.SavedHeroTypeArray.Empty();
 	SpawnInfo.SavedHeroTypeArray.Init(-1, MaximumArraySize);
-	
+
+	FVector SocketLocation = MeshComp->GetSocketLocation(FName("PortSocket"));
 	BeforeHeroArray.Append(HeroArray);
-	for (int32 i=0; i<HeroArray.Num(); ++i)
+	for (int32 HeroIndex=0; HeroIndex<HeroArray.Num(); ++HeroIndex)
 	{
-		HeroArray[i] = BeforeHeroArray[IndexArray[i]];
-		if (HeroArray[i] != nullptr)
+		HeroArray[HeroIndex] = BeforeHeroArray[IndexArray[HeroIndex]];
+		if (HeroArray[HeroIndex] != nullptr)
 		{
-			HeroArray[i]->SetActorLocation(
-			MeshComp->GetSocketLocation(FName("PortSocket"))
-				+ PlayerCharacter->GetActorForwardVector()*OffsetArray[i].X
-				+ PlayerCharacter->GetActorRightVector()*OffsetArray[i].Y
-				+ FVector(0,0,OffsetArray[i].Z + HeroOffset)
+			HeroArray[HeroIndex]->SetActorRelativeLocation(
+				SocketLocation.ForwardVector*OffsetArray[HeroIndex].X
+				+ SocketLocation.RightVector*OffsetArray[HeroIndex].Y
+				+ SocketLocation.UpVector*(OffsetArray[HeroIndex].Z + HeroOffset)
 			);
-			HeroArray[i]->Index = i;
-			SpawnInfo.SavedHeroTypeArray[i] = HeroArray[i]->HeroType;
+			HeroArray[HeroIndex]->Index = HeroIndex;
+			SpawnInfo.SavedHeroTypeArray[HeroIndex] = HeroArray[HeroIndex]->HeroType;
 		}
 	}
 	SetSpawnInformation(SpawnInfo);
