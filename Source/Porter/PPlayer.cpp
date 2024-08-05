@@ -30,7 +30,8 @@ APPlayer::APPlayer()
 	SpringArm->SetWorldLocation(FVector(0, 0, 70));
 	SpringArm->TargetArmLength = 400;
 	SpringArm->bUsePawnControlRotation=true;
-
+	SpringArm->bDoCollisionTest = false;
+	
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
 	bUseControllerRotationYaw = true; 
@@ -240,7 +241,9 @@ void APPlayer::UpPort()
 
 void APPlayer::UpHeroesFromArray()
 {
-	GI->GetPlayerManager()->SpawnHero(0);
+	int32 RandomInt = rand() % 5;
+	GI->GetPlayerManager()->SpawnHero(RandomInt);
+	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Blue, FString::FromInt(RandomInt));
 }
 
 void APPlayer::DownPort()

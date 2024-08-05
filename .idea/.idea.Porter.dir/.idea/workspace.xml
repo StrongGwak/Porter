@@ -8,18 +8,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IA_Damage.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/BP_OpenLevel.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap2.umap" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IA_OpenTest.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IA_SaveTest.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IMC_Player.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Inputs/IMC_Player.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PGameInstance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PGameInstance.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PGameInstance.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PGameInstance.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PHero.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/PHero.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PHero.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PPlayer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/PlayerManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PlayerManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/PlayerManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PlayerManager.h" afterDir="false" />
     </list>
@@ -45,28 +41,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Uproject.Porter.executor": "Run",
-    "git-widget-placeholder": "Yang-Player-GM",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "CppCodeGenerationId",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Uproject.Porter.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Yang-Player-GM&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CppCodeGenerationId&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\12345\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\12345\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\12345\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\12345\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\12345\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\12345\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Porter" type="Uproject" factoryName="rider.uproject">
       <configuration_1>
@@ -167,7 +163,8 @@
       <workItem from="1721963118797" duration="23013000" />
       <workItem from="1722297558091" duration="27450000" />
       <workItem from="1722387149171" duration="4842000" />
-      <workItem from="1722392049877" duration="12627000" />
+      <workItem from="1722392049877" duration="17040000" />
+      <workItem from="1722470575527" duration="14620000" />
     </task>
     <servers />
   </component>

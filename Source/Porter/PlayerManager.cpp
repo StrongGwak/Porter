@@ -58,19 +58,18 @@ void UPlayerManager::SaveSpawnInformation()
 {
 	FSpawnInformation SpawnInfo = GetSpawnInformation();
 	SpawnInfo.SavedPortNum = CheckPortNum();
-	for (auto Hero : HeroArray)
+	SpawnInfo.SavedHeroTypeArray.Empty();
+	SpawnInfo.SavedHeroTypeArray.Init(-1, MaximumArraySize);
+	for (int32 i=0; i<SpawnInfo.SavedPortNum; i++)
 	{
-		if(Hero == nullptr)
+		if(HeroArray[i] != nullptr)
 		{
-			SpawnInfo.SavedHeroTypeArray.Emplace(-1);
+			SpawnInfo.SavedHeroTypeArray[i] = HeroArray[i]->HeroType;
 		}
-		else
-		{
-			SpawnInfo.SavedHeroTypeArray.Emplace(Hero->HeroType);
-		}
+
 	}
 	SetSpawnInformation(SpawnInfo);
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Save Success!")));
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Save Success! %d"),SpawnInfo.SavedPortNum ));
 }
 
 // 레벨 넘어간 후 불러오기
@@ -82,18 +81,13 @@ void UPlayerManager::OpenSpawnInformation()
 		SpawnPort(0);
 	}
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("Open Success!")));
-
-	/*
+	
 	for (int32 i=0; i<SpawnInfo.SavedHeroTypeArray.Num(); ++i)
 	{
-		if (SpawnInfo.SavedHeroTypeArray[i] != -1)
-		{
-			SpawnHero(i);
-		}
+		if (SpawnInfo.SavedHeroTypeArray[i] == -1) continue;
+		SpawnHero(SpawnInfo.SavedHeroTypeArray[i]);
 	}
-	*/
 }
-
 
 int32 UPlayerManager::SpawnPort(int32 PortType)
 {
@@ -154,35 +148,41 @@ int32 UPlayerManager::CheckPortNum()
 
 void UPlayerManager::SpawnHero(int32 HeroType)
 {
+	
 	APawn* PlayerCharacter = GetWorld()->GetFirstPlayerController()->GetPawn();
 	int32 PortNum = CheckPortNum();
 	int32 HeroNum = CheckHeroNum();
-
-	int32 FirstEmptyIndex = -1;
+	int32 EmptyHeroIndex = -1;
+	
+	// if (bNotUseHeroIndex)
+	
 	if (HeroNum < PortNum)
 	{
 		for (int32 i=0; i<HeroArray.Num(); i++)
 		{
 			if(HeroArray[i] == nullptr)
 			{
-				FirstEmptyIndex = i;
+				EmptyHeroIndex = i;
 				break;
 			}
 		}
-		if (FirstEmptyIndex == -1) return;
-
-		FVector RelativeOffset = PlayerCharacter->GetActorForwardVector()*OffsetArray[FirstEmptyIndex].X + PlayerCharacter->GetActorRightVector()*OffsetArray[FirstEmptyIndex].Y + FVector(0,0,OffsetArray[FirstEmptyIndex].Z + HeroOffset);
+		if (EmptyHeroIndex == -1)
+		{
+			return;
+		}
+		
+		FVector RelativeOffset = PlayerCharacter->GetActorForwardVector()*OffsetArray[EmptyHeroIndex].X + PlayerCharacter->GetActorRightVector()*OffsetArray[EmptyHeroIndex].Y + FVector(0,0,OffsetArray[EmptyHeroIndex].Z + HeroOffset);
 		FVector SpawnLocation = PlayerCharacter->GetActorLocation() + RelativeOffset;
 		APHero* Hero = GetWorld()->SpawnActor<APHero>(HeroTypeArray[HeroType], SpawnLocation, PlayerCharacter->GetActorRotation());
 
 		if (Hero)
 		{
-			HeroArray[FirstEmptyIndex] = Hero;
+			HeroArray[EmptyHeroIndex] = Hero;
 			Hero->AttachToComponent(PlayerCharacter->GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
-			// 카메라 안가리게 바꾸는 법 알아보기
-			Hero->SetActorEnableCollision(false);
-			Hero->Index = FirstEmptyIndex;
+			Hero->Index = EmptyHeroIndex;
 			Hero->HeroType = HeroType;
+			// 스텟들 넣기 - HeroManager와 통신해야함
+			Hero->SetActorEnableCollision(false);
 		}
 	}
 }
@@ -198,6 +198,7 @@ void UPlayerManager::DestroyHero(int32 HeroIndex)
 
 void UPlayerManager::SwapHeroes(TArray<int32> IndexArray)
 {
+	FSpawnInformation SpawnInfo = GetSpawnInformation();
 	TArray<APHero*> BeforeHeroArray;
 	APawn* PlayerCharacter = GetWorld()->GetFirstPlayerController()->GetPawn();
 	
@@ -214,8 +215,10 @@ void UPlayerManager::SwapHeroes(TArray<int32> IndexArray)
 				+ FVector(0,0,OffsetArray[i].Z + HeroOffset)
 			);
 			HeroArray[i]->Index = i;
+			SpawnInfo.SavedHeroTypeArray[i] = HeroArray[i]->HeroType;
 		}
 	}
+	SetSpawnInformation(SpawnInfo);
 }
 
 // 항상 0보다 커야함. 0 == 죽음
