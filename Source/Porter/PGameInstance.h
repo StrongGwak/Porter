@@ -19,11 +19,12 @@ public:
 	UPGameInstance();
 
 	virtual void Init() override;
-	
+
+	UFUNCTION(BlueprintCallable, Blueprintable)
 	UPlayerManager* GetPlayerManager() const;
 
 protected:
-	UPROPERTY()
+	UPROPERTY(Blueprintable)
 	UPlayerManager* PlayerManager;
 
 public:
