@@ -77,6 +77,9 @@ protected:
 	UPROPERTY(EditAnywhere)
 	APHeroBulletPoolManager* BulletPoolManager;
 
+	UFUNCTION()
+	void OnMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+
 public:
 	UPROPERTY(EditAnywhere)
 	FRotator AnimRotation;
@@ -84,7 +87,7 @@ public:
 	void Initialize(FPHeroStruct HeroStruct);
 	void FindTarget(AActor* Target);
 	void StartAttack();
-	void StopAttack();
+	void StopAttack() const;
 	void LookTarget();
 	void LookForward();
 	void RangeAttack() const;
@@ -95,5 +98,4 @@ private:
 	FTimerHandle LookForwardTimerHandle;
 
 	FTimerHandle LookTargetTimerHandle;
-	
 };

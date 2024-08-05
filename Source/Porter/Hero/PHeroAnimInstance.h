@@ -27,7 +27,11 @@ protected:
 	APHero* Hero;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
-	FRotator RotationToTarget;	
+	FRotator RotationToTarget;
+
+private:
+	UFUNCTION()
+	void AnimNotify_Fire();
 
 	
 };
