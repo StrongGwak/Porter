@@ -149,10 +149,6 @@ public:
 	void StopBoost();
 	UFUNCTION()
 	void UpdateBoost();
-	//UFUNCTION()
-	//void SpawnPort(int32 Value);
-	//UFUNCTION()
-	//void SpawnHero(int32 Value);
 	
 	// HP
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")

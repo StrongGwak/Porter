@@ -3,7 +3,6 @@
 
 #include "PHero.h"
 #include "PPlayer.h"
-#include "Kismet/GameplayStatics.h"
 #include "PGameInstance.h"
 
 // Sets default values

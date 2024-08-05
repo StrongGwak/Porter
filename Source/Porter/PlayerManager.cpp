@@ -2,7 +2,6 @@
 
 
 #include "PlayerManager.h"
-#include "PPlayer.h"
 #include "PHero.h"
 
 UPlayerManager::UPlayerManager()
@@ -66,44 +65,50 @@ void UPlayerManager::SaveSpawnInformation()
 		{
 			SpawnInfo.SavedHeroTypeArray[i] = HeroArray[i]->HeroType;
 		}
-
 	}
 	SetSpawnInformation(SpawnInfo);
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Save Success! %d"),SpawnInfo.SavedPortNum ));
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Save Success! Port Number : %d"), SpawnInfo.SavedPortNum ));
 }
 
 // 레벨 넘어간 후 불러오기
-void UPlayerManager::OpenSpawnInformation()
+void UPlayerManager::OpenSpawnInformation(ACharacter* PlayerCharacter)
 {
 	FSpawnInformation SpawnInfo = GetSpawnInformation();
+	PortArray.Empty();
+	PortArray.Init(nullptr, MaximumArraySize);
 	for (int32 i=0; i<SpawnInfo.SavedPortNum; ++i)
 	{
-		SpawnPort(0);
+		SpawnPort(0, PlayerCharacter);
 	}
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("Open Success!")));
-	
+
+	HeroArray.Empty();
+	HeroArray.Init(nullptr, MaximumArraySize);
 	for (int32 i=0; i<SpawnInfo.SavedHeroTypeArray.Num(); ++i)
 	{
 		if (SpawnInfo.SavedHeroTypeArray[i] == -1) continue;
-		SpawnHero(SpawnInfo.SavedHeroTypeArray[i]);
+		SpawnHero(SpawnInfo.SavedHeroTypeArray[i], PlayerCharacter, true, i);
 	}
 }
 
-int32 UPlayerManager::SpawnPort(int32 PortType)
+int32 UPlayerManager::SpawnPort(int32 PortType, ACharacter* PlayerCharacter)
 {
-	APawn* PlayerCharacter = GetWorld()->GetFirstPlayerController()->GetPawn();
+	USkeletalMeshComponent* MeshComp = PlayerCharacter->GetMesh();
 	int32 PortNum = CheckPortNum();
 	float SpringArmLength = AddCameraLength*PortFloorArray[PortNum];
+	
 	if(PortNum < MaxPortNum)
 	{
-		FVector RelativeOffset = PlayerCharacter->GetActorForwardVector()*OffsetArray[PortNum].X + PlayerCharacter->GetActorRightVector()*OffsetArray[PortNum].Y + FVector(0,0,OffsetArray[PortNum].Z);
-		FVector SpawnLocation = PlayerCharacter->GetActorLocation() + RelativeOffset;
+		FVector SocketLocation = MeshComp->GetSocketLocation(FName("PortSocket"));
+		FVector RelativeOffset = SocketLocation.ForwardVector*OffsetArray[PortNum].X + SocketLocation.RightVector*OffsetArray[PortNum].Y + FVector(0,0,OffsetArray[PortNum].Z);
+		FVector SpawnLocation = SocketLocation + RelativeOffset;
 		AActor* Port = GetWorld()->SpawnActor<AActor>(PortTypeArray[PortType], SpawnLocation, PlayerCharacter->GetActorRotation());
 
 		if (Port)
 		{
 			PortArray[PortNum] = Port;
-			Port->AttachToComponent(PlayerCharacter->GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
+			Port->AttachToComponent(MeshComp, FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("PortSocket"));
+			Port->SetActorRelativeLocation(RelativeOffset);
 			Port->SetActorEnableCollision(false);
 			SpringArmLength = AddCameraLength*PortFloorArray[PortNum+1];
 		}
@@ -116,6 +121,7 @@ int32 UPlayerManager::SpawnPort(int32 PortType)
 int32 UPlayerManager::DestroyPort()
 {
 	int32 PortNum = CheckPortNum();
+	float SpringArmLength = AddCameraLength*PortFloorArray[PortNum];
 	if(PortNum > 0)
 	{
 		PortNum--;
@@ -129,7 +135,8 @@ int32 UPlayerManager::DestroyPort()
 			HeroArray[PortNum] = nullptr;
 		}
 	}
-	float SpringArmLength = AddCameraLength*PortFloorArray[PortNum];
+	SpringArmLength = AddCameraLength*PortFloorArray[PortNum];
+	
 	return SpringArmLength;
 }
 
@@ -146,44 +153,43 @@ int32 UPlayerManager::CheckPortNum()
 	return Count;
 }
 
-void UPlayerManager::SpawnHero(int32 HeroType)
+void UPlayerManager::SpawnHero(int32 HeroType, ACharacter* PlayerCharacter, bool bUseHeroIndex, int32 HeroIndex)
 {
-	
-	APawn* PlayerCharacter = GetWorld()->GetFirstPlayerController()->GetPawn();
+	USkeletalMeshComponent* MeshComp = PlayerCharacter->GetMesh();
 	int32 PortNum = CheckPortNum();
 	int32 HeroNum = CheckHeroNum();
-	int32 EmptyHeroIndex = -1;
-	
-	// if (bNotUseHeroIndex)
-	
-	if (HeroNum < PortNum)
+
+	// HeroIndex를 사용하지 않으면, 빈 곳에 영웅 소환하기
+	if (!bUseHeroIndex && HeroNum < PortNum)
 	{
 		for (int32 i=0; i<HeroArray.Num(); i++)
 		{
 			if(HeroArray[i] == nullptr)
 			{
-				EmptyHeroIndex = i;
+				HeroIndex = i;
 				break;
 			}
 		}
-		if (EmptyHeroIndex == -1)
-		{
-			return;
-		}
-		
-		FVector RelativeOffset = PlayerCharacter->GetActorForwardVector()*OffsetArray[EmptyHeroIndex].X + PlayerCharacter->GetActorRightVector()*OffsetArray[EmptyHeroIndex].Y + FVector(0,0,OffsetArray[EmptyHeroIndex].Z + HeroOffset);
-		FVector SpawnLocation = PlayerCharacter->GetActorLocation() + RelativeOffset;
-		APHero* Hero = GetWorld()->SpawnActor<APHero>(HeroTypeArray[HeroType], SpawnLocation, PlayerCharacter->GetActorRotation());
+	}
+	if (HeroIndex == -1)
+	{
+		return;
+	}
 
-		if (Hero)
-		{
-			HeroArray[EmptyHeroIndex] = Hero;
-			Hero->AttachToComponent(PlayerCharacter->GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
-			Hero->Index = EmptyHeroIndex;
-			Hero->HeroType = HeroType;
-			// 스텟들 넣기 - HeroManager와 통신해야함
-			Hero->SetActorEnableCollision(false);
-		}
+	FVector SocketLocation = MeshComp->GetSocketLocation(FName("PortSocket"));
+	FVector RelativeOffset = SocketLocation.ForwardVector*OffsetArray[HeroIndex].X + SocketLocation.RightVector*OffsetArray[HeroIndex].Y + FVector(0,0,OffsetArray[HeroIndex].Z + HeroOffset);
+	FVector SpawnLocation = SocketLocation + RelativeOffset;
+	APHero* Hero = GetWorld()->SpawnActor<APHero>(HeroTypeArray[HeroType], SpawnLocation, PlayerCharacter->GetActorRotation());
+
+	if (Hero)
+	{
+		HeroArray[HeroIndex] = Hero;
+		Hero->AttachToComponent(MeshComp, FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("PortSocket"));
+		Hero->SetActorRelativeLocation(RelativeOffset);
+		Hero->Index = HeroIndex;
+		Hero->HeroType = HeroType;
+		// 스텟들 넣기 - HeroManager와 통신해야함
+		Hero->SetActorEnableCollision(false);
 	}
 }
 
@@ -196,11 +202,13 @@ void UPlayerManager::DestroyHero(int32 HeroIndex)
 	}
 }
 
-void UPlayerManager::SwapHeroes(TArray<int32> IndexArray)
+void UPlayerManager::SwapHeroes(TArray<int32> IndexArray, ACharacter* PlayerCharacter)
 {
 	FSpawnInformation SpawnInfo = GetSpawnInformation();
+	USkeletalMeshComponent* MeshComp = PlayerCharacter->GetMesh();
 	TArray<APHero*> BeforeHeroArray;
-	APawn* PlayerCharacter = GetWorld()->GetFirstPlayerController()->GetPawn();
+	SpawnInfo.SavedHeroTypeArray.Empty();
+	SpawnInfo.SavedHeroTypeArray.Init(-1, MaximumArraySize);
 	
 	BeforeHeroArray.Append(HeroArray);
 	for (int32 i=0; i<HeroArray.Num(); ++i)
@@ -209,7 +217,7 @@ void UPlayerManager::SwapHeroes(TArray<int32> IndexArray)
 		if (HeroArray[i] != nullptr)
 		{
 			HeroArray[i]->SetActorLocation(
-				PlayerCharacter->GetActorLocation()
+			MeshComp->GetSocketLocation(FName("PortSocket"))
 				+ PlayerCharacter->GetActorForwardVector()*OffsetArray[i].X
 				+ PlayerCharacter->GetActorRightVector()*OffsetArray[i].Y
 				+ FVector(0,0,OffsetArray[i].Z + HeroOffset)

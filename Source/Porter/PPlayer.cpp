@@ -130,7 +130,6 @@ void APPlayer::MinusHP(int32 Damage)
 		int32 LastNum = GI->GetPlayerManager()->LastHeroNum();
 		if (LastNum == -1)
 		{
-			// 플레이어의 스테이트를 나누자 : 달리기 / 걷기 / 죽음
 			Die();
 		}
 		else
@@ -236,13 +235,13 @@ void APPlayer::UpdateBoost()
 
 void APPlayer::UpPort()
 {
-	SpringArm->TargetArmLength = 400 + GI->GetPlayerManager()->SpawnPort(0);
+	SpringArm->TargetArmLength = 400 + GI->GetPlayerManager()->SpawnPort(0, this);
 }
 
 void APPlayer::UpHeroesFromArray()
 {
 	int32 RandomInt = rand() % 5;
-	GI->GetPlayerManager()->SpawnHero(RandomInt);
+	GI->GetPlayerManager()->SpawnHero(RandomInt, this);
 	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Blue, FString::FromInt(RandomInt));
 }
 
@@ -324,7 +323,7 @@ void APPlayer::PlaySwap()
 {
 	// 0~PortNum
 	TArray<int32> TempArray = {4, 3, 2, 1, 0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
-	GI->GetPlayerManager()->SwapHeroes(TempArray);
+	GI->GetPlayerManager()->SwapHeroes(TempArray, this);
 }
 
 // 영웅 배치, 지게 늘리거나 영웅 늘릴 때 등 수시로 사용하기  
@@ -379,6 +378,6 @@ void APPlayer::SaveSpawn()
 
 void APPlayer::OpenSpawn()
 {
-	GI->GetPlayerManager()->OpenSpawnInformation();
+	GI->GetPlayerManager()->OpenSpawnInformation(this);
 	SpringArm->TargetArmLength = 400 + GI->GetPlayerManager()->AddCameraLength * GI->GetPlayerManager()->PortFloorArray[GI->GetPlayerManager()->CheckPortNum()];
 }

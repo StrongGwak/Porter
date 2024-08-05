@@ -22,6 +22,15 @@ struct FSpawnInformation
 	TArray<int32> TempHeroStatsArray;
 };
 
+USTRUCT(BlueprintType)
+struct FPlayerStats
+{
+	GENERATED_BODY()
+
+	
+	
+};
+
 UCLASS()
 class PORTER_API UPlayerManager : public UObject
 {
@@ -36,11 +45,14 @@ public:
 	void Initialize(TArray<TSubclassOf<AActor>> Port, TArray<TSubclassOf<APHero>> Hero);
 
 	// 플레이어 각종 스텟 get set 함수
+	UFUNCTION(Blueprintable, BlueprintCallable)
 	void SetSpawnInformation(const FSpawnInformation& UpdateStats);
+	UFUNCTION(Blueprintable, BlueprintCallable)
 	FSpawnInformation GetSpawnInformation() const;
+	UFUNCTION(BlueprintCallable, Blueprintable)
 	void SaveSpawnInformation();
-	UFUNCTION()
-	void OpenSpawnInformation();
+	UFUNCTION(BlueprintCallable, Blueprintable)
+	void OpenSpawnInformation(ACharacter* PlayerCharacter);
 
 private:
 	UPROPERTY(EditAnywhere)
@@ -49,7 +61,7 @@ private:
 public:
 	// 지게 관련
 	UFUNCTION()
-	int32 SpawnPort(int32 PortType);
+	int32 SpawnPort(int32 PortType, ACharacter* PlayerCharacter);
 	UFUNCTION()
 	int32 DestroyPort();
 	UFUNCTION()
@@ -57,11 +69,11 @@ public:
 
 	// 영웅 관련
 	UFUNCTION()
-	void SpawnHero(int32 HeroType);
+	void SpawnHero(int32 HeroType, ACharacter* PlayerCharacter, bool bUseHeroIndex = false, int32 HeroIndex = -1);
 	UFUNCTION()
 	void DestroyHero(int32 HeroIndex);
 	UFUNCTION()
-	void SwapHeroes(TArray<int32> HeroIndexArray);
+	void SwapHeroes(TArray<int32> HeroIndexArray, ACharacter* PlayerCharacter);
 	UFUNCTION()
 	int32 LastHeroNum();
 	UFUNCTION()
