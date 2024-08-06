@@ -32,16 +32,25 @@ APHeroAIController::APHeroAIController()
 void APHeroAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
+	Hero = Cast<APHero>(GetPawn());
 
 }
 
 void APHeroAIController::OnPerceptionUpdated(const TArray<AActor*>& Actors)
 {
-	APHero* Hero = Cast<APHero>(GetPawn());
 	// 인지 하고있는 액터를 할당하기 위한 액터 배열
 	TArray<AActor*> Knowns;
 	// 현재 인지하고 있는 액터들을 액터 배열에 할당
 	AIPerception->GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), Knowns);
+	for (AActor* know : Actors)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Actors : %s -----------"), *know->GetName());
+	}
+	for (AActor* know : Knowns)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Knowns : %s"), *know->GetName());
+	}
+	
 	if (!Knowns.IsEmpty())
 	{
 		AActor* Target = nullptr;
@@ -64,16 +73,18 @@ void APHeroAIController::OnPerceptionUpdated(const TArray<AActor*>& Actors)
 				Target = Actor;
 			}
 		}
-		if (Target)
+		if (Target != OldTarget)
 		{
 			// 영웅에게 타겟 전달
 			Hero->FindTarget(Target);
+			OldTarget = Target;
 		}
 	}
 	else
 	{
 		// 대상이 없다면 공격 중지
 		Hero->StopAttack();
+		OldTarget = nullptr;
 	}
 }
 
