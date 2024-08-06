@@ -46,5 +46,5 @@ public:
 	int32 Index = -1;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 HeroType = -1;
+	int32 Type = -1;
 };

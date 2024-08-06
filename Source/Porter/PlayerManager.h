@@ -11,22 +11,6 @@ class APHero;
 /**
  * 
  */
-// 지게, 영웅의 위치정보와 상세정보 모두 저장 - 계속 변하는 수치
-USTRUCT(BlueprintType)
-struct FSpawnInformation
-{
-	GENERATED_BODY()
-
-	UPROPERTY()
-	TArray<AActor*> PortArray;
-	int32 SavedPortNum;
-	
-	UPROPERTY()
-	TArray<class APHero*> HeroArray;
-	UPROPERTY()
-	TArray<FPHeroStruct> HeroStructArray;
-};
-
 UCLASS()
 class PORTER_API UPlayerManager : public UObject
 {
@@ -39,20 +23,24 @@ public:
 
 	// 초기값만 존재
 	void Initialize(TArray<TSubclassOf<AActor>> Port, TArray<TSubclassOf<APHero>> Hero);
-
-	// 플레이어 각종 스텟 get set 함수
-	UFUNCTION(Blueprintable, BlueprintCallable)
-	void SetSpawnInformation(const FSpawnInformation& UpdateStats);
-	UFUNCTION(Blueprintable, BlueprintCallable)
-	FSpawnInformation GetSpawnInformation() const;
+	
 	UFUNCTION(BlueprintCallable, Blueprintable)
 	void SaveSpawnInformation();
 	UFUNCTION(BlueprintCallable, Blueprintable)
 	void OpenSpawnInformation(ACharacter* PlayerCharacter);
 
+	int32 SavedPortNum;
+	
+	UPROPERTY()
+	TArray<FPHeroStruct> HeroStructArray;
+	
 private:
 	UPROPERTY()
-	FSpawnInformation SpawnInformation;
+	TArray<AActor*> PortArray;
+
+	UPROPERTY()
+	TArray<class APHero*> HeroArray;
+
 
 public:
 	// 지게 관련
@@ -128,4 +116,5 @@ public:
 	float HeroWeight = 0.8;
 	UPROPERTY()
 	float HeroOffset = 50;
+
 };

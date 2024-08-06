@@ -54,8 +54,11 @@ protected:
 	int32 Index;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	int32 HeroType;
+	int32 Type;
 
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	FPHeroStruct StatInformation;
+	
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	FPHeroStruct TestStruct;
 

@@ -149,7 +149,9 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 	VisionAngle = HeroStruct.VisionAngle;
 	AttackAnim = HeroStruct.AttackAnim;
 	Index = HeroStruct.Index;
-	HeroType = HeroStruct.HeroType;
+	Type = HeroStruct.Type;
+
+	SetHeroStats(StatInformation);
 	
 	if (AIController)
 	{
@@ -160,7 +162,7 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 
 FPHeroStruct APHero::GetHeroStats() const
 {
-	return TestStruct;
+	return StatInformation;
 }
 
 void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
@@ -172,9 +174,9 @@ void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
 	VisionAngle = UpdateStats.VisionAngle;
 	AttackAnim = UpdateStats.AttackAnim;
 	Index = UpdateStats.Index;
-	HeroType = UpdateStats.HeroType;
+	Type = UpdateStats.Type;
 	
-	TestStruct = UpdateStats;
+	StatInformation = UpdateStats;
 }
 
 void APHero::FindTarget(AActor* Target)

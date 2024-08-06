@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
 #include "PlayerManager.h"
+#include "HeroManager.h"
 #include "PGameInstance.generated.h"
 
 /**
@@ -21,11 +22,17 @@ public:
 	virtual void Init() override;
 
 	UFUNCTION(BlueprintCallable, Blueprintable)
-	UPlayerManager* GetPlayerManager() const;
+	UPlayerManager* GetPlayerManager();
 
-protected:
-	UPROPERTY(Blueprintable)
+	UFUNCTION(BlueprintCallable, Blueprintable)
+	UHeroManager* GetHeroManager();
+
+private:
+	UPROPERTY(Blueprintable, EditAnywhere)
 	UPlayerManager* PlayerManager;
+
+	UPROPERTY(Blueprintable, EditAnywhere)
+	UHeroManager* HeroManger;
 
 public:
 	// 지게 관련

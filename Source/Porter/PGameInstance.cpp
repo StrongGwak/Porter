@@ -19,7 +19,12 @@ void UPGameInstance::Init()
 	}
 }
 
-UPlayerManager* UPGameInstance::GetPlayerManager() const
+UPlayerManager* UPGameInstance::GetPlayerManager()
 {
 	return PlayerManager;
+}
+
+UHeroManager* UPGameInstance::GetHeroManager()
+{
+	return HeroManger;
 }
