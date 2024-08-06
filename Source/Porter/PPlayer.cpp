@@ -8,7 +8,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
 #include "Engine/Engine.h"
-#include "PHero.h"
+#include "Hero/PHero.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "PGameInstance.h"
 
@@ -241,7 +241,7 @@ void APPlayer::UpPort()
 void APPlayer::UpHeroesFromArray()
 {
 	int32 RandomInt = rand() % 5;
-	GI->GetPlayerManager()->SpawnHero(RandomInt, this);
+	GI->GetPlayerManager()->SpawnHero(0, this);
 	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Blue, FString::FromInt(RandomInt));
 }
 
@@ -354,22 +354,26 @@ void APPlayer::GetDamage()
 	MinusHP(3);
 }
 
+
 void APPlayer::MakeHeroHPZero()
 {
-	TArray<APHero*> Heroes = GI->GetPlayerManager()->HeroArray;
+	TArray<APHero*> Heroes = GI->GetPlayerManager()->GetSpawnInformation().HeroArray;
 	int32 IndexChecker = -1;
 	for (int32 i=0; i<Heroes.Num(); i++)
 	{
 		if (Heroes[i] != nullptr)
 		{
-			IndexChecker = Heroes[i]->Index;
+			IndexChecker = Heroes[i]->GetHeroStats().Index;
 			if (IndexChecker == 3)
 			{
-				Heroes[i]->Die();
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Player Manager")));
+				//Heroes[i]->Destroy();
+				Heroes[i] = nullptr;
 			}
 		}
 	}
 }
+
 
 void APPlayer::SaveSpawn()
 {

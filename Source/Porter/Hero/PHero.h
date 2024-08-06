@@ -54,6 +54,9 @@ protected:
 	int32 Index;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	int32 HeroType;
+
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	FPHeroStruct TestStruct;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
@@ -85,6 +88,10 @@ public:
 	FRotator AnimRotation;
 
 	void Initialize(FPHeroStruct HeroStruct);
+	
+	FPHeroStruct GetHeroStats() const;
+	void SetHeroStats(const FPHeroStruct& UpdateStats);
+	
 	void FindTarget(AActor* Target);
 	void StartAttack();
 	void StopAttack() const;
@@ -92,6 +99,7 @@ public:
 	void LookForward();
 	void RangeAttack() const;
 
+	
 private:
 	FTimerHandle AttackTimerHandle;
 
