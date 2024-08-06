@@ -235,6 +235,8 @@ void APPlayer::UpdateBoost()
 
 void APPlayer::UpPort()
 {
+	int32 Check = GI->GetPlayerManager()->CheckPortNum();
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("Check! : %d"), Check));
 	SpringArm->TargetArmLength = 400 + GI->GetPlayerManager()->SpawnPort(0, this);
 }
 
@@ -357,7 +359,8 @@ void APPlayer::GetDamage()
 
 void APPlayer::MakeHeroHPZero()
 {
-	TArray<APHero*> Heroes = GI->GetPlayerManager()->GetSpawnInformation().HeroArray;
+	/*
+	TArray<APHero*> Heroes = GI->GetPlayerManager()->HeroArray;
 	int32 IndexChecker = -1;
 	for (int32 i=0; i<Heroes.Num(); i++)
 	{
@@ -367,11 +370,12 @@ void APPlayer::MakeHeroHPZero()
 			if (IndexChecker == 3)
 			{
 				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Player Manager")));
-				//Heroes[i]->Destroy();
+				Heroes[i]->Destroy();
 				Heroes[i] = nullptr;
 			}
 		}
 	}
+	*/
 }
 
 
