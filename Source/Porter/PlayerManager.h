@@ -4,22 +4,27 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "PlayerStatStruct.h"
+#include "Hero/PHeroStruct.h"
 #include "PlayerManager.generated.h"
 
 class APHero;
 /**
  * 
  */
+// 지게, 영웅의 위치정보와 상세정보 모두 저장 - 계속 변하는 수치
 USTRUCT(BlueprintType)
 struct FSpawnInformation
 {
 	GENERATED_BODY()
 
+	UPROPERTY()
+	TArray<AActor*> PortArray;
 	int32 SavedPortNum;
-	//TArray<int32> SavedHeroIndexArray;	// 빈자리와 차있는 자리로 표현가능하지 않나. TArray의 index가 곧 위치이므로.
-	TArray<int32> SavedHeroTypeArray;
-	TArray<int32> TempHeroStatsArray;
+	
+	UPROPERTY()
+	TArray<class APHero*> HeroArray;
+	UPROPERTY()
+	TArray<FPHeroStruct> HeroStructArray;
 };
 
 UCLASS()
@@ -46,7 +51,7 @@ public:
 	void OpenSpawnInformation(ACharacter* PlayerCharacter);
 
 private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY()
 	FSpawnInformation SpawnInformation;
 
 public:
@@ -100,8 +105,6 @@ public:
 	// 지게 관련
 	UPROPERTY(BlueprintReadOnly)
 	TArray<TSubclassOf<AActor>> PortTypeArray;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Port")
-	TArray<AActor*> PortArray;
 	UPROPERTY()
 	TArray<int32> PortFloorArray;
 	UPROPERTY()
@@ -120,8 +123,7 @@ public:
 	// 영웅 관련
 	UPROPERTY(BlueprintReadOnly)
 	TArray<TSubclassOf<class APHero>> HeroTypeArray;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Hero")
-	TArray<class APHero*> HeroArray;
+	
 	UPROPERTY()
 	float HeroWeight = 0.8;
 	UPROPERTY()

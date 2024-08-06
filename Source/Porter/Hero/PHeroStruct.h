@@ -41,4 +41,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float BulletSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 Index = -1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 HeroType = -1;
 };
