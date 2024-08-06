@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "Hero/PHero.h"
 #include "Perception/AISenseConfig_Sight.h"
 #include "PHeroAIController.generated.h"
 
@@ -32,6 +33,12 @@ protected:
 
 	// 액터간 거리 계산 함수
 	float CalculateDistanceToActor(AActor* OtherActor) const;
+
+	UPROPERTY(VisibleAnywhere, Category="Awareness")
+	AActor* OldTarget = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category="Awareness")
+	APHero* Hero;
 
 public:
 	virtual void OnPossess(APawn* InPawn) override;

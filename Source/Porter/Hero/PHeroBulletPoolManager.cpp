@@ -40,7 +40,7 @@ APHeroBullet* APHeroBulletPoolManager::GetBullet()
 {
 	for (APHeroBullet* Bullet : BulletPool)
 	{
-		// 수정할곳
+		// 수정할 곳
 		if (!Bullet->IsActorActive())
 		{
 			Bullet->SetActorEnableCollision(true);

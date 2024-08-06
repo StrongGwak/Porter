@@ -39,8 +39,6 @@ APHero::APHero()
 	AIControllerClass = APHeroAIController::StaticClass();
 	// 월드에 배치되거나 스폰될 때 AI Controller에 의해 제어되도록 설정
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
-	// AI Controller 캐스팅
-	AIController = Cast<APHeroAIController>(GetController());
 
 	BulletPoolManagerClass = APHeroBulletPoolManager::StaticClass();
 	
@@ -79,7 +77,7 @@ void APHero::BeginPlay()
 	// 월드에 배치되거나 스폰될 때 AI Controller에 의해 제어되도록 설정
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	// AI Controller 캐스팅
-	AIController = Cast<APHeroAIController>(GetController());
+	APHeroAIController* AIController = Cast<APHeroAIController>(GetController());
 	if (AIController)
 	{
 		// AI Controller의 시야 정보 설정 (적 인식 거리)
@@ -148,7 +146,9 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 	SightRadius = HeroStruct.SightRadius;
 	VisionAngle = HeroStruct.VisionAngle;
 	AttackAnim = HeroStruct.AttackAnim;
-	
+
+	// AI Controller 캐스팅
+	APHeroAIController* AIController = Cast<APHeroAIController>(GetController());
 	if (AIController)
 	{
 		// AI Controller의 시야 정보 설정 (적 인식 거리)
@@ -195,8 +195,7 @@ void APHero::RangeAttack() const
 			Bullet->SetActorRotation(FRotator(LookAtRotator.Pitch - 90, LookAtRotator.Yaw, LookAtRotator.Roll));
 			Bullet->SetActorLocation(RangeAttackPosition->GetComponentLocation());
 			Bullet->Initialize(TestStruct.BulletMesh, TestStruct.BulletSpeed, Damage, RangeAttackPosition->GetForwardVector());
-			DrawDebugBox(GetWorld(), RangeAttackPosition->GetComponentLocation(), FVector(10, 10, 10), FColor::Purple, true, -1, 0, 1);
-			UE_LOG(LogTemp, Log, TEXT("Position %f, %f ,%f"), AttackTarget->GetActorLocation().X, AttackTarget->GetActorLocation().Y, AttackTarget->GetActorLocation().Z);
+			//DrawDebugBox(GetWorld(), RangeAttackPosition->GetComponentLocation(), FVector(10, 10, 10), FColor::Purple, true, -1, 0, 1);
 		}
 	}
 }
@@ -227,11 +226,11 @@ void APHero::LookTarget()
 		
 		if (NewRotation.Equals(TargetRotation, 0.1f))
 		{
-			bIsLookingTarget = false;
+			//bIsLookingTarget = false;
 		}
 		else
 		{
-			bIsLookingTarget = true;
+			//bIsLookingTarget = true;
 		}
 	}
 }
