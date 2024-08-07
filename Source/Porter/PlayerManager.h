@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "Hero/PHeroStruct.h"
+
 #include "PlayerManager.generated.h"
 
 class APHero;
@@ -22,7 +23,8 @@ public:
 	UPlayerManager();
 
 	// 초기값만 존재
-	void Initialize(TArray<TSubclassOf<AActor>> Port, TArray<TSubclassOf<APHero>> Hero);
+	void Initialize(TArray<TSubclassOf<AActor>> Port);
+	void SetGameInstance(class UPGameInstance* PGameInstance);
 	
 	UFUNCTION(BlueprintCallable, Blueprintable)
 	void SaveSpawnInformation();
@@ -31,16 +33,9 @@ public:
 
 	int32 SavedPortNum;
 	
-	UPROPERTY()
-	TArray<FPHeroStruct> HeroStructArray;
-	
 private:
 	UPROPERTY()
 	TArray<AActor*> PortArray;
-
-	UPROPERTY()
-	TArray<class APHero*> HeroArray;
-
 
 public:
 	// 지게 관련
@@ -50,18 +45,7 @@ public:
 	int32 DestroyPort();
 	UFUNCTION()
 	int32 CheckPortNum();
-
-	// 영웅 관련
-	UFUNCTION()
-	void SpawnHero(int32 HeroType, ACharacter* PlayerCharacter, bool bUseHeroIndex = false, int32 HeroIndex = -1);
-	UFUNCTION()
-	void DestroyHero(int32 HeroIndex);
-	UFUNCTION()
-	void SwapHeroes(TArray<int32> HeroIndexArray, ACharacter* PlayerCharacter);
-	UFUNCTION()
-	int32 LastHeroNum();
-	UFUNCTION()
-	int32 CheckHeroNum();
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
 	int32 MaximumArraySize = 15;
 
@@ -106,15 +90,10 @@ public:
 	int32 MaxPortNum = 10;
 	UPROPERTY(EditAnywhere, Category="Stats|Port")
 	int32 MaxWeight = 10;
-	
-public:
-	// 영웅 관련
-	UPROPERTY(BlueprintReadOnly)
-	TArray<TSubclassOf<class APHero>> HeroTypeArray;
-	
-	UPROPERTY()
-	float HeroWeight = 0.8;
-	UPROPERTY()
-	float HeroOffset = 50;
 
+public:
+
+	UPROPERTY()
+	class UPGameInstance* GI;
+	
 };

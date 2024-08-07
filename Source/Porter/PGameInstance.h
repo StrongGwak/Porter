@@ -32,7 +32,7 @@ private:
 	UPlayerManager* PlayerManager;
 
 	UPROPERTY(Blueprintable, EditAnywhere)
-	UHeroManager* HeroManger;
+	UHeroManager* HeroManager;
 
 public:
 	// 지게 관련

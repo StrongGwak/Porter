@@ -127,14 +127,14 @@ void APPlayer::MinusHP(int32 Damage)
 	else
 	{
 		// (수정 필요) hero 없애기
-		int32 LastNum = GI->GetPlayerManager()->LastHeroNum();
+		int32 LastNum = GI->GetHeroManager()->LastHeroNum();
 		if (LastNum == -1)
 		{
 			Die();
 		}
 		else
 		{
-			GI->GetPlayerManager()->DestroyHero(LastNum);
+			GI->GetHeroManager()->DestroyHero(LastNum);
 			CurrentHP = MaxHp;
 		}
 	}
@@ -243,7 +243,7 @@ void APPlayer::UpPort()
 void APPlayer::UpHeroesFromArray()
 {
 	int32 RandomInt = rand() % 5;
-	GI->GetPlayerManager()->SpawnHero(0, this);
+	GI->GetHeroManager()->SpawnHero(0, this);
 	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Blue, FString::FromInt(RandomInt));
 }
 
@@ -325,13 +325,14 @@ void APPlayer::PlaySwap()
 {
 	// 0~PortNum
 	TArray<int32> TempArray = {4, 3, 2, 1, 0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
-	GI->GetPlayerManager()->SwapHeroes(TempArray, this);
+	GI->GetHeroManager()->SwapHeroes(TempArray, this);
 }
 
 // 영웅 배치, 지게 늘리거나 영웅 늘릴 때 등 수시로 사용하기  
 bool APPlayer::CheckCondition()
 {
-	EntireWeight = HeroWeight * GI->GetPlayerManager()->CheckHeroNum() + PortWeight * GI->GetPlayerManager()->CheckPortNum();
+	/*
+	EntireWeight = HeroWeight * GI->GetHeroManager()->CheckHeroNum() + PortWeight * GI->GetPlayerManager()->CheckPortNum();
 
 	int32 LastHeroIndex = -1;
 	for (int32 i = HeroArray.Num() - 1; i>=0; --i)
@@ -349,6 +350,8 @@ bool APPlayer::CheckCondition()
 	// 무게 안넘고, 지게 수가 같거나 더 적고, 영웅 위치가 지게 가장 끝 위치보다 같거나 작아야 한다. 
 	if (IsOverWeight || IsOverIndex) return false;
 	else return true;
+	*/
+	return true;
 }
 
 void APPlayer::GetDamage()
@@ -359,23 +362,22 @@ void APPlayer::GetDamage()
 
 void APPlayer::MakeHeroHPZero()
 {
-	/*
-	TArray<APHero*> Heroes = GI->GetPlayerManager()->HeroArray;
+	TArray<APHero*> HeroArray = GI->GetHeroManager()->GetHeroArray();
 	int32 IndexChecker = -1;
-	for (int32 i=0; i<Heroes.Num(); i++)
+	for (int32 i=0; i<HeroArray.Num(); i++)
 	{
-		if (Heroes[i] != nullptr)
+		if (HeroArray[i] != nullptr)
 		{
-			IndexChecker = Heroes[i]->GetHeroStats().Index;
+			IndexChecker = HeroArray[i]->GetHeroStats().Index;
 			if (IndexChecker == 3)
 			{
 				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Player Manager")));
-				Heroes[i]->Destroy();
-				Heroes[i] = nullptr;
+				HeroArray[i]->Destroy();
+				HeroArray[i] = nullptr;
 			}
 		}
 	}
-	*/
+	GI->GetHeroManager()->SetHeroArray(HeroArray);
 }
 
 
