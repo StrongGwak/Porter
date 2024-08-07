@@ -3,12 +3,15 @@
 
 #include "Hero/PHeroBulletPoolManager.h"
 
+#include "GameFramework/ProjectileMovementComponent.h"
+
 // Sets default values
 APHeroBulletPoolManager::APHeroBulletPoolManager()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	// 투사체 클래스 설정
 	BulletClass = APHeroBullet::StaticClass();
 }
 
@@ -16,23 +19,13 @@ APHeroBulletPoolManager::APHeroBulletPoolManager()
 void APHeroBulletPoolManager::BeginPlay()
 {
 	Super::BeginPlay();
-	if (BulletClass)
-	{
-		// Bullet 생성
-		for (int i = 0; i < PoolSize; i++)
-		{
-			APHeroBullet* Bullet = GetWorld()->SpawnActor<APHeroBullet>(BulletClass);
-			Bullet->SetActorEnableCollision(false);
-			Bullet->SetActorHiddenInGame(true);
-			BulletPool.Add(Bullet);
-		}
-	}
 }
 
 // Called every frame
 void APHeroBulletPoolManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
 
 }
 
@@ -60,4 +53,26 @@ void APHeroBulletPoolManager::ReturnBullet(APHeroBullet* Bullet)
 	Bullet->SetActorEnableCollision(false);
 	Bullet->SetActorHiddenInGame(true);
 	Bullet->SetActorLocation(FVector::ZeroVector);
+	Bullet->ProjectileMovementComponent->bSimulationEnabled = false;
+}
+
+void APHeroBulletPoolManager::Initialize(UStaticMesh* NewStaticMesh, float NewSpeed, float NewDamage)
+{
+	StaticMesh = NewStaticMesh;
+	Speed = NewSpeed;
+	Damage = NewDamage;
+	
+	if (BulletClass)
+	{
+		// Bullet 생성
+		for (int i = 0; i < PoolSize; i++)
+		{
+			APHeroBullet* Bullet = GetWorld()->SpawnActor<APHeroBullet>(BulletClass);
+			Bullet->SetActorEnableCollision(false);
+			Bullet->SetActorHiddenInGame(true);
+			Bullet->SetBulletPoolManager(this);
+			Bullet->Initialize(StaticMesh, Speed, Damage);
+			BulletPool.Add(Bullet);
+		}
+	}
 }
