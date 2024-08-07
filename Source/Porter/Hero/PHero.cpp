@@ -51,6 +51,7 @@ void APHero::BeginPlay()
 
 	if (BulletPoolManagerClass) {
 		BulletPoolManager = GetWorld()->SpawnActor<APHeroBulletPoolManager>(BulletPoolManagerClass);
+		BulletPoolManager->Initialize(TestStruct.BulletMesh, TestStruct.BulletSpeed, TestStruct.Damage);
 	}
 	
 	// Bullet이 Player Type을 무시하기 때문에 Hero도 Object Type을 Player로 설정
@@ -109,7 +110,7 @@ void APHero::Tick(float DeltaTime)
 	}
 }
 
-
+// 애니메이션 종료시 실행하는 함수
 void APHero::OnMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
 	if (Montage == AttackAnim)
@@ -194,8 +195,8 @@ void APHero::RangeAttack() const
 			FRotator LookAtRotator = UKismetMathLibrary::FindLookAtRotation(RangeAttackPosition->GetComponentLocation(), AttackTarget->GetActorLocation());
 			Bullet->SetActorRotation(FRotator(LookAtRotator.Pitch - 90, LookAtRotator.Yaw, LookAtRotator.Roll));
 			Bullet->SetActorLocation(RangeAttackPosition->GetComponentLocation());
-			Bullet->Initialize(TestStruct.BulletMesh, TestStruct.BulletSpeed, Damage, RangeAttackPosition->GetForwardVector());
-			//DrawDebugBox(GetWorld(), RangeAttackPosition->GetComponentLocation(), FVector(10, 10, 10), FColor::Purple, true, -1, 0, 1);
+			// 투사체에 적용할 힘
+			Bullet->Fire(RangeAttackPosition->GetForwardVector());
 		}
 	}
 }
@@ -226,7 +227,7 @@ void APHero::LookTarget()
 		
 		if (NewRotation.Equals(TargetRotation, 0.1f))
 		{
-			//bIsLookingTarget = false;
+			bIsLookingTarget = false;
 		}
 		else
 		{
@@ -250,5 +251,3 @@ void APHero::LookForward()
 		bIsLookingForward = false;
 	}
 }
-
-
