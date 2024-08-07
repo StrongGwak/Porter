@@ -15,7 +15,16 @@ void UPGameInstance::Init()
 	if (PlayerManager)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Game Instance")));
-		PlayerManager->Initialize(PortTypeArray, HeroTypeArray);
+		PlayerManager->Initialize(PortTypeArray);
+		PlayerManager->SetGameInstance(this);
+		
+	}
+
+	HeroManager = NewObject<UHeroManager>(this);
+	if (HeroManager)
+	{
+		HeroManager->Initialize(HeroTypeArray);
+		HeroManager->SetGameInstance(this);
 	}
 }
 
@@ -26,5 +35,5 @@ UPlayerManager* UPGameInstance::GetPlayerManager()
 
 UHeroManager* UPGameInstance::GetHeroManager()
 {
-	return HeroManger;
+	return HeroManager;
 }

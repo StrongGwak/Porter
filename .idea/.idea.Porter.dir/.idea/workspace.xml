@@ -8,17 +8,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/Porter/HeroManager.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/Porter/HeroManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/BP_OpenLevel.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/BP_OpenLevel.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroStruct.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroStruct.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/HeroManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/HeroManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/HeroManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/HeroManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/PGameInstance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PGameInstance.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/PGameInstance.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PGameInstance.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PPlayer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/PlayerManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PlayerManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/PlayerManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PlayerManager.h" afterDir="false" />
     </list>
@@ -191,7 +187,8 @@
       <workItem from="1722821365935" duration="15625000" />
       <workItem from="1722902722523" duration="6363000" />
       <workItem from="1722909184267" duration="11375000" />
-      <workItem from="1722923556155" duration="14581000" />
+      <workItem from="1722923556155" duration="17232000" />
+      <workItem from="1722989355254" duration="4073000" />
     </task>
     <servers />
   </component>
