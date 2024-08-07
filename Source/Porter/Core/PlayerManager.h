@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "Hero/PHeroStruct.h"
+#include "../Hero/PHeroStruct.h"
 
 #include "PlayerManager.generated.h"
 

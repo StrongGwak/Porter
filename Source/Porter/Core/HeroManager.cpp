@@ -3,7 +3,7 @@
 
 #include "HeroManager.h"
 #include "PGameInstance.h"
-#include "Hero/PHero.h"
+#include "../Hero/PHero.h"
 
 UHeroManager::UHeroManager()
 {
