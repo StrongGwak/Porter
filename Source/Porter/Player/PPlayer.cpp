@@ -37,7 +37,6 @@ APPlayer::APPlayer()
 	bUseControllerRotationYaw = true; 
 
 	FObjectFinderInputManager();
-	//UpdateStats(PlayerAndHeroStats);
 }
 
 // Called when the game starts or when spawned

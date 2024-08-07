@@ -21,8 +21,7 @@ class PORTER_API UPlayerManager : public UObject
 	// MaximumArraySize는 정말 신중하게 바꿀 것.
 public:
 	UPlayerManager();
-
-	// 초기값만 존재
+	
 	void Initialize(TArray<TSubclassOf<AActor>> Port);
 	void SetGameInstance(class UPGameInstance* PGameInstance);
 	
@@ -71,7 +70,7 @@ public:
 	float PlayerBoostSpeed = 1000;
 
 	TArray<FVector> OffsetArray;
-	float OffsetX = -100;
+	float OffsetX = 0;
 
 public:
 	// 지게 관련
@@ -82,7 +81,7 @@ public:
 	UPROPERTY()
 	float PortHeight = 100;
 	UPROPERTY()
-	float PortWidth = 100;
+	float PortWidth = 69.5;
 	UPROPERTY()
 	float PortWeight = 0.2;
 

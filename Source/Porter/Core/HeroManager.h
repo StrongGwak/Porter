@@ -60,7 +60,7 @@ public:
 	UPROPERTY()
 	float HeroWeight = 0.8;
 	UPROPERTY()
-	float HeroOffset = 50;
+	FVector HeroOffset = FVector(-40, 0, 30);
 
 public:
 	// GI

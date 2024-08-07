@@ -26,6 +26,12 @@ void UPGameInstance::Init()
 		HeroManager->Initialize(HeroTypeArray);
 		HeroManager->SetGameInstance(this);
 	}
+
+	ItemManager = NewObject<UItemManager>(this);
+	if (ItemManager)
+	{
+		ItemManager->
+	}
 }
 
 UPlayerManager* UPGameInstance::GetPlayerManager()
@@ -36,4 +42,9 @@ UPlayerManager* UPGameInstance::GetPlayerManager()
 UHeroManager* UPGameInstance::GetHeroManager()
 {
 	return HeroManager;
+}
+
+UItemManager* UPGameInstance::GetItemManager()
+{
+	return ItemManager;
 }
