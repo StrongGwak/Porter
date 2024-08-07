@@ -8,15 +8,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/BP_TestPHero.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/HeroManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/HeroManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/HeroManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/HeroManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PGameInstance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PGameInstance.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PGameInstance.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PGameInstance.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PPlayer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PlayerManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PlayerManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/PlayerManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/PlayerManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_Player.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_Player.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Character/BP_Player.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Inputs/IA_Look.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Inputs/IA_Move.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Inputs/IA_TestDown.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Inputs/IA_TestUp.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Inputs/IMC_Player.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/BP_PickupItem.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/HeroManager.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/HeroManager.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/PGameInstance.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/PGameInstance.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/PPlayer.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/PlayerManager.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/PlayerManager.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/PlayerStatStruct.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/PlayerStatStruct.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/TestPortBox.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/TestPortBox.h" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,7 +202,9 @@
       <workItem from="1722902722523" duration="6363000" />
       <workItem from="1722909184267" duration="11375000" />
       <workItem from="1722923556155" duration="17232000" />
-      <workItem from="1722989355254" duration="4073000" />
+      <workItem from="1722989355254" duration="4352000" />
+      <workItem from="1722993883567" duration="1135000" />
+      <workItem from="1722995221400" duration="70000" />
     </task>
     <servers />
   </component>

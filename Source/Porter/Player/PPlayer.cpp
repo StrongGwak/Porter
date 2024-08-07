@@ -8,9 +8,9 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
 #include "Engine/Engine.h"
-#include "Hero/PHero.h"
+#include "../Hero/PHero.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "PGameInstance.h"
+#include "../Core/PGameInstance.h"
 
 // Sets default values
 APPlayer::APPlayer()
@@ -236,7 +236,7 @@ void APPlayer::UpdateBoost()
 void APPlayer::UpPort()
 {
 	int32 Check = GI->GetPlayerManager()->CheckPortNum();
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("Check! : %d"), Check));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("Check! : %d"), Check));
 	SpringArm->TargetArmLength = 400 + GI->GetPlayerManager()->SpawnPort(0, this);
 }
 
@@ -244,7 +244,7 @@ void APPlayer::UpHeroesFromArray()
 {
 	int32 RandomInt = rand() % 5;
 	GI->GetHeroManager()->SpawnHero(0, this);
-	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Blue, FString::FromInt(RandomInt));
+	//GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Blue, FString::FromInt(RandomInt));
 }
 
 void APPlayer::DownPort()
@@ -384,10 +384,12 @@ void APPlayer::MakeHeroHPZero()
 void APPlayer::SaveSpawn()
 {
 	GI->GetPlayerManager()->SaveSpawnInformation();
+	GI->GetHeroManager()->SaveSpawnInformation();
 }
 
 void APPlayer::OpenSpawn()
 {
 	GI->GetPlayerManager()->OpenSpawnInformation(this);
+	GI->GetHeroManager()->OpenSpawnInformation(this);
 	SpringArm->TargetArmLength = 400 + GI->GetPlayerManager()->AddCameraLength * GI->GetPlayerManager()->PortFloorArray[GI->GetPlayerManager()->CheckPortNum()];
 }

@@ -4,7 +4,7 @@
 #include "PlayerManager.h"
 #include "PGameInstance.h"
 #include "Commandlets/GatherTextFromSourceCommandlet.h"
-#include "Hero/PHero.h"
+#include "../Hero/PHero.h"
 
 UPlayerManager::UPlayerManager()
 {
