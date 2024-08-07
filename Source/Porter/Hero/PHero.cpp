@@ -4,6 +4,7 @@
 #include "Hero/PHero.h"
 
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Hero/PHeroStruct.h"
 #include "Hero/PHeroAIController.h"
 #include "Hero/PHeroBulletPoolManager.h"
@@ -16,7 +17,7 @@ APHero::APHero()
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	// Bullet이 Player Type을 무시하기 때문에 Hero도 Object Type을 Player로 설정
+	// Bullet이 Player Type을 무시하기 때문에 Hero도 Object Type을 Player로 설
 	GetCapsuleComponent()->SetCollisionObjectType(ECC_GameTraceChannel2);
 	GetCapsuleComponent()->SetCapsuleHalfHeight(60);
 
@@ -43,7 +44,9 @@ APHero::APHero()
 	AIController = Cast<APHeroAIController>(GetController());
 
 	BulletPoolManagerClass = APHeroBulletPoolManager::StaticClass();
-	
+
+	// test
+	//GetCharacterMovement()->Deactivate();
 }
 
 // Called when the game starts or when spawned
@@ -90,6 +93,10 @@ void APHero::BeginPlay()
 	{
 		AnimInstance->OnMontageEnded.AddDynamic(this, &APHero::OnMontageEnded);
 	}
+
+	// 중력 영향 안받게
+	//GetCharacterMovement()->GravityScale = 0.0f;
+	//GetCharacterMovement()->StopMovementImmediately();
 	
 }
 

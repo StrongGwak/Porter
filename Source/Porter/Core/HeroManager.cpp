@@ -4,6 +4,7 @@
 #include "HeroManager.h"
 #include "PGameInstance.h"
 #include "../Hero/PHero.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 UHeroManager::UHeroManager()
 {
@@ -27,6 +28,7 @@ void UHeroManager::SaveSpawnInformation()
 	FPHeroStruct HeroStruct;
 	HeroStructArray.Empty();
 	HeroStructArray.Init(HeroStruct, MaximumArraySize);
+	//GEngine->AddOnScreenDebugMessage(-1,3,FColor::Blue,FString::FromInt(HeroStructArray.Num()));
 
 	for (int32 i=0; i<MaximumArraySize; i++)
 	{
@@ -69,6 +71,7 @@ void UHeroManager::SpawnHero(int32 HeroType, ACharacter* PlayerCharacter, bool b
 	//GEngine->AddOnScreenDebugMessage(-1,3,FColor::Blue,FString::FromInt(PortNum));
 	int32 HeroNum = CheckHeroNum();
 
+
 	// HeroIndex를 사용하지 않으면, 빈 곳에 영웅 소환하기
 	if (!bUseHeroIndex && HeroNum < PortNum)
 	{
@@ -86,13 +89,16 @@ void UHeroManager::SpawnHero(int32 HeroType, ACharacter* PlayerCharacter, bool b
 		return;
 	}
 
+	// Offset Array에서 해당 위치에 맞는 값 가져오기
 	TArray<FVector> OffsetArray = GI->GetPlayerManager()->OffsetArray;
 	FVector SocketLocation = SMComp->GetSocketLocation(FName("PortSocket"));
-	FVector RelativeOffset = SocketLocation.ForwardVector*OffsetArray[HeroIndex].X
-							+ SocketLocation.RightVector*OffsetArray[HeroIndex].Y
-							+ SocketLocation.UpVector*(OffsetArray[HeroIndex].Z + HeroOffset);
+	FVector RelativeOffset = SocketLocation.ForwardVector*(OffsetArray[HeroIndex].X + HeroOffset.X)
+							+ SocketLocation.RightVector*(OffsetArray[HeroIndex].Y + HeroOffset.Y)
+							+ SocketLocation.UpVector*(OffsetArray[HeroIndex].Z + HeroOffset.Z);
 	FVector SpawnLocation = SocketLocation + RelativeOffset;
-	APHero* Hero = GetWorld()->SpawnActor<APHero>(HeroTypeArray[HeroType], SpawnLocation, PlayerCharacter->GetActorRotation());
+	FActorSpawnParameters SpawnParameters;
+
+	APHero* Hero = GetWorld()->SpawnActor<APHero>(HeroTypeArray[HeroType], SpawnLocation, PlayerCharacter->GetActorRotation(), SpawnParameters);
 
 	if (Hero)
 	{
@@ -101,6 +107,10 @@ void UHeroManager::SpawnHero(int32 HeroType, ACharacter* PlayerCharacter, bool b
 		//Hero->AttachToComponent(PlayerCharacter->GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
 		Hero->AttachToComponent(SMComp, FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("PortSocket"));
 		Hero->SetActorRelativeLocation(RelativeOffset);
+		
+		// 콜리전 제거
+		Hero->SetActorEnableCollision(false);
+		Hero->GetCharacterMovement()->GravityScale=0;
 
 		// 위치와 종류 부여
 		HeroStruct.Index = HeroIndex;
@@ -136,9 +146,9 @@ void UHeroManager::SwapHeroes(TArray<int32> IndexArray, ACharacter* PlayerCharac
 		if (HeroArray[HeroIndex] != nullptr)
 		{
 			HeroArray[HeroIndex]->SetActorRelativeLocation(
-				SocketLocation.ForwardVector*OffsetArray[HeroIndex].X
-				+ SocketLocation.RightVector*OffsetArray[HeroIndex].Y
-				+ SocketLocation.UpVector*(OffsetArray[HeroIndex].Z + HeroOffset)
+				SocketLocation.ForwardVector*(OffsetArray[HeroIndex].X + HeroOffset.X)
+				+ SocketLocation.RightVector*(OffsetArray[HeroIndex].Y + HeroOffset.Y)
+				+ SocketLocation.UpVector*(OffsetArray[HeroIndex].Z + HeroOffset.Z)
 			);
 		
 			// Index 재할당 및 SpawnInformation의 HeroType 고치기

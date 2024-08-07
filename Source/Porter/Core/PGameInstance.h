@@ -6,6 +6,7 @@
 #include "Engine/GameInstance.h"
 #include "PlayerManager.h"
 #include "HeroManager.h"
+#include "ItemManager.h"
 #include "PGameInstance.generated.h"
 
 /**
@@ -27,12 +28,18 @@ public:
 	UFUNCTION(BlueprintCallable, Blueprintable)
 	UHeroManager* GetHeroManager();
 
+	UFUNCTION(BlueprintCallable, Blueprintable)
+	UItemManager* GetItemManager();
+
 private:
-	UPROPERTY(Blueprintable, EditAnywhere)
+	UPROPERTY()
 	UPlayerManager* PlayerManager;
 
-	UPROPERTY(Blueprintable, EditAnywhere)
+	UPROPERTY()
 	UHeroManager* HeroManager;
+
+	UPROPERTY()
+	UItemManager* ItemManager;
 
 public:
 	// 지게 관련

@@ -31,9 +31,6 @@ UPlayerManager::UPlayerManager()
 	}
 	OffsetArray.RemoveAt(0);
 	PortArray.Init(nullptr, MaximumArraySize);
-	
-	//이거 쓰면 다운됨
-	//SpawnInfo.HeroStructArray.Init(HeroStruct, MaximumArraySize);
 }
 
 void UPlayerManager::Initialize(TArray<TSubclassOf<AActor>> Port)
@@ -124,4 +121,3 @@ int32 UPlayerManager::CheckPortNum()
 	}
 	return Count;
 }
-
