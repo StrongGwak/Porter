@@ -83,26 +83,23 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 }
 
 // 블루프린트에서 업데이트 할 사항
-void APPlayer::UpdateStats(FPlayerStatsStruct UpdateStat)
+void APPlayer::SetStats(FPlayerStatsStruct UpdateStat)
 {
-	PlayerAndHeroStats = UpdateStat;
+	Stats = UpdateStat;
 	
-	// 바로 적용해야 할 것들 나중에 따로 정리 필요하긴 함
-	// 틱에서 검사하는게 아니니까 이 과정이 필요하다. 
-	GetCharacterMovement()->MaxWalkSpeed = PlayerAndHeroStats.PlayerWalkSpeed;
+	MaxHp = Stats.MaxHp;
+	MaxStamina = Stats.MaxStamina;
+	DecreaseStamina = Stats.DecreaseStamina;
+	IncreaseStamina = Stats.IncreaseStamina;
+	ZeroToHundredIncreaseStamina = Stats.ZeroToHundredIncreaseStamina;
+	MaxWalkSpeed = Stats.WalkSpeed;
+	BoostSpeed = Stats.BoostSpeed;
+	MaxWeight = Stats.MaxWeight;
+}
 
-	// 현재 지게 수가 max를 넘게 될 경우 없애버리기
-	// (수정 필요) 무게도 생각해야하는게?  
-	while (GI->GetPlayerManager()->CheckPortNum() > PlayerAndHeroStats.MaxPortNum)
-	{
-		DownPort();
-	}
-	MaxStamina = PlayerAndHeroStats.MaxStamina;
-	DecreaseStamina = PlayerAndHeroStats.DecreaseStamina;
-	IncreaseStamina = PlayerAndHeroStats.IncreaseStamina;
-	ZeroToHundredIncreaseStamina = PlayerAndHeroStats.ZeroToHundredIncreaseStamina;
-	MaxWeight = PlayerAndHeroStats.MaxWeight;
-	//HeroIndexArray = PlayerAndHeroStats.HeroIndexArray;
+FPlayerStatsStruct APPlayer::GetStats()
+{
+	return Stats;
 }
 
 void APPlayer::PlusHP(int32 Heal)
@@ -170,7 +167,7 @@ void APPlayer::Boost()
 		TempStamina = CurrentStamina;
 		GetWorldTimerManager().ClearTimer(RestTimeHandle);
 		GetWorldTimerManager().SetTimer(BoostTimeHandle, this, &APPlayer::UpdateBoost, 0.1f, true);
-		GetCharacterMovement()->MaxWalkSpeed = PlayerAndHeroStats.PlayerBoostSpeed;
+		GetCharacterMovement()->MaxWalkSpeed = Stats.BoostSpeed;
 	}
 }
 
@@ -179,7 +176,7 @@ void APPlayer::StopBoost()
 	bIsBoost = false;
 	RestTime = GetWorld()->GetTimeSeconds();
 	TempStamina = CurrentStamina;
-	GetCharacterMovement()->MaxWalkSpeed = PlayerAndHeroStats.PlayerWalkSpeed;
+	GetCharacterMovement()->MaxWalkSpeed = Stats.WalkSpeed;
 	GetWorldTimerManager().ClearTimer(BoostTimeHandle);
 	// 이렇게 하지 않으면 뗐을때도 RestTimer를 Set해서 계속해서 시간 측정함
 	if (CurrentStamina < MaxStamina)
