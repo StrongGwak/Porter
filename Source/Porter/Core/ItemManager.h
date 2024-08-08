@@ -17,6 +17,9 @@ class PORTER_API UItemManager : public UObject
 public:
 	void SetGameInstance(class UPGameInstance* PGameInstance);
 
+private:
+	UPROPERTY()
+	TArray<int32> DTIndex;
 
 public:
 	UPROPERTY()
