@@ -149,6 +149,11 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 	SightRadius = HeroStruct.SightRadius;
 	VisionAngle = HeroStruct.VisionAngle;
 	AttackAnim = HeroStruct.AttackAnim;
+	Index = HeroStruct.Index;
+	Type = HeroStruct.Type;
+
+	SetHeroStats(StatInformation);
+	
 
 	// AI Controller 캐스팅
 	APHeroAIController* AIController = Cast<APHeroAIController>(GetController());
@@ -157,6 +162,25 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 		// AI Controller의 시야 정보 설정 (적 인식 거리)
 		AIController->SetSightConfig(SightRadius, SightRadius + 100.0f, VisionAngle);
 	}
+}
+
+FPHeroStruct APHero::GetHeroStats() const
+{
+	return StatInformation;
+}
+
+void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
+{
+	Damage = UpdateStats.Damage;
+	AttackSpeed = UpdateStats.AttackSpeed;
+	AttackAnim = UpdateStats.AttackAnim;
+	SightRadius = UpdateStats.SightRadius;
+	VisionAngle = UpdateStats.VisionAngle;
+	AttackAnim = UpdateStats.AttackAnim;
+	Index = UpdateStats.Index;
+	Type = UpdateStats.Type;
+	
+	StatInformation = UpdateStats;
 }
 
 void APHero::FindTarget(AActor* Target)

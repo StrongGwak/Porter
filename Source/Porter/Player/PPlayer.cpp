@@ -8,9 +8,9 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
 #include "Engine/Engine.h"
-#include "PHero.h"
-#include "VectorTypes.h"
+#include "../Hero/PHero.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "../Core/PGameInstance.h"
 
 // Sets default values
 APPlayer::APPlayer()
@@ -30,14 +30,13 @@ APPlayer::APPlayer()
 	SpringArm->SetWorldLocation(FVector(0, 0, 70));
 	SpringArm->TargetArmLength = 400;
 	SpringArm->bUsePawnControlRotation=true;
-
+	SpringArm->bDoCollisionTest = false;
+	
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
 	bUseControllerRotationYaw = true; 
 
 	FObjectFinderInputManager();
-	MakeArrays();
-	UpdateStats(PlayerAndHeroStats);
 }
 
 // Called when the game starts or when spawned
@@ -45,6 +44,8 @@ void APPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// 생성자에서 쓰면 안됨
+	GI = Cast<UPGameInstance>(GetGameInstance());
 	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* SubSystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
@@ -74,35 +75,11 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Started, this, &APPlayer::Boost);
 	EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Completed, this, &APPlayer::StopBoost);
 	EnhancedInputComponent->BindAction(SwapAction, ETriggerEvent::Started, this, &APPlayer::PlaySwap);
-	EnhancedInputComponent->BindAction(TestHeroUpAction, ETriggerEvent::Started, this, &APPlayer::UpHerosFromArray);
-}
-
-// 반드시 같은 크기의 행렬(15)만 온다는 가정하기 -> 따로 함수로 만들어야 함
-// 일단 포트로 해놨는데, 플레이어로만 가능하게 바꿔야함. 플레이어 제작 후 생각
-// 바꾸는건 무게 필요없음
-void APPlayer::SwapHeroesByArray(TArray<int32> SwapArray)
-{
-	// SwapArray : 4 3 2 1 0 5~14 == 위치한 PortNum. 1번부터 시작한다. 0~14가 들어가있어야 한다.
-	// SwapArray에는 index를 어떻게 바꾸어야 하는지가 들어가 있음
-	TArray<APHero*> TempSwapArray;
-	// TempSwapArray.Empty();
-	TempSwapArray.Append(HeroBoxArray);
-	for (int32 i=0; i<HeroBoxArray.Num(); ++i)
-	{
-		//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(SwapArray[i]));
-		HeroBoxArray[i] = TempSwapArray[SwapArray[i]];
-		
-		// 실체 위치 변경
-		if (HeroBoxArray[i] != nullptr)
-		{
-			HeroBoxArray[i]->SetActorLocation(
-			   GetActorLocation()
-			   + GetActorForwardVector()*OffsetArray[i].X
-			   + GetActorRightVector()*OffsetArray[i].Y
-			   + FVector(0, 0, OffsetArray[i].Z + HeroOffset)
-			   );
-		}
-	}
+	EnhancedInputComponent->BindAction(TestHeroUpAction, ETriggerEvent::Started, this, &APPlayer::UpHeroesFromArray);
+	EnhancedInputComponent->BindAction(TestHeroKill, ETriggerEvent::Started, this, &APPlayer::MakeHeroHPZero);
+	EnhancedInputComponent->BindAction(TestDamage, ETriggerEvent::Started, this, &APPlayer::GetDamage);
+	EnhancedInputComponent->BindAction(TestSave, ETriggerEvent::Started, this, &APPlayer::SaveSpawn);
+	EnhancedInputComponent->BindAction(TestOpen, ETriggerEvent::Started, this, &APPlayer::OpenSpawn);
 }
 
 // 블루프린트에서 업데이트 할 사항
@@ -116,15 +93,16 @@ void APPlayer::UpdateStats(FPlayerStatsStruct UpdateStat)
 
 	// 현재 지게 수가 max를 넘게 될 경우 없애버리기
 	// (수정 필요) 무게도 생각해야하는게?  
-	while (PortNum > PlayerAndHeroStats.MaxPortNum)
+	while (GI->GetPlayerManager()->CheckPortNum() > PlayerAndHeroStats.MaxPortNum)
 	{
 		DownPort();
 	}
-	MaxStamina = PlayerAndHeroStats.PlayerMaxStamina;
-	DecreaseStamina = PlayerAndHeroStats.PlayerDecreaseStamina;
-	IncreaseStamina = PlayerAndHeroStats.PlayerIncreaseStamina;
-	ZeroToHundredIncreaseStamina = PlayerAndHeroStats.PlayerZeroToHundredIncreaseStamina;
+	MaxStamina = PlayerAndHeroStats.MaxStamina;
+	DecreaseStamina = PlayerAndHeroStats.DecreaseStamina;
+	IncreaseStamina = PlayerAndHeroStats.IncreaseStamina;
+	ZeroToHundredIncreaseStamina = PlayerAndHeroStats.ZeroToHundredIncreaseStamina;
 	MaxWeight = PlayerAndHeroStats.MaxWeight;
+	//HeroIndexArray = PlayerAndHeroStats.HeroIndexArray;
 }
 
 void APPlayer::PlusHP(int32 Heal)
@@ -148,9 +126,18 @@ void APPlayer::MinusHP(int32 Damage)
 	else
 	{
 		// (수정 필요) hero 없애기
-		DownPort();
-		CurrentHP = MaxHp;
+		int32 LastNum = GI->GetHeroManager()->LastHeroNum();
+		if (LastNum == -1)
+		{
+			Die();
+		}
+		else
+		{
+			GI->GetHeroManager()->DestroyHero(LastNum);
+			CurrentHP = MaxHp;
+		}
 	}
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Debug %d"), CurrentHP));
 }
 
 void APPlayer::Move(const FInputActionValue& Value)
@@ -183,7 +170,7 @@ void APPlayer::Boost()
 		TempStamina = CurrentStamina;
 		GetWorldTimerManager().ClearTimer(RestTimeHandle);
 		GetWorldTimerManager().SetTimer(BoostTimeHandle, this, &APPlayer::UpdateBoost, 0.1f, true);
-		GetCharacterMovement()->MaxWalkSpeed = PlayerAndHeroStats.PlayerRunSpeed;
+		GetCharacterMovement()->MaxWalkSpeed = PlayerAndHeroStats.PlayerBoostSpeed;
 	}
 }
 
@@ -245,140 +232,23 @@ void APPlayer::UpdateBoost()
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentStamina));
 }
 
-// 나중에 변수로 빼야함
 void APPlayer::UpPort()
 {
-	SpawnPort(0);
+	int32 Check = GI->GetPlayerManager()->CheckPortNum();
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("Check! : %d"), Check));
+	SpringArm->TargetArmLength = 400 + GI->GetPlayerManager()->SpawnPort(0, this);
 }
 
-// Hero 1개 생성 + 종류 추가
-// HeroNum과 PortNum 구분해서 써야함
-// 또한, HeroIndex라는 변수도 생각해야함 - 이 Index는 1부터 시작하고 ... <- 그냥 0부터 시작하게 하면 안돼? 다른걸 고쳐서
-// 
-void APPlayer::SpawnPort(int32 PortTypeIndex)
+void APPlayer::UpHeroesFromArray()
 {
-	if (PortNum < PlayerAndHeroStats.MaxPortNum)
-	{
-		FVector RelativeOffset = GetActorForwardVector()*OffsetArray[PortNum].X+ GetActorRightVector()*OffsetArray[PortNum].Y + FVector(0, 0, OffsetArray[PortNum].Z);
-		FVector SpawnLocation = GetActorLocation() + RelativeOffset; 
-		ACharacter* Port = GetWorld()->SpawnActor<ACharacter>(PortType[PortTypeIndex], SpawnLocation, GetActorRotation());
-		
-		if(Port)
-		{
-			PortArray[PortNum] = Port;
-			Port->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
-		}
-		PortNum++;
-		SpringArm->TargetArmLength = 400 + PortFloorArray[PortNum] * AddCameraLength;
-
-		Port->SetActorEnableCollision(false);
-	}
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(PortNum));
+	int32 RandomInt = rand() % 5;
+	GI->GetHeroManager()->SpawnHero(0, this);
+	//GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Blue, FString::FromInt(RandomInt));
 }
 
-
-void APPlayer::UpHerosFromArray()
-{
-	int32 RandomValue = std::rand() % 3;
-	SpawnHero(RandomValue);
-}
-
-
-void APPlayer::SpawnHero(int32 HeroTypeIndex)
-{
-	if (HeroNum < PlayerAndHeroStats.MaxPortNum && HeroNum < PortNum)
-	{
-		int32 TempPosition = -1;
-		for (int32 i=0; i < HeroBoxArray.Num(); i++)
-		{
-			if (HeroBoxArray[i] == nullptr)
-			{
-				TempPosition = i;
-				break;
-			}
-		}
-		// 예외처리 - 이미 막지 않았나
-		if (TempPosition == -1) return;
-		
-		FVector RelativeOffset =  GetActorForwardVector()*OffsetArray[TempPosition].X+ GetActorRightVector()*OffsetArray[TempPosition].Y + FVector(0, 0, OffsetArray[TempPosition].Z + HeroOffset);
-		FVector SpawnLocation = GetActorLocation() + RelativeOffset;
-		APHero* Heroes = GetWorld()->SpawnActor<APHero>(HeroType[HeroTypeIndex], SpawnLocation, GetActorRotation());
-		
-		if (Heroes)
-		{
-			HeroBoxArray[TempPosition] = Heroes;
-			Heroes->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
-		}
-		Heroes->SetActorEnableCollision(false);
-		HeroNum++;
-	}
-}
-
-
-// Hero 1개 파괴(가장 끝) - 지게의 수만큼 돌리며 서치 필요함
-// HeroNum에 위치하지 않을 수 있다. <- 이부분이 가장 중요. 가장 큰 변경점
-// 빈자리에 nullptr이 들어가있어야 한다. -> 거꾸로 검색하기
-// 이거 포트 파괴가 아니라 Hero 파괴여야함. port는 남아있어야 한다.
 void APPlayer::DownPort()
 {
-	if (PortNum > 0)
-	{
-		PortNum--;
-		SpringArm->TargetArmLength = 400 + PortFloorArray[PortNum] * AddCameraLength;
-		
-		PortArray[PortNum]->Destroy();	// 실적용
-		PortArray[PortNum] = nullptr;	// 내가 가진 Array에만 적용
-
-		// GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentHP));
-
-		// 만약 PortNum에 영웅이 있다면
-		if (HeroBoxArray[PortNum] != nullptr)
-		{
-			HeroBoxArray[PortNum]->Destroy();
-			HeroBoxArray[PortNum] = nullptr;
-			HeroNum--;
-		}
-	}
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(PortNum));
-}
-
-
-
-// 생성자에서 미리 배열 만들어두기
-// 여기 offset은 1부터 시작한다.  
-void APPlayer::MakeArrays()
-{
-	int PortFloor = 0;
-	for(int TempPortNum=0; TempPortNum<15+1; TempPortNum++)
-	{
-		// PortNum 수에 따른 카메라 레벨 == 쌓은 층 수
-		PortFloor = 0;
-		while (true)
-		{
-			if (TempPortNum <= PortFloor * (PortFloor + 1) / 2) break;
-			else PortFloor++;
-		}
-		// 배열 추가
-		PortFloorArray.Emplace(PortFloor);
-		
-		// 층수로 계산하는 스폰 위치 Offset
-		float OffsetY = 0;
-		float CurrentSpawnNum = TempPortNum - (PortFloor-1)*PortFloor/2;
-		int32 ForCount = round(PortFloor);
-		for (int32 i = 0; i<round(CurrentSpawnNum); i++)
-		{
-			if (i%2 == 1) OffsetY = -1*OffsetY - 2*PortWidth;
-			else OffsetY *= -1;
-		}
-		if (ForCount%2 == 0) OffsetY += PortWidth;
-		OffsetArray.Emplace(FVector(-100, OffsetY, PortFloor*PortHeight));
-	}
-	// index 0부터 적용시키기
-	OffsetArray.RemoveAt(0);
-
-	// Hero와 Port의 초기 15개 만들기
-	HeroBoxArray.Init(nullptr, 15);
-	PortArray.Init(nullptr, 15);
+	SpringArm->TargetArmLength = 400 + GI->GetPlayerManager()->DestroyPort();
 }
 
 void APPlayer::FObjectFinderInputManager()
@@ -423,6 +293,26 @@ void APPlayer::FObjectFinderInputManager()
 	{
 		TestHeroUpAction = InputHeroUp.Object;
 	}
+	static ConstructorHelpers::FObjectFinder<UInputAction>InputHeroKillTest(TEXT("/Script/EnhancedInput.InputAction'/Game/Porter/Develop/Inputs/IA_KillHeroTest.IA_KillHeroTest'"));
+	if (InputHeroKillTest.Object != nullptr)
+	{
+		TestHeroKill = InputHeroKillTest.Object;
+	}
+	static ConstructorHelpers::FObjectFinder<UInputAction>InputTestDamage(TEXT("/Script/EnhancedInput.InputAction'/Game/Porter/Develop/Inputs/IA_Damage.IA_Damage'"));
+	if (InputTestDamage.Object != nullptr)
+	{
+		TestDamage = InputTestDamage.Object;
+	}
+	static ConstructorHelpers::FObjectFinder<UInputAction>InputSave(TEXT("/Script/EnhancedInput.InputAction'/Game/Porter/Develop/Inputs/IA_SaveTest.IA_SaveTest'"));
+	if (InputSave.Object != nullptr)
+	{
+		TestSave = InputSave.Object;
+	}
+	static ConstructorHelpers::FObjectFinder<UInputAction>InputOpen(TEXT("/Script/EnhancedInput.InputAction'/Game/Porter/Develop/Inputs/IA_OpenTest.IA_OpenTest'"));
+	if (InputOpen.Object != nullptr)
+	{
+		TestOpen = InputOpen.Object;
+	}
 }
 
 void APPlayer::Die()
@@ -433,35 +323,20 @@ void APPlayer::Die()
 void APPlayer::PlaySwap()
 {
 	// 0~PortNum
-	ItemIndexArray = {4, 3, 2, 1, 0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
-	SwapHeroesByArray(ItemIndexArray);
-}
-
-// nullptr이 아닌 원소의 수만 세는 함수
-int32 APPlayer::CheckArrayNum(TArray<APHero*> CheckCharacterArray)
-{
-	int32 EntireArrayNum = CheckCharacterArray.Num();
-	int32 Count = 0;
-	for (int32 i=0;i<EntireArrayNum;++i)
-	{
-		if (CheckCharacterArray[i] != nullptr)
-		{
-			Count++;
-		}
-	}
-	return Count;
+	TArray<int32> TempArray = {4, 3, 2, 1, 0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
+	GI->GetHeroManager()->SwapHeroes(TempArray, this);
 }
 
 // 영웅 배치, 지게 늘리거나 영웅 늘릴 때 등 수시로 사용하기  
 bool APPlayer::CheckCondition()
 {
-	EntireWeight = HeroWeight * HeroNum + PortWeight * PortNum;
-	HeroNum = CheckArrayNum(HeroBoxArray);
+	/*
+	EntireWeight = HeroWeight * GI->GetHeroManager()->CheckHeroNum() + PortWeight * GI->GetPlayerManager()->CheckPortNum();
 
 	int32 LastHeroIndex = -1;
-	for (int32 i = HeroBoxArray.Num() - 1; i>=0; --i)
+	for (int32 i = HeroArray.Num() - 1; i>=0; --i)
 	{
-		if (HeroBoxArray[i] != nullptr)
+		if (HeroArray[i] != nullptr)
 		{
 			LastHeroIndex = i;
 			break;
@@ -469,12 +344,51 @@ bool APPlayer::CheckCondition()
 	}
 
 	bool IsOverWeight = EntireWeight > MaxWeight;
-	bool IsOverIndex = LastHeroIndex > PortNum - 1;
+	bool IsOverIndex = LastHeroIndex > GI->GetPlayerManager()->CheckPortNum() - 1;
 	
 	// 무게 안넘고, 지게 수가 같거나 더 적고, 영웅 위치가 지게 가장 끝 위치보다 같거나 작아야 한다. 
 	if (IsOverWeight || IsOverIndex) return false;
 	else return true;
+	*/
+	return true;
+}
+
+void APPlayer::GetDamage()
+{
+	MinusHP(3);
 }
 
 
+void APPlayer::MakeHeroHPZero()
+{
+	TArray<APHero*> HeroArray = GI->GetHeroManager()->GetHeroArray();
+	int32 IndexChecker = -1;
+	for (int32 i=0; i<HeroArray.Num(); i++)
+	{
+		if (HeroArray[i] != nullptr)
+		{
+			IndexChecker = HeroArray[i]->GetHeroStats().Index;
+			if (IndexChecker == 3)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Player Manager")));
+				HeroArray[i]->Destroy();
+				HeroArray[i] = nullptr;
+			}
+		}
+	}
+	GI->GetHeroManager()->SetHeroArray(HeroArray);
+}
 
+
+void APPlayer::SaveSpawn()
+{
+	GI->GetPlayerManager()->SaveSpawnInformation();
+	GI->GetHeroManager()->SaveSpawnInformation();
+}
+
+void APPlayer::OpenSpawn()
+{
+	GI->GetPlayerManager()->OpenSpawnInformation(this);
+	GI->GetHeroManager()->OpenSpawnInformation(this);
+	SpringArm->TargetArmLength = 400 + GI->GetPlayerManager()->AddCameraLength * GI->GetPlayerManager()->PortFloorArray[GI->GetPlayerManager()->CheckPortNum()];
+}
