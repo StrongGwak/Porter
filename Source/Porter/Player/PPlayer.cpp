@@ -53,6 +53,8 @@ void APPlayer::BeginPlay()
 			SubSystem->AddMappingContext(IMC, 0);
 		}
 	}
+	SetStats(Stats);
+	
 }
 
 // Called every frame
@@ -86,7 +88,8 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void APPlayer::SetStats(FPlayerStatsStruct UpdateStat)
 {
 	Stats = UpdateStat;
-	
+
+	// 스탯 저장용
 	MaxHp = Stats.MaxHp;
 	MaxStamina = Stats.MaxStamina;
 	DecreaseStamina = Stats.DecreaseStamina;
@@ -95,6 +98,8 @@ void APPlayer::SetStats(FPlayerStatsStruct UpdateStat)
 	MaxWalkSpeed = Stats.WalkSpeed;
 	BoostSpeed = Stats.BoostSpeed;
 	MaxWeight = Stats.MaxWeight;
+
+	// 
 }
 
 FPlayerStatsStruct APPlayer::GetStats()
