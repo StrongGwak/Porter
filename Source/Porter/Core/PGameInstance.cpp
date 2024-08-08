@@ -30,7 +30,7 @@ void UPGameInstance::Init()
 	ItemManager = NewObject<UItemManager>(this);
 	if (ItemManager)
 	{
-		ItemManager->
+		ItemManager->SetGameInstance(this);
 	}
 }
 

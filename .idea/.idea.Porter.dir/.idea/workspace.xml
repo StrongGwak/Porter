@@ -8,26 +8,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Porter/Develop/GameMode/GI_PGameInstance.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/bp_test.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/Porter/Core/ItemManager.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/Porter/Core/ItemManager.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/Porter/Player/PPort.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/Porter/Player/PPort.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_Player.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_Player.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_Hero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_Hero.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/WB/WB_Text.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/WB/WB_Text.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Character/BP_Player.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/BP_OpenLevel.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/BP_OpenLevel.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Core/ItemManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/ItemManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Core/PGameInstance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/PGameInstance.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Core/PGameInstance.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/PGameInstance.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Core/PlayerManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/PlayerManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Core/PlayerManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/PlayerManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,28 +52,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Uproject.Porter.executor": "Run",
-    "git-widget-placeholder": "Yang-Player-GM",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "CppCodeGenerationId",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Uproject.Porter.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Yang-Player-GM&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CppCodeGenerationId&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\12345\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\12345\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\12345\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\12345\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\12345\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\12345\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Porter" type="Uproject" factoryName="rider.uproject">
       <configuration_1>
@@ -205,6 +192,9 @@
       <workItem from="1722995221400" duration="70000" />
       <workItem from="1722995653067" duration="15206000" />
       <workItem from="1723015627582" duration="880000" />
+      <workItem from="1723016831125" duration="1202000" />
+      <workItem from="1723019011583" duration="3952000" />
+      <workItem from="1723075737661" duration="2567000" />
     </task>
     <servers />
   </component>
