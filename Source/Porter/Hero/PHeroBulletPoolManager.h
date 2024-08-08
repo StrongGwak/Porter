@@ -38,7 +38,7 @@ protected:
 	float Damage;
 
 	UPROPERTY(EditAnywhere, Category = Bullet, Meta = (AllowPrivateAccess = "true"))
-	class UStaticMeshComponent* StaticMesh;
+	class UStaticMesh* StaticMesh;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class APHeroBullet> BulletClass;
@@ -47,7 +47,4 @@ protected:
 	int32 PoolSize = 15;
 
 	TArray<APHeroBullet*> BulletPool;
-
 };
-
-
