@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Hero/PHeroBulletPoolManager.h"
 #include "Hero/PHeroStruct.h"
-#include "Hero/PHeroAIController.h"
 #include "GameFramework/Character.h"
 #include "PHero.generated.h"
 
@@ -25,10 +24,6 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-private:
-	UPROPERTY()
-	APHeroAIController* AIController = nullptr;
 	
 // Hero Stat
 protected:	
