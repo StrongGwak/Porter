@@ -24,10 +24,6 @@ struct FPlayerStatsStruct
 	// 주석은 변수 위에 써야 bp 노드상에서 보임
 public:
 	// 플레이어
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
-	float mouseSpeed;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
-	float AddCameraLength;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
 	int32 MaxHp;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
@@ -39,16 +35,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
 	float ZeroToHundredIncreaseStamina; // 속력
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
-	float PlayerWalkSpeed ;
+	float WalkSpeed ;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
-	float PlayerBoostSpeed;
-
-	UPROPERTY(EditAnywhere, Category="Stats|Port")
-	int32 MaxPortNum = 10;
-	UPROPERTY(EditAnywhere, Category="Stats|Port")
-	int32 MaxWeight = 10;
+	float BoostSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Port")
+	int32 MaxWeight;
 	
 	FPlayerStatsStruct()
-		: mouseSpeed(30), AddCameraLength(300), MaxHp(5), MaxStamina(100), DecreaseStamina(33), IncreaseStamina(20), \
-			ZeroToHundredIncreaseStamina(10), PlayerWalkSpeed(400), PlayerBoostSpeed(1000) {}
+		: MaxHp(5), MaxStamina(100), DecreaseStamina(33), IncreaseStamina(20), \
+			ZeroToHundredIncreaseStamina(10), WalkSpeed(400), BoostSpeed(1000), MaxWeight(10) {}
 };
