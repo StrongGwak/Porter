@@ -16,7 +16,10 @@ public:
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FString HeroName;
+	FString Name;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int HP;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int Damage;

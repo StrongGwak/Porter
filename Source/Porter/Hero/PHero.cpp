@@ -53,7 +53,13 @@ void APHero::BeginPlay()
 		BulletPoolManager = GetWorld()->SpawnActor<APHeroBulletPoolManager>(BulletPoolManagerClass);
 		BulletPoolManager->Initialize(TestStruct.BulletMesh, TestStruct.BulletSpeed, TestStruct.Damage);
 	}
-	
+
+	if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
+	{
+		AnimInstance->OnMontageEnded.AddDynamic(this, &APHero::OnMontageEnded);
+	}
+
+	// ========== Test Code =========
 	// Bullet이 Player Type을 무시하기 때문에 Hero도 Object Type을 Player로 설정
 	GetCapsuleComponent()->SetCollisionObjectType(ECC_GameTraceChannel2);
 	// 스켈레탈 메시 할당
@@ -84,12 +90,7 @@ void APHero::BeginPlay()
 		// AI Controller의 시야 정보 설정 (적 인식 거리)
 		AIController->SetSightConfig(SightRadius, SightRadius + 100.0f, VisionAngle);
 	}
-
-	if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
-	{
-		AnimInstance->OnMontageEnded.AddDynamic(this, &APHero::OnMontageEnded);
-	}
-	
+	// ========== Test Code =========
 }
 
 // Called every frame
@@ -135,26 +136,21 @@ void APHero::OnMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 void APHero::Initialize(FPHeroStruct HeroStruct)
 {
 	// 스켈레탈 메시 할당
-	if (TestStruct.SkeletalMesh)
+	if (HeroStruct.SkeletalMesh)
 	{
 		GetMesh()->SetSkeletalMesh(HeroStruct.SkeletalMesh);
 		GetMesh()->SetRelativeLocation(FVector3d(0.0f, 0.0f, -90.0f));
 		GetMesh()->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 	}
 
-	// 매개변수로 온 구조체의 정보를 영웅 멤버변수에 할당
-	Damage = HeroStruct.Damage;
-	AttackSpeed = HeroStruct.AttackSpeed;
-	AttackAnim = HeroStruct.AttackAnim;
-	SightRadius = HeroStruct.SightRadius;
-	VisionAngle = HeroStruct.VisionAngle;
-	AttackAnim = HeroStruct.AttackAnim;
-	Index = HeroStruct.Index;
-	Type = HeroStruct.Type;
+	// Hero Stat 설정
+	SetHeroStats(HeroStruct);
 
-	SetHeroStats(StatInformation);
+	if (BulletPoolManagerClass) {
+		BulletPoolManager = GetWorld()->SpawnActor<APHeroBulletPoolManager>(BulletPoolManagerClass);
+		BulletPoolManager->Initialize(BulletMesh, BulletSpeed, Damage);
+	}
 	
-
 	// AI Controller 캐스팅
 	APHeroAIController* AIController = Cast<APHeroAIController>(GetController());
 	if (AIController)
@@ -166,21 +162,32 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 
 FPHeroStruct APHero::GetHeroStats() const
 {
-	return StatInformation;
+	FPHeroStruct Stat;
+	Stat.HP = HP;
+	Stat.Damage = Damage;
+	Stat.AttackSpeed = AttackSpeed;
+	Stat.SkeletalMesh = SkeletalMesh;
+	Stat.AttackAnim = AttackAnim;
+	Stat.SightRadius = SightRadius;
+	Stat.VisionAngle = VisionAngle;
+	Stat.BulletMesh = BulletMesh;
+	Stat.BulletSpeed = BulletSpeed;
+	Stat.Index = Index;
+	Stat.Type = Type;
+	return Stat;
 }
 
 void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
 {
+	HP = UpdateStats.HP;
 	Damage = UpdateStats.Damage;
 	AttackSpeed = UpdateStats.AttackSpeed;
 	AttackAnim = UpdateStats.AttackAnim;
 	SightRadius = UpdateStats.SightRadius;
 	VisionAngle = UpdateStats.VisionAngle;
-	AttackAnim = UpdateStats.AttackAnim;
+	BulletSpeed = UpdateStats.BulletSpeed;
 	Index = UpdateStats.Index;
 	Type = UpdateStats.Type;
-	
-	StatInformation = UpdateStats;
 }
 
 void APHero::FindTarget(AActor* Target)
@@ -201,17 +208,6 @@ void APHero::FindTarget(AActor* Target)
 	
 }
 
-void APHero::StartAttack()
-{
-	if (AttackTarget)
-	{
-		bIsLookingForward = false;
-		bIsLookingTarget = true;
-	}
-	// 조건문으로 근거리 원거리 공격
-	RangeAttack();
-}
-
 void APHero::RangeAttack() const
 {
 	if (BulletPoolManager)
@@ -230,6 +226,31 @@ void APHero::RangeAttack() const
 			Bullet->Fire(RangeAttackPosition->GetForwardVector());
 		}
 	}
+}
+
+void APHero::GetDamage(int TakenDamage)
+{
+	HP -= TakenDamage;
+	if (HP < 1)
+	{
+		Die();
+	}
+}
+
+void APHero::Die()
+{
+	UE_LOG(LogTemp, Log, TEXT("%s Hero Die"), *GetName());
+}
+
+void APHero::StartAttack()
+{
+	if (AttackTarget)
+	{
+		bIsLookingForward = false;
+		bIsLookingTarget = true;
+	}
+	// 조건문으로 근거리 원거리 공격
+	RangeAttack();
 }
 
 void APHero::StopAttack() const
