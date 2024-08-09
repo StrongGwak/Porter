@@ -17,10 +17,12 @@ class PORTER_API UItemManager : public UObject
 public:
 	void SetGameInstance(class UPGameInstance* PGameInstance);
 
-private:
+protected:
 	UPROPERTY()
 	TArray<int32> DTIndex;
-
+	UPROPERTY()
+	FString ItemList;
+	
 public:
 	UPROPERTY()
 	class UPGameInstance* GI;

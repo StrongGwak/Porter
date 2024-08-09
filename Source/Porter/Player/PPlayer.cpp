@@ -37,6 +37,7 @@ APPlayer::APPlayer()
 	bUseControllerRotationYaw = true; 
 
 	FObjectFinderInputManager();
+	InitPlayer();
 }
 
 // Called when the game starts or when spawned
@@ -54,6 +55,11 @@ void APPlayer::BeginPlay()
 		}
 	}
 	SetStats(Stats);
+
+	// 초기값 설정 - CurrentHP는 따로 빼야
+	CurrentHP = MaxHp;
+	CurrentStamina = MaxStamina;
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 	
 }
 
@@ -89,17 +95,27 @@ void APPlayer::SetStats(FPlayerStatsStruct UpdateStat)
 {
 	Stats = UpdateStat;
 
-	// 스탯 저장용
+	// 스탯 적용
 	MaxHp = Stats.MaxHp;
 	MaxStamina = Stats.MaxStamina;
 	DecreaseStamina = Stats.DecreaseStamina;
 	IncreaseStamina = Stats.IncreaseStamina;
 	ZeroToHundredIncreaseStamina = Stats.ZeroToHundredIncreaseStamina;
-	MaxWalkSpeed = Stats.WalkSpeed;
+	WalkSpeed = Stats.WalkSpeed;
 	BoostSpeed = Stats.BoostSpeed;
 	MaxWeight = Stats.MaxWeight;
 
-	// 
+	// 나중에 CurrentHP추가 - 지금은 그냥 쓰는 중
+
+	// 조건 적용
+	if (CurrentHP > MaxHp)
+	{
+		CurrentHP = MaxHp;
+	}
+	if (CurrentStamina > MaxStamina)
+	{
+		CurrentStamina = MaxStamina;
+	}
 }
 
 FPlayerStatsStruct APPlayer::GetStats()
@@ -172,7 +188,7 @@ void APPlayer::Boost()
 		TempStamina = CurrentStamina;
 		GetWorldTimerManager().ClearTimer(RestTimeHandle);
 		GetWorldTimerManager().SetTimer(BoostTimeHandle, this, &APPlayer::UpdateBoost, 0.1f, true);
-		GetCharacterMovement()->MaxWalkSpeed = Stats.BoostSpeed;
+		GetCharacterMovement()->MaxWalkSpeed = BoostSpeed;
 	}
 }
 
@@ -181,7 +197,7 @@ void APPlayer::StopBoost()
 	bIsBoost = false;
 	RestTime = GetWorld()->GetTimeSeconds();
 	TempStamina = CurrentStamina;
-	GetCharacterMovement()->MaxWalkSpeed = Stats.WalkSpeed;
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 	GetWorldTimerManager().ClearTimer(BoostTimeHandle);
 	// 이렇게 하지 않으면 뗐을때도 RestTimer를 Set해서 계속해서 시간 측정함
 	if (CurrentStamina < MaxStamina)
@@ -237,15 +253,12 @@ void APPlayer::UpdateBoost()
 void APPlayer::UpPort()
 {
 	int32 Check = GI->GetPlayerManager()->CheckPortNum();
-	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("Check! : %d"), Check));
 	SpringArm->TargetArmLength = 400 + GI->GetPlayerManager()->SpawnPort(0, this);
 }
 
 void APPlayer::UpHeroesFromArray()
 {
-	int32 RandomInt = rand() % 5;
 	GI->GetHeroManager()->SpawnHero(0, this);
-	//GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Blue, FString::FromInt(RandomInt));
 }
 
 void APPlayer::DownPort()
@@ -384,7 +397,7 @@ void APPlayer::MakeHeroHPZero()
 
 void APPlayer::SaveSpawn()
 {
-	GI->GetPlayerManager()->SaveSpawnInformation();
+	GI->GetPlayerManager()->SaveSpawnInformation(this);
 	GI->GetHeroManager()->SaveSpawnInformation();
 }
 
@@ -393,4 +406,8 @@ void APPlayer::OpenSpawn()
 	GI->GetPlayerManager()->OpenSpawnInformation(this);
 	GI->GetHeroManager()->OpenSpawnInformation(this);
 	SpringArm->TargetArmLength = 400 + GI->GetPlayerManager()->AddCameraLength * GI->GetPlayerManager()->PortFloorArray[GI->GetPlayerManager()->CheckPortNum()];
+}
+
+void APPlayer::InitPlayer()
+{
 }

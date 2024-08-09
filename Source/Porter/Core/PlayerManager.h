@@ -5,10 +5,12 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "../Hero/PHeroStruct.h"
+#include "Player/PlayerStatStruct.h"
 
 #include "PlayerManager.generated.h"
 
-class APHero;
+//struct FPlayerStatsStruct;
+//class APHero;
 /**
  * 
  */
@@ -26,9 +28,9 @@ public:
 	void SetGameInstance(class UPGameInstance* PGameInstance);
 	
 	UFUNCTION(BlueprintCallable, Blueprintable)
-	void SaveSpawnInformation();
+	void SaveSpawnInformation(APPlayer* PlayerCharacter);
 	UFUNCTION(BlueprintCallable, Blueprintable)
-	void OpenSpawnInformation(ACharacter* PlayerCharacter);
+	void OpenSpawnInformation(class APPlayer* PlayerCharacter);
 
 	int32 SavedPortNum;
 	
@@ -49,25 +51,13 @@ public:
 	int32 MaximumArraySize = 15;
 
 public:
-	// 플레이어
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
 	float mouseSpeed = 30;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
 	float AddCameraLength = 300;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
-	int32 MaxHp = 5;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
-	float MaxStamina = 100;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
-	float DecreaseStamina = 33; // 속력
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
-	float IncreaseStamina = 20; // 속력
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
-	float ZeroToHundredIncreaseStamina = 10; // 속력
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
-	float PlayerWalkSpeed = 400;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
-	float PlayerBoostSpeed = 1000;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stat")
+	FPlayerStatsStruct PlayerStats;
 
 	TArray<FVector> OffsetArray;
 	float OffsetX = 0;

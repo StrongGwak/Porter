@@ -113,22 +113,22 @@ public:
 protected:
 	// HP
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
-	int32 MaxHp = 5;
+	int32 MaxHp;
 	// 얘는 플레이어가 가지고 있어야지
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
-	int32 CurrentHP = 5;
+	int32 CurrentHP = 1;
 
 	// 스태미나
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
-	float MaxStamina = 100;
+	float MaxStamina;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
-	float DecreaseStamina = 33; // 속력
+	float DecreaseStamina; // 속력
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
-	float IncreaseStamina = 20; // 속력
+	float IncreaseStamina; // 속력
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
-	float ZeroToHundredIncreaseStamina = 10; // 속력
+	float ZeroToHundredIncreaseStamina; // 속력
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
-	float MaxWalkSpeed = 400;
+	float WalkSpeed = 400;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	float BoostSpeed = 1000;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
@@ -175,6 +175,8 @@ public:
 	void SaveSpawn();
 	UFUNCTION()
 	void OpenSpawn();
+	UFUNCTION()
+	void InitPlayer();
 	
 
 };

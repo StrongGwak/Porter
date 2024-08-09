@@ -8,7 +8,9 @@
 
 UHeroManager::UHeroManager()
 {
+	FPHeroStruct HeroStruct;
 	HeroArray.Init(nullptr, MaximumArraySize);
+	HeroStructArray.Init(HeroStruct, MaximumArraySize);
 }
 
 void UHeroManager::Initialize(TArray<TSubclassOf<APHero>> Hero)
@@ -25,11 +27,6 @@ void UHeroManager::SetGameInstance(UPGameInstance* PGameInstance)
 // 레벨 넘어가기 전 hero stat 저장
 void UHeroManager::SaveSpawnInformation()
 {
-	FPHeroStruct HeroStruct;
-	HeroStructArray.Empty();
-	HeroStructArray.Init(HeroStruct, MaximumArraySize);
-	//GEngine->AddOnScreenDebugMessage(-1,3,FColor::Blue,FString::FromInt(HeroStructArray.Num()));
-
 	for (int32 i=0; i<MaximumArraySize; i++)
 	{
 		if (HeroArray[i] != nullptr)
