@@ -90,9 +90,13 @@ public:
 public:
 	// Player가 가지고 있는 스텟들
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
-	FPlayerStatsStruct PlayerAndHeroStats;
-	UFUNCTION(BlueprintCallable, Category="Stats")
-	void UpdateStats(FPlayerStatsStruct UpdateStat);
+	FPlayerStatsStruct Stats;
+	UFUNCTION(BlueprintCallable, Blueprintable, Category="Stats")
+	void SetStats(FPlayerStatsStruct UpdateStat);
+	UFUNCTION(BlueprintCallable, Blueprintable, Category="Stats")
+	FPlayerStatsStruct GetStats();
+	
+	
 
 	// 나중에 옮기기
 	UFUNCTION(Category="Stats")
@@ -105,7 +109,8 @@ public:
 	void StopBoost();
 	UFUNCTION()
 	void UpdateBoost();
-	
+
+protected:
 	// HP
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	int32 MaxHp = 5;
@@ -122,6 +127,10 @@ public:
 	float IncreaseStamina = 20; // 속력
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	float ZeroToHundredIncreaseStamina = 10; // 속력
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
+	float MaxWalkSpeed = 400;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
+	float BoostSpeed = 1000;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	float CurrentStamina = 100;
 	UPROPERTY()
