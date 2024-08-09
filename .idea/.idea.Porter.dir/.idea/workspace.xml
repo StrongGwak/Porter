@@ -9,6 +9,13 @@
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBullet.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBullet.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBullet.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBullet.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroStruct.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroStruct.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,6 +189,7 @@
       <workItem from="1722990049630" duration="24625000" />
       <workItem from="1723077834393" duration="6671000" />
       <workItem from="1723163443355" duration="1262000" />
+      <workItem from="1723171552993" duration="13117000" />
     </task>
     <servers />
   </component>

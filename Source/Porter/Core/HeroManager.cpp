@@ -62,9 +62,9 @@ void UHeroManager::SetHeroArray(TArray<APHero*> Heroes)
 	HeroArray = Heroes;
 }
 
-
 void UHeroManager::SpawnHero(int32 HeroType, ACharacter* PlayerCharacter, bool bUseHeroIndex, int32 HeroIndex)
 {
+	// Player에서 처리
 	USkeletalMeshComponent* SMComp = PlayerCharacter->GetMesh();
 	
 	int32 PortNum = GI->GetPlayerManager()->CheckPortNum();
@@ -104,10 +104,12 @@ void UHeroManager::SpawnHero(int32 HeroType, ACharacter* PlayerCharacter, bool b
 	{
 		FPHeroStruct HeroStruct = Hero->GetHeroStats();
 
+		// Player에서 처리
 		//Hero->AttachToComponent(PlayerCharacter->GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
 		Hero->AttachToComponent(SMComp, FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("PortSocket"));
 		Hero->SetActorRelativeLocation(RelativeOffset);
-		
+
+		// Hero에서 처리
 		// 콜리전 제거
 		Hero->SetActorEnableCollision(false);
 		Hero->GetCharacterMovement()->GravityScale=0;
@@ -118,6 +120,7 @@ void UHeroManager::SpawnHero(int32 HeroType, ACharacter* PlayerCharacter, bool b
 
 		// 변경사항 저장
 		HeroArray[HeroIndex] = Hero;
+		// Initialize로 처리
 		Hero->SetHeroStats(HeroStruct);
 	}
 }
@@ -133,7 +136,9 @@ void UHeroManager::DestroyHero(int32 HeroIndex)
 
 void UHeroManager::SwapHeroes(TArray<int32> IndexArray, ACharacter* PlayerCharacter)
 {
+	// 바꿀 Hero 2개만 뽑아서 Index만 바꾸기
 	FPHeroStruct HeroStruct;
+	// Player에서 처리
 	USkeletalMeshComponent* MeshComp = PlayerCharacter->GetMesh();
 	TArray<APHero*> BeforeHeroArray;
 	TArray<FVector> OffsetArray = GI->GetPlayerManager()->OffsetArray;

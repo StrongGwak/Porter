@@ -41,6 +41,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = Projectile, Meta = (AllowPrivateAccess = "true"))
 	class UProjectileMovementComponent* ProjectileMovementComponent;
 
+	void UpdateBullet(int UpdateDamage, int UpdateSpeed);
+
 protected:
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	float Speed;
