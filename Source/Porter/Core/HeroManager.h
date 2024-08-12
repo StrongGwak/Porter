@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
 #include "HeroManager.generated.h"
 
 class UPlayerManager;
@@ -37,15 +36,15 @@ public:
 	
 private:
 	UPROPERTY()
-	TArray<class APHero*> HeroArray;
+	TArray<APHero*> HeroArray;
 
 public:
 	UFUNCTION()
-	void SpawnHero(int32 HeroType, ACharacter* PlayerCharacter, bool bUseHeroIndex = false, int32 HeroIndex = -1);
+	APHero* SpawnHero(FName RowName);
 	UFUNCTION()
 	void DestroyHero(int32 HeroIndex);
 	UFUNCTION()
-	void SwapHeroes(TArray<int32> IndexArray, ACharacter* PlayerCharacter);
+	TArray<APHero*> SwapHeroes(TArray<int32> IndexArray);
 	UFUNCTION()
 	int32 LastHeroNum();
 	UFUNCTION()
@@ -66,4 +65,11 @@ public:
 	// GI
 	UPROPERTY()
 	class UPGameInstance* GI;
+
+protected:
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class APHero> HeroClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	UDataTable* HeroDataTable;
 };

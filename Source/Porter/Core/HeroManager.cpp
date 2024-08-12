@@ -4,11 +4,12 @@
 #include "HeroManager.h"
 #include "PGameInstance.h"
 #include "../Hero/PHero.h"
-#include "GameFramework/CharacterMovementComponent.h"
 
 UHeroManager::UHeroManager()
 {
 	HeroArray.Init(nullptr, MaximumArraySize);
+	HeroDataTable = LoadObject<UDataTable>(nullptr, TEXT("/Game/Porter/Develop/Hero/DT_Hero.DT_Hero"));
+	HeroClass = APHero::StaticClass();
 }
 
 void UHeroManager::Initialize(TArray<TSubclassOf<APHero>> Hero)
@@ -48,7 +49,7 @@ void UHeroManager::OpenSpawnInformation(ACharacter* PlayerCharacter)
 		{
 			continue;
 		}
-		SpawnHero(HeroStructArray[i].Type, PlayerCharacter, true, i);
+		//SpawnHero(HeroStructArray[i].Type, PlayerCharacter, true, i);
 	}
 }
 
@@ -62,67 +63,32 @@ void UHeroManager::SetHeroArray(TArray<APHero*> Heroes)
 	HeroArray = Heroes;
 }
 
-void UHeroManager::SpawnHero(int32 HeroType, ACharacter* PlayerCharacter, bool bUseHeroIndex, int32 HeroIndex)
+APHero* UHeroManager::SpawnHero(FName RowName)
 {
-	// Player에서 처리
-	USkeletalMeshComponent* SMComp = PlayerCharacter->GetMesh();
-	
-	int32 PortNum = GI->GetPlayerManager()->CheckPortNum();
-	//GEngine->AddOnScreenDebugMessage(-1,3,FColor::Blue,FString::FromInt(PortNum));
-	int32 HeroNum = CheckHeroNum();
-
-
-	// HeroIndex를 사용하지 않으면, 빈 곳에 영웅 소환하기
-	if (!bUseHeroIndex && HeroNum < PortNum)
+	static const FString ContextString(TEXT("Hero Null"));
+	if (HeroDataTable)
 	{
-		for (int32 i=0; i<HeroArray.Num(); i++)
+		FPHeroStruct* HeroStructPtr = HeroDataTable->FindRow<FPHeroStruct>(RowName, ContextString);
+		if (HeroStructPtr)
 		{
-			if(HeroArray[i] == nullptr)
+			FPHeroStruct HeroStruct = *HeroStructPtr;
+			
+			APHero* Hero = GetWorld()->SpawnActor<APHero>(HeroClass);
+			if (Hero)
 			{
-				HeroIndex = i;
-				break;
+				int index = CheckHeroNum();
+				// 위치와 종류 부여
+				HeroStruct.Index = index;
+
+				// 변경사항 저장
+				HeroArray[index] = Hero;
+		
+				Hero->Initialize(HeroStruct);
 			}
+			return Hero;
 		}
 	}
-	if (HeroIndex == -1)
-	{
-		return;
-	}
-
-	// Offset Array에서 해당 위치에 맞는 값 가져오기
-	TArray<FVector> OffsetArray = GI->GetPlayerManager()->OffsetArray;
-	FVector SocketLocation = SMComp->GetSocketLocation(FName("PortSocket"));
-	FVector RelativeOffset = SocketLocation.ForwardVector*(OffsetArray[HeroIndex].X + HeroOffset.X)
-							+ SocketLocation.RightVector*(OffsetArray[HeroIndex].Y + HeroOffset.Y)
-							+ SocketLocation.UpVector*(OffsetArray[HeroIndex].Z + HeroOffset.Z);
-	FVector SpawnLocation = SocketLocation + RelativeOffset;
-	FActorSpawnParameters SpawnParameters;
-
-	APHero* Hero = GetWorld()->SpawnActor<APHero>(HeroTypeArray[HeroType], SpawnLocation, PlayerCharacter->GetActorRotation(), SpawnParameters);
-
-	if (Hero)
-	{
-		FPHeroStruct HeroStruct = Hero->GetHeroStats();
-
-		// Player에서 처리
-		//Hero->AttachToComponent(PlayerCharacter->GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
-		Hero->AttachToComponent(SMComp, FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("PortSocket"));
-		Hero->SetActorRelativeLocation(RelativeOffset);
-
-		// Hero에서 처리
-		// 콜리전 제거
-		Hero->SetActorEnableCollision(false);
-		Hero->GetCharacterMovement()->GravityScale=0;
-
-		// 위치와 종류 부여
-		HeroStruct.Index = HeroIndex;
-		HeroStruct.Type = HeroType;
-
-		// 변경사항 저장
-		HeroArray[HeroIndex] = Hero;
-		// Initialize로 처리
-		Hero->SetHeroStats(HeroStruct);
-	}
+	return nullptr;	
 }
 
 void UHeroManager::DestroyHero(int32 HeroIndex)
@@ -134,34 +100,14 @@ void UHeroManager::DestroyHero(int32 HeroIndex)
 	}
 }
 
-void UHeroManager::SwapHeroes(TArray<int32> IndexArray, ACharacter* PlayerCharacter)
+TArray<APHero*> UHeroManager::SwapHeroes(TArray<int32> IndexArray)
 {
-	// 바꿀 Hero 2개만 뽑아서 Index만 바꾸기
-	FPHeroStruct HeroStruct;
-	// Player에서 처리
-	USkeletalMeshComponent* MeshComp = PlayerCharacter->GetMesh();
-	TArray<APHero*> BeforeHeroArray;
-	TArray<FVector> OffsetArray = GI->GetPlayerManager()->OffsetArray;
-	FVector SocketLocation = MeshComp->GetSocketLocation(FName("PortSocket"));
-	BeforeHeroArray.Append(HeroArray);
-	
-	for (int32 HeroIndex=0; HeroIndex<HeroArray.Num(); ++HeroIndex)
+	for (int index : IndexArray)
 	{
-		HeroArray[HeroIndex] = BeforeHeroArray[IndexArray[HeroIndex]];
-		if (HeroArray[HeroIndex] != nullptr)
-		{
-			HeroArray[HeroIndex]->SetActorRelativeLocation(
-				SocketLocation.ForwardVector*(OffsetArray[HeroIndex].X + HeroOffset.X)
-				+ SocketLocation.RightVector*(OffsetArray[HeroIndex].Y + HeroOffset.Y)
-				+ SocketLocation.UpVector*(OffsetArray[HeroIndex].Z + HeroOffset.Z)
-			);
-		
-			// Index 재할당 및 SpawnInformation의 HeroType 고치기
-			HeroStruct = HeroArray[HeroIndex]->GetHeroStats();
-			HeroStruct.Index = HeroIndex;
-			HeroArray[HeroIndex]->SetHeroStats(HeroStruct);
-		}
+		HeroArray[index]->SetIndex(index);
 	}
+
+	return HeroArray;
 }
 
 int32 UHeroManager::LastHeroNum()

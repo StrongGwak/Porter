@@ -106,4 +106,5 @@ public:
 	void RangeAttack() const;
 	void GetDamage(int TakenDamage);
 	void Die();
+	void SetIndex(int NewIndex);
 };

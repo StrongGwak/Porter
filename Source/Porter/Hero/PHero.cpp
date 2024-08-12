@@ -4,6 +4,7 @@
 #include "Hero/PHero.h"
 
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Hero/PHeroStruct.h"
 #include "Hero/PHeroAIController.h"
 #include "Hero/PHeroBulletPoolManager.h"
@@ -29,11 +30,12 @@ APHero::APHero()
 
 	GunPosition = CreateDefaultSubobject<USceneComponent>(TEXT("GunPosition"));
 	GunPosition->SetupAttachment(GetCapsuleComponent());
-
+	
 	// 투사체 생성 위치
 	RangeAttackPosition = CreateDefaultSubobject<USceneComponent>(TEXT("RangeAttackPosition"));
 	RangeAttackPosition->SetupAttachment(GunPosition);
 	RangeAttackPosition->SetRelativeLocation(FVector3d(50, 0, 50.0f));
+	
 
 	// AI Controller 할당
 	AIControllerClass = APHeroAIController::StaticClass();
@@ -41,7 +43,11 @@ APHero::APHero()
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 	BulletPoolManagerClass = APHeroBulletPoolManager::StaticClass();
-	
+
+	SetActorEnableCollision(false);
+	GetCharacterMovement()->GravityScale=0;
+
+	AnimRotation = GetMesh()->GetComponentRotation();
 }
 
 // Called when the game starts or when spawned
@@ -109,6 +115,8 @@ void APHero::Tick(float DeltaTime)
 	{
 		LookTarget();
 	}
+
+	DrawDebugPoint(GetWorld(), RangeAttackPosition->GetComponentLocation(), 10, FColor(52, 220, 239), true);
 }
 
 // 애니메이션 종료시 실행하는 함수
@@ -242,6 +250,11 @@ void APHero::Die()
 	UE_LOG(LogTemp, Log, TEXT("%s Hero Die"), *GetName());
 }
 
+void APHero::SetIndex(int NewIndex)
+{
+	Index = NewIndex;
+}
+
 void APHero::StartAttack()
 {
 	if (AttackTarget)
@@ -272,11 +285,10 @@ void APHero::LookTarget()
 		FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(GunPosition->GetComponentLocation(), AttackTarget->GetActorLocation());
 		FRotator TargetRotation = FRotator(LookAtRotation.Pitch, LookAtRotation.Yaw, 0);
 		FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 5.0f); // 5.0f는 회전 속도
-		AnimRotation = NewRotation + FRotator(0, 90, 0);
 
 		// 새로운 회전 각도를 설정
 		GunPosition->SetWorldRotation(NewRotation);
-		
+		AnimRotation = GunPosition->GetComponentRotation() - GetMesh()->GetComponentRotation();
 		if (NewRotation.Equals(TargetRotation, 0.1f))
 		{
 			bIsLookingTarget = false;
@@ -289,12 +301,12 @@ void APHero::LookForward()
 	// 현재 회전을 천천히 목표 회전으로 보간
 	FRotator CurrentRotation = GunPosition->GetComponentRotation();
 	FRotator TargetRotation = FRotator(0, 0, 0);
-	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 1.0f); // 5.0f는 회전 속도
-	AnimRotation = NewRotation + FRotator(0, 90, 0);
+	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 5.0f); // 5.0f는 회전 속도
+	AnimRotation = NewRotation;
 	// 새로운 회전 각도를 설정
 	GunPosition->SetWorldRotation(NewRotation);
 
-	if (NewRotation.Equals(TargetRotation, 0.1f))
+	if (NewRotation.Equals(TargetRotation, 0.5f))
 	{
 		bIsLookingForward = false;
 	}

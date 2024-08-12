@@ -30,7 +30,6 @@ void UPHeroAnimInstance::AnimNotify_Fire()
 {
 	if (Hero)
 	{
-		UE_LOG(LogTemp, Log, TEXT("AnimInstance"));
 		Hero->StartAttack();
 	}
 }
