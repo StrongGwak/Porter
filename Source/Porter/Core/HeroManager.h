@@ -40,7 +40,7 @@ private:
 
 public:
 	UFUNCTION()
-	APHero* SpawnHero(FName RowName);
+	APHero* SpawnHero(FPHeroStruct HeroStruct);
 	UFUNCTION()
 	void DestroyHero(int32 HeroIndex);
 	UFUNCTION()
@@ -49,6 +49,10 @@ public:
 	int32 LastHeroNum();
 	UFUNCTION()
 	int32 CheckHeroNum();
+
+	UFUNCTION()
+	APHero* FindHero(FName RowName);
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
 	int32 MaximumArraySize = 15;
 

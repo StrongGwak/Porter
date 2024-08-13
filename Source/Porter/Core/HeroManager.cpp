@@ -26,31 +26,22 @@ void UHeroManager::SetGameInstance(UPGameInstance* PGameInstance)
 // 레벨 넘어가기 전 hero stat 저장
 void UHeroManager::SaveSpawnInformation()
 {
-	FPHeroStruct HeroStruct;
-	HeroStructArray.Empty();
-	HeroStructArray.Init(HeroStruct, MaximumArraySize);
-	//GEngine->AddOnScreenDebugMessage(-1,3,FColor::Blue,FString::FromInt(HeroStructArray.Num()));
-
-	for (int32 i=0; i<MaximumArraySize; i++)
+	for (APHero* Hero : HeroArray)
 	{
-		if (HeroArray[i] != nullptr)
-		{
-			HeroStructArray[i] = HeroArray[i]->GetHeroStats();
-		}
+		HeroStructArray.Add(Hero->GetHeroStats());
 	}
 }
 
 // 레벨 넘어간 후 Hero Stat에 따른 Hero 소환
 void UHeroManager::OpenSpawnInformation(ACharacter* PlayerCharacter)
 {
-	for (int32 i=0; i<HeroStructArray.Num(); ++i)
+
+	
+	for (FPHeroStruct HeroStruct : HeroStructArray)
 	{
-		if (HeroStructArray[i].Type == -1)
-		{
-			continue;
-		}
-		//SpawnHero(HeroStructArray[i].Type, PlayerCharacter, true, i);
+		SpawnHero(HeroStruct);
 	}
+	
 }
 
 TArray<APHero*> UHeroManager::GetHeroArray()
@@ -63,32 +54,58 @@ void UHeroManager::SetHeroArray(TArray<APHero*> Heroes)
 	HeroArray = Heroes;
 }
 
-APHero* UHeroManager::SpawnHero(FName RowName)
+APHero* UHeroManager::FindHero(FName RowName)
 {
+	FPHeroStruct HeroStruct;
 	static const FString ContextString(TEXT("Hero Null"));
 	if (HeroDataTable)
 	{
 		FPHeroStruct* HeroStructPtr = HeroDataTable->FindRow<FPHeroStruct>(RowName, ContextString);
 		if (HeroStructPtr)
 		{
-			FPHeroStruct HeroStruct = *HeroStructPtr;
-			
-			APHero* Hero = GetWorld()->SpawnActor<APHero>(HeroClass);
-			if (Hero)
-			{
-				int index = CheckHeroNum();
-				// 위치와 종류 부여
-				HeroStruct.Index = index;
+			HeroStruct = *HeroStructPtr;
+			return SpawnHero(HeroStruct);
+		}
+	}
+	return nullptr;
+}
 
-				// 변경사항 저장
-				HeroArray[index] = Hero;
+
+APHero* UHeroManager::SpawnHero(FPHeroStruct HeroStruct)
+{
+	if (HeroStruct.Index == -1)
+	{
+		APHero* Hero = GetWorld()->SpawnActor<APHero>(HeroClass);
+		if (Hero)
+		{
+			int index = CheckHeroNum();
+			// 위치와 종류 부여
+			HeroStruct.Index = index;
+
+			// 변경사항 저장
+			HeroArray[index] = Hero;
 		
-				Hero->Initialize(HeroStruct);
-			}
+			Hero->Initialize(HeroStruct);
+
 			return Hero;
 		}
 	}
-	return nullptr;	
+	else
+	{
+		APHero* Hero = GetWorld()->SpawnActor<APHero>(HeroClass);
+		if (Hero)
+		{
+
+			// 변경사항 저장
+			HeroArray[HeroStruct.Index] = Hero;
+		
+			Hero->Initialize(HeroStruct);
+
+			return Hero;
+		}
+	}
+	
+	return nullptr;
 }
 
 void UHeroManager::DestroyHero(int32 HeroIndex)
@@ -136,3 +153,4 @@ int32 UHeroManager::CheckHeroNum()
 	}
 	return Count;
 }
+

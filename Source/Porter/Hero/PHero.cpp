@@ -116,7 +116,6 @@ void APHero::Tick(float DeltaTime)
 		LookTarget();
 	}
 
-	DrawDebugPoint(GetWorld(), RangeAttackPosition->GetComponentLocation(), 10, FColor(52, 220, 239), true);
 }
 
 // 애니메이션 종료시 실행하는 함수
@@ -261,13 +260,16 @@ void APHero::StartAttack()
 	{
 		bIsLookingForward = false;
 		bIsLookingTarget = true;
+		// 조건문으로 근거리 원거리 공격
+		RangeAttack();
 	}
-	// 조건문으로 근거리 원거리 공격
-	RangeAttack();
+	
+	
 }
 
-void APHero::StopAttack() const
+void APHero::StopAttack()
 {
+	AttackTarget = nullptr;
 	if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
 	{
 		if (AnimInstance->Montage_IsPlaying(AttackAnim))
@@ -293,6 +295,9 @@ void APHero::LookTarget()
 		{
 			bIsLookingTarget = false;
 		}
+	} else
+	{
+		bIsLookingTarget = false;
 	}
 }
 

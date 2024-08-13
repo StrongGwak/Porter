@@ -246,9 +246,11 @@ void APPlayer::UpPort()
 
 void APPlayer::UpHeroesFromArray()
 {
-	int32 RandomInt = rand() % 5;
+	// 수정했음
+	//int32 RandomInt = rand() % 5;
 	FName RowName = TEXT("Test1");
-	APHero* Hero = GI->GetHeroManager()->SpawnHero(RowName);
+	//APHero* Hero = GI->GetHeroManager()->SpawnHero(RowName);
+	APHero* Hero = GI->GetHeroManager()->FindHero(RowName);
 	if (Hero)
 	{
 		// Player에서 처리

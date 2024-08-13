@@ -9,42 +9,11 @@
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_CPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_CPlayer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/ABP/ABP_Enemy_Humanoid_Melee.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/ABP/ABP_Enemy_Humanoid_Melee.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/ABP/ABP_Enemy_Humanoid_Ranged.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/ABP/ABP_Enemy_Humanoid_Ranged.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Bow_Attack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Bow_Attack.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Bow_Equip.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Bow_Equip.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Bow_Unequip.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Bow_Unequip.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Sword_Attack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Sword_Attack.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Sword_Equip.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Sword_Equip.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Sword_Unequip.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Sword_Unequip.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Bow_Attack1_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Bow_Attack1_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Bow_Attack2_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Bow_Attack2_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Bow_Equip_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Bow_Equip_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Bow_Idle_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Bow_Idle_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Bow_Sprint_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Bow_Sprint_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Bow_Unequip_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Bow_Unequip_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Sword_Attack_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Sword_Attack_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Sword_Equip_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Sword_Equip_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Sword_Idle_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Sword_Idle_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Sword_Unequip_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Sword_Unequip_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/BP_Enemy_Humanoid_Melee.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/BP_Enemy_Humanoid_Melee.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/BP_Enemy_Humanoid_Ranged.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/BP_Enemy_Humanoid_Ranged.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/AM_BowAttack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/AM_BowAttack.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/AM_Bow_Attack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/AM_Bow_Attack.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Bow_Attack1_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Bow_Attack1_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Bow_Attack2_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Bow_Attack2_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/IK_Source.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/IK_Source.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/RTG_NewRetargeter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/RTG_NewRetargeter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/SittingIdle_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/SittingIdle_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_TestEnemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_TestEnemy.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_Hero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_Hero.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAIController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAnimInstance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAnimInstance.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -177,6 +146,78 @@
         <option name="Build" />
       </method>
     </configuration>
+    <configuration default="true" type="Uproject" factoryName="rider.uproject">
+      <configuration_1>
+        <option name="CONFIGURATION" value="Development Editor" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="C:\Program Files\Epic Games\UE_5.4\Engine\Binaries\Win64\UnrealEditor.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\UE5\Porter\Porter.uproject&quot;" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+      </configuration_1>
+      <configuration_2>
+        <option name="CONFIGURATION" value="DebugGame Editor" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="C:\Program Files\Epic Games\UE_5.4\Engine\Binaries\Win64\UnrealEditor-Win64-DebugGame.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\UE5\Porter\Porter.uproject&quot;" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+      </configuration_2>
+      <configuration_3>
+        <option name="CONFIGURATION" value="DebugGame" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="C:\UE5\Porter\Binaries\Win64\Porter-Win64-DebugGame.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+      </configuration_3>
+      <configuration_4>
+        <option name="CONFIGURATION" value="Development" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="C:\UE5\Porter\Binaries\Win64\Porter.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+      </configuration_4>
+      <configuration_5>
+        <option name="CONFIGURATION" value="Shipping" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="C:\UE5\Porter\Binaries\Win64\Porter-Win64-Shipping.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+      </configuration_5>
+      <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
+      <option name="AUTO_SELECT_PRIORITY" value="10010" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -222,6 +263,8 @@
       <workItem from="1723171552993" duration="13117000" />
       <workItem from="1723422717432" duration="24253000" />
       <workItem from="1723453666088" duration="185000" />
+      <workItem from="1723510681004" duration="1124000" />
+      <workItem from="1723511944733" duration="9559000" />
     </task>
     <servers />
   </component>

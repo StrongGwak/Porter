@@ -100,7 +100,7 @@ public:
 	void SetHeroStats(const FPHeroStruct& UpdateStats);
 	void FindTarget(AActor* Target);
 	void StartAttack();
-	void StopAttack() const;
+	void StopAttack();
 	void LookTarget();
 	void LookForward();
 	void RangeAttack() const;
