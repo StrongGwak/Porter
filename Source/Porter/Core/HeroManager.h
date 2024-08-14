@@ -19,7 +19,7 @@ class PORTER_API UHeroManager : public UObject
 public:
 	UHeroManager();
 
-	void Initialize(TArray<TSubclassOf<APHero>> Hero);
+	void Initialize();
 	void SetGameInstance(class UPGameInstance* PGameInstance);
 
 	UFUNCTION(BlueprintCallable, Blueprintable)

@@ -9,9 +9,11 @@
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/GameMode/GI_PGameInstance.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/GameMode/GI_PGameInstance.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_Hero.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Core/PGameInstance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/PGameInstance.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" afterDir="false" />
@@ -55,7 +57,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Uproject.Porter.executor&quot;: &quot;Run&quot;,
+    &quot;Uproject.Porter.executor&quot;: &quot;Debug&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Gwak-Hero&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -265,6 +267,10 @@
       <workItem from="1723453666088" duration="185000" />
       <workItem from="1723510681004" duration="1124000" />
       <workItem from="1723511944733" duration="9559000" />
+      <workItem from="1723595848040" duration="638000" />
+      <workItem from="1723596529610" duration="9589000" />
+      <workItem from="1723617408228" duration="2198000" />
+      <workItem from="1723620463960" duration="2921000" />
     </task>
     <servers />
   </component>

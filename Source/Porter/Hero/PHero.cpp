@@ -25,6 +25,7 @@ APHero::APHero()
 	static ConstructorHelpers::FClassFinder<UAnimInstance> TempAnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_PHeroAnimation.ABP_PHeroAnimation_C"));
 	if (TempAnimInstance.Succeeded()) 
 	{
+		UE_LOG(LogTemp, Log, TEXT("Animclass!!!!!!!!!!!!!!!!!!!!!!"));
 		GetMesh()->SetAnimInstanceClass(TempAnimInstance.Class);
 	}
 
@@ -46,8 +47,6 @@ APHero::APHero()
 
 	SetActorEnableCollision(false);
 	GetCharacterMovement()->GravityScale=0;
-
-	AnimRotation = GetMesh()->GetComponentRotation();
 }
 
 // Called when the game starts or when spawned
@@ -55,48 +54,6 @@ void APHero::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (BulletPoolManagerClass) {
-		BulletPoolManager = GetWorld()->SpawnActor<APHeroBulletPoolManager>(BulletPoolManagerClass);
-		BulletPoolManager->Initialize(TestStruct.BulletMesh, TestStruct.BulletSpeed, TestStruct.Damage);
-	}
-
-	if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
-	{
-		AnimInstance->OnMontageEnded.AddDynamic(this, &APHero::OnMontageEnded);
-	}
-
-	// ========== Test Code =========
-	// Bullet이 Player Type을 무시하기 때문에 Hero도 Object Type을 Player로 설정
-	GetCapsuleComponent()->SetCollisionObjectType(ECC_GameTraceChannel2);
-	// 스켈레탈 메시 할당
-	if (TestStruct.SkeletalMesh)
-	{
-		GetMesh()->SetSkeletalMesh(TestStruct.SkeletalMesh);
-		GetMesh()->SetRelativeLocation(FVector3d(-20.0f, 0.0f, -120.0f));
-		GetMesh()->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
-		GetMesh()->SetCollisionObjectType(ECC_GameTraceChannel2);
-	}
-
-	// 매개변수로 온 구조체의 정보를 영웅 멤버변수에 할당
-	Damage = TestStruct.Damage;
-	AttackSpeed = TestStruct.AttackSpeed;
-	AttackAnim = TestStruct.AttackAnim;
-	SightRadius = TestStruct.SightRadius;
-	VisionAngle = TestStruct.VisionAngle;
-	AttackAnim = TestStruct.AttackAnim;
-
-	// AI Controller 할당
-	AIControllerClass = APHeroAIController::StaticClass();
-	// 월드에 배치되거나 스폰될 때 AI Controller에 의해 제어되도록 설정
-	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
-	// AI Controller 캐스팅
-	APHeroAIController* AIController = Cast<APHeroAIController>(GetController());
-	if (AIController)
-	{
-		// AI Controller의 시야 정보 설정 (적 인식 거리)
-		AIController->SetSightConfig(SightRadius, SightRadius + 100.0f, VisionAngle);
-	}
-	// ========== Test Code =========
 }
 
 // Called every frame
@@ -165,6 +122,11 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 		// AI Controller의 시야 정보 설정 (적 인식 거리)
 		AIController->SetSightConfig(SightRadius, SightRadius + 100.0f, VisionAngle);
 	}
+
+	if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
+	{
+		AnimInstance->OnMontageEnded.AddDynamic(this, &APHero::OnMontageEnded);
+	}
 }
 
 FPHeroStruct APHero::GetHeroStats() const
@@ -186,12 +148,15 @@ FPHeroStruct APHero::GetHeroStats() const
 
 void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
 {
+	Name = UpdateStats.Name;
 	HP = UpdateStats.HP;
 	Damage = UpdateStats.Damage;
 	AttackSpeed = UpdateStats.AttackSpeed;
+	SkeletalMesh = UpdateStats.SkeletalMesh;
 	AttackAnim = UpdateStats.AttackAnim;
 	SightRadius = UpdateStats.SightRadius;
 	VisionAngle = UpdateStats.VisionAngle;
+	BulletMesh = UpdateStats.BulletMesh;
 	BulletSpeed = UpdateStats.BulletSpeed;
 	Index = UpdateStats.Index;
 	Type = UpdateStats.Type;

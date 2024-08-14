@@ -12,9 +12,8 @@ UHeroManager::UHeroManager()
 	HeroClass = APHero::StaticClass();
 }
 
-void UHeroManager::Initialize(TArray<TSubclassOf<APHero>> Hero)
+void UHeroManager::Initialize()
 {
-	HeroTypeArray = Hero;
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Hero Manager")));
 }
 
@@ -26,22 +25,25 @@ void UHeroManager::SetGameInstance(UPGameInstance* PGameInstance)
 // 레벨 넘어가기 전 hero stat 저장
 void UHeroManager::SaveSpawnInformation()
 {
-	for (APHero* Hero : HeroArray)
+	if (!HeroArray.IsEmpty())
 	{
-		HeroStructArray.Add(Hero->GetHeroStats());
+		for (APHero* Hero : HeroArray)
+		{
+			HeroStructArray.Add(Hero->GetHeroStats());
+		}
 	}
 }
 
 // 레벨 넘어간 후 Hero Stat에 따른 Hero 소환
 void UHeroManager::OpenSpawnInformation(ACharacter* PlayerCharacter)
 {
-
-	
-	for (FPHeroStruct HeroStruct : HeroStructArray)
+	if (!HeroArray.IsEmpty())
 	{
-		SpawnHero(HeroStruct);
+		for (FPHeroStruct HeroStruct : HeroStructArray)
+        	{
+        		SpawnHero(HeroStruct);
+        	}
 	}
-	
 }
 
 TArray<APHero*> UHeroManager::GetHeroArray()
