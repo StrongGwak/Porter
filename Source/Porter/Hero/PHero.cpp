@@ -25,7 +25,6 @@ APHero::APHero()
 	static ConstructorHelpers::FClassFinder<UAnimInstance> TempAnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_PHeroAnimation.ABP_PHeroAnimation_C"));
 	if (TempAnimInstance.Succeeded()) 
 	{
-		UE_LOG(LogTemp, Log, TEXT("Animclass!!!!!!!!!!!!!!!!!!!!!!"));
 		GetMesh()->SetAnimInstanceClass(TempAnimInstance.Class);
 	}
 
