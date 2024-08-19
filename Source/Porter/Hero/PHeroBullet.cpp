@@ -78,7 +78,7 @@ void APHeroBullet::OnBoxHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UP
 			SceneComponent ->GetChildrenComponents(true, ChildComponents);
 			for (USceneComponent* Child : ChildComponents)
 			{
-				if (Child)
+				if (Child->ComponentHasTag("HitProjectile"))
 				{
 					// 컴포넌트 식별
 					if (Child->bHiddenInGame)

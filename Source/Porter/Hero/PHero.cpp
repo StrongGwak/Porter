@@ -35,7 +35,17 @@ APHero::APHero()
 	RangeAttackPosition = CreateDefaultSubobject<USceneComponent>(TEXT("RangeAttackPosition"));
 	RangeAttackPosition->SetupAttachment(GunPosition);
 	RangeAttackPosition->SetRelativeLocation(FVector3d(50, 0, 50.0f));
-	
+
+	//test
+	box = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("box"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> TmpMesh(TEXT("/Game/StarterContent/Shapes/Shape_Cube.Shape_Cube"));
+	if(TmpMesh.Succeeded())
+	{
+		box->SetStaticMesh(TmpMesh.Object);
+		box->SetRelativeScale3D(FVector3d(0.05f, 0.05f, 0.05f));
+		box->SetupAttachment(RangeAttackPosition);
+	}
+	//test
 
 	// AI Controller 할당
 	AIControllerClass = APHeroAIController::StaticClass();
@@ -254,6 +264,7 @@ void APHero::LookTarget()
 
 		// 새로운 회전 각도를 설정
 		GunPosition->SetWorldRotation(NewRotation);
+		UE_LOG(LogTemp, Log, TEXT("Rotation : %f, %f, %f"), GunPosition->GetComponentRotation().Pitch,  GunPosition->GetComponentRotation().Yaw,  GunPosition->GetComponentRotation().Roll);
 		AnimRotation = GunPosition->GetComponentRotation() - GetMesh()->GetComponentRotation();
 		if (NewRotation.Equals(TargetRotation, 0.1f))
 		{
@@ -262,6 +273,7 @@ void APHero::LookTarget()
 	} else
 	{
 		bIsLookingTarget = false;
+		bIsLookingForward = true;
 	}
 }
 

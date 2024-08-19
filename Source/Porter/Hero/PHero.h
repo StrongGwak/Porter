@@ -104,4 +104,8 @@ public:
 	void GetDamage(int TakenDamage);
 	void Die();
 	void SetIndex(int NewIndex);
+
+	//test
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* box;
 };
