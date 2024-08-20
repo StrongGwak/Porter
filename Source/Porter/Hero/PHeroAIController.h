@@ -22,6 +22,9 @@ public:
 	// 시야 감지 설정 함수
 	void SetSightConfig(float SightRadius, float LoseSightRadius, float PeripheralVisionAngle) const;
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 protected:
 	// 감지 컴포넌트
 	UPROPERTY(VisibleAnywhere, Category="Awareness")

@@ -108,7 +108,4 @@ public:
 	void Die();
 	void SetIndex(int NewIndex);
 
-	//test
-	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* box;
 };

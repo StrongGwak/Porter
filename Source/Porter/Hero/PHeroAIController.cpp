@@ -36,12 +36,31 @@ void APHeroAIController::OnPossess(APawn* InPawn)
 
 }
 
+void APHeroAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if (OldTarget && OldTarget->IsPendingKillPending())
+	{
+		AIPerception->ForgetActor(OldTarget);
+		OldTarget = nullptr;
+		// 인지 하고있는 액터를 할당하기 위한 액터 배열
+		TArray<AActor*> Knowns;
+		// 현재 인지하고 있는 액터들을 액터 배열에 할당
+		AIPerception->GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), Knowns);
+		OnPerceptionUpdated(Knowns);
+	}
+}
+
 void APHeroAIController::OnPerceptionUpdated(const TArray<AActor*>& Actors)
 {
 	// 인지 하고있는 액터를 할당하기 위한 액터 배열
 	TArray<AActor*> Knowns;
 	// 현재 인지하고 있는 액터들을 액터 배열에 할당
 	AIPerception->GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), Knowns);
+	for (AActor* actor : Knowns)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Actors : %s"), *actor->GetName());
+	}
 	if (!Knowns.IsEmpty())
 	{
 		AActor* Target = nullptr;

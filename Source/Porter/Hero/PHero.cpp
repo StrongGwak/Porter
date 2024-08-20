@@ -35,18 +35,7 @@ APHero::APHero()
 	RangeAttackPosition = CreateDefaultSubobject<USceneComponent>(TEXT("RangeAttackPosition"));
 	RangeAttackPosition->SetupAttachment(GunPosition);
 	RangeAttackPosition->SetRelativeLocation(FVector3d(50, 0, 50.0f));
-
-	//test
-	box = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("box"));
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> TmpMesh(TEXT("/Game/StarterContent/Shapes/Shape_Cube.Shape_Cube"));
-	if(TmpMesh.Succeeded())
-	{
-		box->SetStaticMesh(TmpMesh.Object);
-		box->SetRelativeScale3D(FVector3d(0.05f, 0.05f, 0.05f));
-		box->SetupAttachment(RangeAttackPosition);
-	}
-	//test
-
+	
 	// AI Controller 할당
 	AIControllerClass = APHeroAIController::StaticClass();
 	// 월드에 배치되거나 스폰될 때 AI Controller에 의해 제어되도록 설정

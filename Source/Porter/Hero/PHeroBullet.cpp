@@ -5,6 +5,7 @@
 
 #include "PHeroBulletPoolManager.h"
 #include "Components/BoxComponent.h"
+#include "Engine/DamageEvents.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 // Sets default values
@@ -64,8 +65,10 @@ void APHeroBullet::OnBoxHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UP
 	// Enemy인지 태그로 식별
 	if (Hit.GetActor()->ActorHasTag("Enemy"))
 	{
-		// GetDamage 함수 실행
-		// Hit.GetActor()->GetDamage(Damage);
+		// 블루프린트 AnyDamage 이벤트 호출
+		FDamageEvent DamageEvent;   // Generic damage event
+		Hit.GetActor()->TakeDamage(Damage, DamageEvent, nullptr, this);
+		
 		// 맞은 컴포넌트 유효성 검사
 		UPrimitiveComponent* TargetComponent = Hit.GetComponent();
 		if (TargetComponent && TargetComponent->IsA<USceneComponent>())
