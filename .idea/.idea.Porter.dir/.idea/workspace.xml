@@ -9,36 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/AI/BehaviorTree/Decorators/BTDecorator_HasPatrolRoute.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/AI/BehaviorTree/Decorators/BTDecorator_HasPatrolRoute.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/AI/BehaviorTree/Tasks/BTTask_NormalAttack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/AI/BehaviorTree/Tasks/BTTask_NormalAttack.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/AI/BehaviorTree/Tasks/BTTask_SetCombatStance.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/AI/BehaviorTree/Tasks/BTTask_SetCombatStance.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/AI/BehaviorTree/Tasks/BTTask_SetPassiveStance.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/AI/BehaviorTree/Tasks/BTTask_SetPassiveStance.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/ABP/ABP_Enemy_Humanoid_Melee.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/ABP/ABP_Enemy_Humanoid_Melee.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/ABP/ABP_Enemy_Humanoid_Ranged.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/ABP/ABP_Enemy_Humanoid_Ranged.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Bow_Attack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Bow_Attack.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Bow_Equip.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Bow_Equip.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Bow_Unequip.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Montage/AM_Bow_Unequip.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Sword_Attack_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Sword_Attack_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Sword_Equip_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Sword_Equip_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Sword_Idle_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Sword_Idle_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Sword_Unequip_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Animation/Sequence/Sword_Unequip_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Boss/BP_Enemy_Boss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Boss/BP_Enemy_Boss.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Normal/BP_Enemy_Archer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Normal/BP_Enemy_Archer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Normal/BP_Enemy_Swordman.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Normal/BP_Enemy_Swordman.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Parent/BP_Enemy_Base.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Parent/BP_Enemy_Base.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Parent/BP_Enemy_Melee.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Parent/BP_Enemy_Melee.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Parent/BP_Enemy_Ranged.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Parent/BP_Enemy_Ranged.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/GameMode/GM_Porter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/GameMode/GM_Porter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_HeroBullet.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_HeroBullet.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_Hero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_Hero.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/SM_Port.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/SM_Port.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/SM_PortBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/SM_PortBase.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/SM_Porta.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/SM_Porta.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/SM_RiceStack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/SM_RiceStack.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBullet.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBullet.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -294,7 +265,8 @@
       <workItem from="1723617408228" duration="2198000" />
       <workItem from="1723620463960" duration="2921000" />
       <workItem from="1724047522877" duration="4361000" />
-      <workItem from="1724053858506" duration="2212000" />
+      <workItem from="1724053858506" duration="2709000" />
+      <workItem from="1724113465892" duration="2791000" />
     </task>
     <servers />
   </component>

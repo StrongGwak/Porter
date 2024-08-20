@@ -234,6 +234,17 @@ void APHero::StartAttack()
 	{
 		bIsLookingForward = false;
 		bIsLookingTarget = true;
+
+		//test
+		FRotator CurrentRotation = GunPosition->GetComponentRotation();
+		FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(GunPosition->GetComponentLocation(), AttackTarget->GetActorLocation());
+		FRotator TargetRotation = FRotator(LookAtRotation.Pitch, LookAtRotation.Yaw, 0);
+		UE_LOG(LogTemp, Log, TEXT("Actor : %s"), *AttackTarget->GetName());
+		//UE_LOG(LogTemp, Log, TEXT("Rotation : %f, %f, %f"), TargetRotation.Pitch,  TargetRotation.Yaw,  TargetRotation.Roll);
+		
+
+
+		
 		// 조건문으로 근거리 원거리 공격
 		RangeAttack();
 	}
@@ -244,6 +255,11 @@ void APHero::StartAttack()
 void APHero::StopAttack()
 {
 	AttackTarget = nullptr;
+	if (!AttackTarget)
+	{
+		bIsLookingForward = true;
+		bIsLookingTarget = false;
+	}
 	if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
 	{
 		if (AnimInstance->Montage_IsPlaying(AttackAnim))
@@ -266,14 +282,10 @@ void APHero::LookTarget()
 		GunPosition->SetWorldRotation(NewRotation);
 		UE_LOG(LogTemp, Log, TEXT("Rotation : %f, %f, %f"), GunPosition->GetComponentRotation().Pitch,  GunPosition->GetComponentRotation().Yaw,  GunPosition->GetComponentRotation().Roll);
 		AnimRotation = GunPosition->GetComponentRotation() - GetMesh()->GetComponentRotation();
-		if (NewRotation.Equals(TargetRotation, 0.1f))
+		/*if (NewRotation.Equals(TargetRotation, 0.1f))
 		{
 			bIsLookingTarget = false;
-		}
-	} else
-	{
-		bIsLookingTarget = false;
-		bIsLookingForward = true;
+		}*/
 	}
 }
 
@@ -287,7 +299,7 @@ void APHero::LookForward()
 	// 새로운 회전 각도를 설정
 	GunPosition->SetWorldRotation(NewRotation);
 
-	if (NewRotation.Equals(TargetRotation, 0.5f))
+	if (NewRotation.Equals(TargetRotation, 0.1f))
 	{
 		bIsLookingForward = false;
 	}
