@@ -101,7 +101,10 @@ public:
 	void LookTarget();
 	void LookForward();
 	void RangeAttack() const;
+	
+	UFUNCTION(BlueprintCallable, Category="Function")
 	void GetDamage(int TakenDamage);
+	
 	void Die();
 	void SetIndex(int NewIndex);
 

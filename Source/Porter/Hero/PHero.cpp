@@ -93,7 +93,6 @@ void APHero::OnMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 		if (bInterrupted)
 		{
 			bIsLookingTarget = false;
-			bIsLookingForward = true;
 		}
 		else // 애니메이션이 성공적으로 끝났다면
 		{
@@ -235,16 +234,6 @@ void APHero::StartAttack()
 		bIsLookingForward = false;
 		bIsLookingTarget = true;
 
-		//test
-		FRotator CurrentRotation = GunPosition->GetComponentRotation();
-		FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(GunPosition->GetComponentLocation(), AttackTarget->GetActorLocation());
-		FRotator TargetRotation = FRotator(LookAtRotation.Pitch, LookAtRotation.Yaw, 0);
-		UE_LOG(LogTemp, Log, TEXT("Actor : %s"), *AttackTarget->GetName());
-		//UE_LOG(LogTemp, Log, TEXT("Rotation : %f, %f, %f"), TargetRotation.Pitch,  TargetRotation.Yaw,  TargetRotation.Roll);
-		
-
-
-		
 		// 조건문으로 근거리 원거리 공격
 		RangeAttack();
 	}
@@ -257,8 +246,8 @@ void APHero::StopAttack()
 	AttackTarget = nullptr;
 	if (!AttackTarget)
 	{
-		bIsLookingForward = true;
 		bIsLookingTarget = false;
+		bIsLookingForward = true;
 	}
 	if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
 	{
@@ -280,25 +269,26 @@ void APHero::LookTarget()
 
 		// 새로운 회전 각도를 설정
 		GunPosition->SetWorldRotation(NewRotation);
-		UE_LOG(LogTemp, Log, TEXT("Rotation : %f, %f, %f"), GunPosition->GetComponentRotation().Pitch,  GunPosition->GetComponentRotation().Yaw,  GunPosition->GetComponentRotation().Roll);
 		AnimRotation = GunPosition->GetComponentRotation() - GetMesh()->GetComponentRotation();
-		/*if (NewRotation.Equals(TargetRotation, 0.1f))
+		
+		if (NewRotation.Equals(TargetRotation, 0.1f))
 		{
 			bIsLookingTarget = false;
-		}*/
+		}
 	}
 }
 
 void APHero::LookForward()
 {
 	// 현재 회전을 천천히 목표 회전으로 보간
-	FRotator CurrentRotation = GunPosition->GetComponentRotation();
-	FRotator TargetRotation = FRotator(0, 0, 0);
-	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 5.0f); // 5.0f는 회전 속도
-	AnimRotation = NewRotation;
+	FRotator TargetRotation = GetActorRotation();
+	FRotator NewRotation = FMath::RInterpTo(GunPosition->GetComponentRotation(), TargetRotation, GetWorld()->GetDeltaSeconds(), 5.0f); // 5.0f는 회전 속도
+	FRotator NewAnimRotation = FMath::RInterpTo(AnimRotation, FRotator(0.0f, 0.0f, 0.0f), GetWorld()->GetDeltaSeconds(), 5.0f); // 5.0f는 회전 속도
+
 	// 새로운 회전 각도를 설정
 	GunPosition->SetWorldRotation(NewRotation);
-
+	AnimRotation = NewAnimRotation;
+	
 	if (NewRotation.Equals(TargetRotation, 0.1f))
 	{
 		bIsLookingForward = false;
