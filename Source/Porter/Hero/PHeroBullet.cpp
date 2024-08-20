@@ -64,6 +64,8 @@ void APHeroBullet::OnBoxHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UP
 	// Enemy인지 태그로 식별
 	if (Hit.GetActor()->ActorHasTag("Enemy"))
 	{
+		// GetDamage 함수 실행
+		// Hit.GetActor()->GetDamage(Damage);
 		// 맞은 컴포넌트 유효성 검사
 		UPrimitiveComponent* TargetComponent = Hit.GetComponent();
 		if (TargetComponent && TargetComponent->IsA<USceneComponent>())
@@ -76,7 +78,7 @@ void APHeroBullet::OnBoxHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UP
 			SceneComponent ->GetChildrenComponents(true, ChildComponents);
 			for (USceneComponent* Child : ChildComponents)
 			{
-				if (Child)
+				if (Child->ComponentHasTag("HitProjectile"))
 				{
 					// 컴포넌트 식별
 					if (Child->bHiddenInGame)
@@ -143,4 +145,10 @@ void APHeroBullet::SetBulletPoolManager(APHeroBulletPoolManager* Manager)
 {
 	// 매니저 설정
 	BulletPoolManager = Manager;
+}
+
+void APHeroBullet::UpdateBullet(int UpdateDamage, int UpdateSpeed)
+{
+	Damage = UpdateDamage;
+	Speed = UpdateSpeed;
 }

@@ -28,13 +28,19 @@ public:
 // Hero Stat
 protected:	
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	FString HName;
+	FString Name;
+
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	int HP;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	int Damage;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	int AttackSpeed;
+
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMesh* SkeletalMesh;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	UAnimMontage* AttackAnim;
@@ -44,6 +50,12 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	float VisionAngle;
+
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	UStaticMesh* BulletMesh;
+	
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	float BulletSpeed;
 	
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	int32 Index;
@@ -52,19 +64,13 @@ protected:
 	int32 Type;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	FPHeroStruct StatInformation;
-	
-	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	FPHeroStruct TestStruct;
-
-	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	AActor* AttackTarget;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"));
-	class USceneComponent* GunPosition;
+	USceneComponent* GunPosition;
 	
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	class USceneComponent* RangeAttackPosition;
+	USceneComponent* RangeAttackPosition;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	bool bIsLookingTarget;
@@ -89,19 +95,20 @@ public:
 	
 	FPHeroStruct GetHeroStats() const;
 	void SetHeroStats(const FPHeroStruct& UpdateStats);
-	
 	void FindTarget(AActor* Target);
 	void StartAttack();
-	void StopAttack() const;
+	void StopAttack();
 	void LookTarget();
 	void LookForward();
 	void RangeAttack() const;
-
 	
-private:
-	FTimerHandle AttackTimerHandle;
+	UFUNCTION(BlueprintCallable, Category="Function")
+	void GetDamage(int TakenDamage);
+	
+	void Die();
+	void SetIndex(int NewIndex);
 
-	FTimerHandle LookForwardTimerHandle;
-
-	FTimerHandle LookTargetTimerHandle;
+	//test
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* box;
 };
