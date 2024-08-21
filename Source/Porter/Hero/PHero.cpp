@@ -73,27 +73,6 @@ void APHero::Tick(float DeltaTime)
 
 }
 
-// 애니메이션 종료시 실행하는 함수
-void APHero::OnMontageEnded(UAnimMontage* Montage, bool bInterrupted)
-{
-	if (Montage == AttackAnim)
-	{
-		// 애니메이션이 끝나기전에 종료됐다면
-		if (bInterrupted)
-		{
-			bIsLookingTarget = false;
-		}
-		else // 애니메이션이 성공적으로 끝났다면
-		{
-			if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
-			{
-				// 애니메이션 다시 실행
-				AnimInstance->Montage_Play(AttackAnim);
-			}
-		}
-	}
-}
-
 void APHero::Initialize(FPHeroStruct HeroStruct)
 {
 	// 스켈레탈 메시 할당
@@ -107,9 +86,12 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 	// Hero Stat 설정
 	SetHeroStats(HeroStruct);
 
-	if (BulletPoolManagerClass) {
-		BulletPoolManager = GetWorld()->SpawnActor<APHeroBulletPoolManager>(BulletPoolManagerClass);
-		BulletPoolManager->Initialize(BulletMesh, BulletSpeed, Damage);
+	if (!IsMelee)
+	{
+		if (BulletPoolManagerClass) {
+			BulletPoolManager = GetWorld()->SpawnActor<APHeroBulletPoolManager>(BulletPoolManagerClass);
+			BulletPoolManager->Initialize(BulletMesh, BulletSpeed, Damage);
+		}
 	}
 	
 	// AI Controller 캐스팅
@@ -138,6 +120,7 @@ FPHeroStruct APHero::GetHeroStats() const
 	Stat.VisionAngle = VisionAngle;
 	Stat.BulletMesh = BulletMesh;
 	Stat.BulletSpeed = BulletSpeed;
+	Stat.IsMelee = IsMelee;
 	Stat.Index = Index;
 	Stat.Type = Type;
 	return Stat;
@@ -155,8 +138,15 @@ void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
 	VisionAngle = UpdateStats.VisionAngle;
 	BulletMesh = UpdateStats.BulletMesh;
 	BulletSpeed = UpdateStats.BulletSpeed;
+	IsMelee = UpdateStats.IsMelee;
 	Index = UpdateStats.Index;
 	Type = UpdateStats.Type;
+}
+
+
+void APHero::SetIndex(int NewIndex)
+{
+	Index = NewIndex;
 }
 
 void APHero::FindTarget(AActor* Target)
@@ -175,6 +165,27 @@ void APHero::FindTarget(AActor* Target)
 		AnimInstance->Montage_Play(AttackAnim);
 	}
 	
+}
+
+// 애니메이션 종료시 실행하는 함수
+void APHero::OnMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	if (Montage == AttackAnim)
+	{
+		// 애니메이션이 끝나기전에 종료됐다면
+		if (bInterrupted)
+		{
+			bIsLookingTarget = false;
+		}
+		else // 애니메이션이 성공적으로 끝났다면
+		{
+			if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
+			{
+				// 애니메이션 다시 실행
+				AnimInstance->Montage_Play(AttackAnim);
+			}
+		}
+	}
 }
 
 void APHero::RangeAttack() const
@@ -197,25 +208,6 @@ void APHero::RangeAttack() const
 	}
 }
 
-void APHero::GetDamage(int TakenDamage)
-{
-	HP -= TakenDamage;
-	if (HP < 1)
-	{
-		Die();
-	}
-}
-
-void APHero::Die()
-{
-	UE_LOG(LogTemp, Log, TEXT("%s Hero Die"), *GetName());
-}
-
-void APHero::SetIndex(int NewIndex)
-{
-	Index = NewIndex;
-}
-
 void APHero::StartAttack()
 {
 	if (AttackTarget)
@@ -223,8 +215,11 @@ void APHero::StartAttack()
 		bIsLookingForward = false;
 		bIsLookingTarget = true;
 
-		// 조건문으로 근거리 원거리 공격
-		RangeAttack();
+		//원거리 공격
+		if (!IsMelee)
+		{
+			RangeAttack();
+		}		
 	}
 	
 	
@@ -282,4 +277,18 @@ void APHero::LookForward()
 	{
 		bIsLookingForward = false;
 	}
+}
+
+void APHero::GetDamage(int TakenDamage)
+{
+	HP -= TakenDamage;
+	if (HP < 1)
+	{
+		Die();
+	}
+}
+
+void APHero::Die()
+{
+	UE_LOG(LogTemp, Log, TEXT("%s Hero Die"), *GetName());
 }

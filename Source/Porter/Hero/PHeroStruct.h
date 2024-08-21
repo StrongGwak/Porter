@@ -46,6 +46,9 @@ public:
 	float BulletSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool IsMelee;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 Index = -1;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
