@@ -16,7 +16,16 @@ public:
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FString Name;
+	USkeletalMesh* SkeletalMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimSequence* Animation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector MeshLocation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector HitBoxSize;
 
 	
 };
