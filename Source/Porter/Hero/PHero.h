@@ -28,7 +28,7 @@ public:
 // Hero Stat
 protected:	
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	FString Name;
+	FName Name;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	int HP;
@@ -56,6 +56,9 @@ protected:
 	
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	float BulletSpeed;
+
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	bool IsMelee;
 	
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	int32 Index;
@@ -108,7 +111,4 @@ public:
 	void Die();
 	void SetIndex(int NewIndex);
 
-	//test
-	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* box;
 };

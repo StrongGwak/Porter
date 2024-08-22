@@ -16,7 +16,7 @@ public:
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FString Name;
+	FName Name;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int HP;
@@ -40,10 +40,7 @@ public:
 	float VisionAngle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UStaticMesh* BulletMesh;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float BulletSpeed;
+	bool IsMelee;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 Index = -1;

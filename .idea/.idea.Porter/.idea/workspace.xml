@@ -12,8 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bef04e83-89c4-43ef-abed-106d646cd890" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +35,10 @@
     &quot;accountId&quot;: &quot;84e3bbe4-cb68-4e00-a951-b6ede8c68089&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PTestStruct.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PTestStruct.h" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 0
@@ -60,9 +64,9 @@
   },
   &quot;keyToStringList&quot;: {
     &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\gwakganghan\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\gwakganghan\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\gwakganghan\\AppData\\Local\\Symbols\\src&quot;
+      &quot;C:\\Users\\12345\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\12345\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\12345\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
 }</component>
@@ -78,6 +82,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_1>
       <configuration_2>
         <option name="CONFIGURATION" value="Shipping" />
@@ -89,6 +94,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_2>
       <configuration_3>
         <option name="CONFIGURATION" value="DebugGame" />
@@ -100,6 +106,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_3>
       <configuration_4>
         <option name="CONFIGURATION" value="Development Editor" />
@@ -111,6 +118,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_4>
       <configuration_5>
         <option name="CONFIGURATION" value="Shipping" />
@@ -122,6 +130,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_5>
       <configuration_6>
         <option name="CONFIGURATION" value="DebugGame" />
@@ -133,6 +142,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_6>
       <configuration_7>
         <option name="CONFIGURATION" value="Development Editor" />
@@ -144,6 +154,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_7>
       <configuration_8>
         <option name="CONFIGURATION" value="Development" />
@@ -155,6 +166,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_8>
       <configuration_9>
         <option name="CONFIGURATION" value="DebugGame Editor" />
@@ -166,6 +178,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_9>
       <configuration_10>
         <option name="CONFIGURATION" value="Development" />
@@ -177,6 +190,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_10>
       <configuration_11>
         <option name="CONFIGURATION" value="Shipping" />
@@ -188,6 +202,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_11>
       <configuration_12>
         <option name="CONFIGURATION" value="DebugGame" />
@@ -199,6 +214,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_12>
       <configuration_13>
         <option name="CONFIGURATION" value="DebugGame Editor" />
@@ -210,6 +226,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_13>
       <configuration_14>
         <option name="CONFIGURATION" value="DebugGame Editor" />
@@ -221,6 +238,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_14>
       <configuration_15>
         <option name="CONFIGURATION" value="Development" />
@@ -232,8 +250,10 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_15>
       <option name="DEFAULT_PROJECT_PATH" value="$PROJECT_DIR$/Intermediate/ProjectFiles/Porter.vcxproj" />
+      <option name="AUTO_SELECT_PRIORITY" value="0" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -249,6 +269,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_1>
       <configuration_2>
         <option name="CONFIGURATION" value="Shipping" />
@@ -260,6 +281,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_2>
       <configuration_3>
         <option name="CONFIGURATION" value="DebugGame" />
@@ -271,6 +293,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_3>
       <configuration_4>
         <option name="CONFIGURATION" value="Development Editor" />
@@ -282,6 +305,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_4>
       <configuration_5>
         <option name="CONFIGURATION" value="Shipping" />
@@ -293,6 +317,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_5>
       <configuration_6>
         <option name="CONFIGURATION" value="DebugGame" />
@@ -304,6 +329,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_6>
       <configuration_7>
         <option name="CONFIGURATION" value="Development Editor" />
@@ -315,6 +341,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_7>
       <configuration_8>
         <option name="CONFIGURATION" value="Development" />
@@ -326,6 +353,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_8>
       <configuration_9>
         <option name="CONFIGURATION" value="DebugGame Editor" />
@@ -337,6 +365,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_9>
       <configuration_10>
         <option name="CONFIGURATION" value="Development" />
@@ -348,6 +377,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_10>
       <configuration_11>
         <option name="CONFIGURATION" value="Shipping" />
@@ -359,6 +389,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_11>
       <configuration_12>
         <option name="CONFIGURATION" value="DebugGame" />
@@ -370,6 +401,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_12>
       <configuration_13>
         <option name="CONFIGURATION" value="DebugGame Editor" />
@@ -381,6 +413,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_13>
       <configuration_14>
         <option name="CONFIGURATION" value="DebugGame Editor" />
@@ -392,6 +425,7 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_14>
       <configuration_15>
         <option name="CONFIGURATION" value="Development" />
@@ -403,8 +437,10 @@
         <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_15>
       <option name="DEFAULT_PROJECT_PATH" value="$PROJECT_DIR$/Intermediate/ProjectFiles/UE5.vcxproj" />
+      <option name="AUTO_SELECT_PRIORITY" value="0" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -475,6 +511,8 @@
       <workItem from="1723165249693" duration="62000" />
       <workItem from="1723716429788" duration="888000" />
       <workItem from="1723990061712" duration="161000" />
+      <workItem from="1724292603609" duration="141000" />
+      <workItem from="1724292857409" duration="286000" />
     </task>
     <servers />
   </component>

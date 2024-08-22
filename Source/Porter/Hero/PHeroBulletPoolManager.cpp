@@ -2,7 +2,7 @@
 
 
 #include "Hero/PHeroBulletPoolManager.h"
-
+#include "PHeroBulletStruct.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 // Sets default values
@@ -11,6 +11,7 @@ APHeroBulletPoolManager::APHeroBulletPoolManager()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	BulletDataTable = LoadObject<UDataTable>(nullptr, TEXT("/Game/Porter/Develop/Hero/DT_HeroBullet.DT_HeroBullet"));
 	// 투사체 클래스 설정
 	BulletClass = APHeroBullet::StaticClass();
 }
@@ -56,23 +57,37 @@ void APHeroBulletPoolManager::ReturnBullet(APHeroBullet* Bullet)
 	Bullet->ProjectileMovementComponent->bSimulationEnabled = false;
 }
 
-void APHeroBulletPoolManager::Initialize(UStaticMesh* NewStaticMesh, float NewSpeed, float NewDamage)
+FPHeroBulletStruct* APHeroBulletPoolManager::FindBullet(FName RowName) const
 {
-	StaticMesh = NewStaticMesh;
-	Speed = NewSpeed;
-	Damage = NewDamage;
-	
-	if (BulletClass)
+	static const FString ContextString(TEXT("Bullet Null"));
+	if (BulletDataTable)
 	{
-		// Bullet 생성
-		for (int i = 0; i < PoolSize; i++)
+		FPHeroBulletStruct* BulletStructptr = BulletDataTable->FindRow<FPHeroBulletStruct>(RowName, ContextString);
+		if (BulletStructptr)
 		{
-			APHeroBullet* Bullet = GetWorld()->SpawnActor<APHeroBullet>(BulletClass);
-			Bullet->SetActorEnableCollision(false);
-			Bullet->SetActorHiddenInGame(true);
-			Bullet->SetBulletPoolManager(this);
-			Bullet->Initialize(StaticMesh, Speed, Damage);
-			BulletPool.Add(Bullet);
+			return BulletStructptr;
+		}
+	}
+	return nullptr;
+}
+
+void APHeroBulletPoolManager::Initialize(FName RowName, int Damage)
+{
+	FPHeroBulletStruct* BulletStructptr = FindBullet(RowName);
+	if (BulletStructptr != nullptr)
+	{
+		if (BulletClass)
+		{
+			// Bullet 생성
+			for (int i = 0; i < PoolSize; i++)
+			{
+				APHeroBullet* Bullet = GetWorld()->SpawnActor<APHeroBullet>(BulletClass);
+				Bullet->SetActorEnableCollision(false);
+				Bullet->SetActorHiddenInGame(true);
+				Bullet->SetBulletPoolManager(this);
+				Bullet->Initialize(BulletStructptr, Damage);
+				BulletPool.Add(Bullet);
+			}
 		}
 	}
 }
