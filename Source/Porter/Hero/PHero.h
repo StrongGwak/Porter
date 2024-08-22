@@ -28,7 +28,7 @@ public:
 // Hero Stat
 protected:	
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	FString Name;
+	FName Name;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	int HP;

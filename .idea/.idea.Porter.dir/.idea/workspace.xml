@@ -9,9 +9,22 @@
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Boss/BP_Enemy_Boss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Boss/BP_Enemy_Boss.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Normal/BP_Enemy_Archer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Normal/BP_Enemy_Archer.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Normal/BP_Enemy_Swordman.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Normal/BP_Enemy_Swordman.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_HeroBullet.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_HeroBullet.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_Hero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_Hero.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/HeroData.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/HeroData.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAIController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBullet.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBullet.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBullet.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBullet.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBulletPoolManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBulletPoolManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBulletPoolManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBulletPoolManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroStruct.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroStruct.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,7 +283,14 @@
       <workItem from="1724053858506" duration="2709000" />
       <workItem from="1724113465892" duration="2791000" />
       <workItem from="1724137819857" duration="5250000" />
-      <workItem from="1724218128668" duration="2802000" />
+      <workItem from="1724218128668" duration="3397000" />
+      <workItem from="1724288703394" duration="1772000" />
+      <workItem from="1724290529728" duration="42000" />
+      <workItem from="1724290612203" duration="146000" />
+      <workItem from="1724291173879" duration="1163000" />
+      <workItem from="1724293138796" duration="1836000" />
+      <workItem from="1724295372988" duration="5017000" />
+      <workItem from="1724303175870" duration="2307000" />
     </task>
     <servers />
   </component>

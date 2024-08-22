@@ -90,7 +90,7 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 	{
 		if (BulletPoolManagerClass) {
 			BulletPoolManager = GetWorld()->SpawnActor<APHeroBulletPoolManager>(BulletPoolManagerClass);
-			BulletPoolManager->Initialize(BulletMesh, BulletSpeed, Damage);
+			BulletPoolManager->Initialize(Name, Damage);
 		}
 	}
 	
@@ -111,6 +111,7 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 FPHeroStruct APHero::GetHeroStats() const
 {
 	FPHeroStruct Stat;
+	Stat.Name = Name;
 	Stat.HP = HP;
 	Stat.Damage = Damage;
 	Stat.AttackSpeed = AttackSpeed;
@@ -118,8 +119,6 @@ FPHeroStruct APHero::GetHeroStats() const
 	Stat.AttackAnim = AttackAnim;
 	Stat.SightRadius = SightRadius;
 	Stat.VisionAngle = VisionAngle;
-	Stat.BulletMesh = BulletMesh;
-	Stat.BulletSpeed = BulletSpeed;
 	Stat.IsMelee = IsMelee;
 	Stat.Index = Index;
 	Stat.Type = Type;
@@ -136,8 +135,6 @@ void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
 	AttackAnim = UpdateStats.AttackAnim;
 	SightRadius = UpdateStats.SightRadius;
 	VisionAngle = UpdateStats.VisionAngle;
-	BulletMesh = UpdateStats.BulletMesh;
-	BulletSpeed = UpdateStats.BulletSpeed;
 	IsMelee = UpdateStats.IsMelee;
 	Index = UpdateStats.Index;
 	Type = UpdateStats.Type;

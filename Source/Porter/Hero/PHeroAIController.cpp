@@ -57,10 +57,7 @@ void APHeroAIController::OnPerceptionUpdated(const TArray<AActor*>& Actors)
 	TArray<AActor*> Knowns;
 	// 현재 인지하고 있는 액터들을 액터 배열에 할당
 	AIPerception->GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), Knowns);
-	for (AActor* actor : Knowns)
-	{
-		UE_LOG(LogTemp, Log, TEXT("Actors : %s"), *actor->GetName());
-	}
+	
 	if (!Knowns.IsEmpty())
 	{
 		AActor* Target = nullptr;
