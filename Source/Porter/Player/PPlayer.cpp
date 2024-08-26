@@ -248,7 +248,7 @@ void APPlayer::UpHeroesFromArray()
 {
 	// 수정했음
 	//int32 RandomInt = rand() % 5;
-	FName RowName = TEXT("Test1");
+	FName RowName = TEXT("Test2");
 	//APHero* Hero = GI->GetHeroManager()->SpawnHero(RowName);
 	APHero* Hero = GI->GetHeroManager()->FindHero(RowName);
 	if (Hero)

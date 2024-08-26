@@ -31,6 +31,21 @@ public:
 	USkeletalMesh* SkeletalMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimSequence* IdleAnim;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimSequence* WalkAnim;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimSequence* RunAnim;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimSequence* HitAnim;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimSequence* DieAim;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UAnimMontage* AttackAnim;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

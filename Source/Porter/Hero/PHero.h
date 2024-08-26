@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "Hero/PHeroBulletPoolManager.h"
 #include "Hero/PHeroStruct.h"
+#include "Hero/PHeroWeaponStruct.h"
+#include "Hero/PHeroAnimInstance.h"
 #include "GameFramework/Character.h"
 #include "PHero.generated.h"
 
@@ -20,6 +22,8 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	
+	FPHeroWeaponStruct* FindWeapon(FName RowName) const;
 
 public:	
 	// Called every frame
@@ -87,8 +91,20 @@ protected:
 	UPROPERTY(EditAnywhere)
 	APHeroBulletPoolManager* BulletPoolManager;
 
+	UPROPERTY(EditAnywhere)
+	UPHeroAnimInstance* HeroAniminstance;
+
 	UFUNCTION()
-	void OnMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+	void OnAttackEnded(UAnimMontage* Montage, bool bInterrupted);
+
+	UPROPERTY(EditDefaultsOnly)
+	UDataTable* WeaponDataTable;
+	
+	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMeshComponent* WeaponMesh;
+
+	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"));
+	UBoxComponent* WeaponCollision;
 
 public:
 	UPROPERTY(EditAnywhere)
@@ -97,18 +113,27 @@ public:
 	void Initialize(FPHeroStruct HeroStruct);
 	
 	FPHeroStruct GetHeroStats() const;
+	
 	void SetHeroStats(const FPHeroStruct& UpdateStats);
+	
 	void FindTarget(AActor* Target);
+
+	UFUNCTION()
 	void StartAttack();
+	
 	void StopAttack();
+	
 	void LookTarget();
+	
 	void LookForward();
+	
 	void RangeAttack() const;
 	
 	UFUNCTION(BlueprintCallable, Category="Function")
 	void GetDamage(int TakenDamage);
 	
 	void Die();
+	
 	void SetIndex(int NewIndex);
 
 };

@@ -4,26 +4,32 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
-#include "PHeroWeaponStruct.generated.h"
+#include "PHeroAnimationStruct.generated.h"
 
 /**
  * 
  */
 USTRUCT(BlueprintType)
-struct FPHeroWeaponStruct :public FTableRowBase
+struct FPHeroAnimationStruct :public FTableRowBase
 {
 public:
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* SkeletalMesh;
+	UAnimSequence* IdleAnim;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimSequence* WalkAnim;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimSequence* RunAnim;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UAnimSequence* Animation;
+	UAnimSequence* HitAnim;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector MeshLocation;
-
+	UAnimSequence* DieAim;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector HitBoxSize;
+	UAnimMontage* AttackAnim;
 };
