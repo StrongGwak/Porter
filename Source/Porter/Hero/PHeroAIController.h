@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "Hero/PHero.h"
 #include "Perception/AISenseConfig_Sight.h"
 #include "PHeroAIController.generated.h"
 
@@ -21,6 +22,9 @@ public:
 	// 시야 감지 설정 함수
 	void SetSightConfig(float SightRadius, float LoseSightRadius, float PeripheralVisionAngle) const;
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 protected:
 	// 감지 컴포넌트
 	UPROPERTY(VisibleAnywhere, Category="Awareness")
@@ -32,6 +36,12 @@ protected:
 
 	// 액터간 거리 계산 함수
 	float CalculateDistanceToActor(AActor* OtherActor) const;
+
+	UPROPERTY(VisibleAnywhere, Category="Awareness")
+	AActor* OldTarget = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category="Awareness")
+	APHero* Hero;
 
 public:
 	virtual void OnPossess(APawn* InPawn) override;

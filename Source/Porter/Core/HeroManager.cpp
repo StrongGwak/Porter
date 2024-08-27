@@ -4,16 +4,16 @@
 #include "HeroManager.h"
 #include "PGameInstance.h"
 #include "../Hero/PHero.h"
-#include "GameFramework/CharacterMovementComponent.h"
 
 UHeroManager::UHeroManager()
 {
 	HeroArray.Init(nullptr, MaximumArraySize);
+	HeroDataTable = LoadObject<UDataTable>(nullptr, TEXT("/Game/Porter/Develop/Hero/DT_Hero.DT_Hero"));
+	HeroClass = APHero::StaticClass();
 }
 
-void UHeroManager::Initialize(TArray<TSubclassOf<APHero>> Hero)
+void UHeroManager::Initialize()
 {
-	HeroTypeArray = Hero;
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Hero Manager")));
 }
 
@@ -25,16 +25,11 @@ void UHeroManager::SetGameInstance(UPGameInstance* PGameInstance)
 // 레벨 넘어가기 전 hero stat 저장
 void UHeroManager::SaveSpawnInformation()
 {
-	FPHeroStruct HeroStruct;
-	HeroStructArray.Empty();
-	HeroStructArray.Init(HeroStruct, MaximumArraySize);
-	//GEngine->AddOnScreenDebugMessage(-1,3,FColor::Blue,FString::FromInt(HeroStructArray.Num()));
-
-	for (int32 i=0; i<MaximumArraySize; i++)
+	if (!HeroArray.IsEmpty())
 	{
-		if (HeroArray[i] != nullptr)
+		for (APHero* Hero : HeroArray)
 		{
-			HeroStructArray[i] = HeroArray[i]->GetHeroStats();
+			HeroStructArray.Add(Hero->GetHeroStats());
 		}
 	}
 }
@@ -42,13 +37,12 @@ void UHeroManager::SaveSpawnInformation()
 // 레벨 넘어간 후 Hero Stat에 따른 Hero 소환
 void UHeroManager::OpenSpawnInformation(ACharacter* PlayerCharacter)
 {
-	for (int32 i=0; i<HeroStructArray.Num(); ++i)
+	if (!HeroArray.IsEmpty())
 	{
-		if (HeroStructArray[i].Type == -1)
-		{
-			continue;
-		}
-		SpawnHero(HeroStructArray[i].Type, PlayerCharacter, true, i);
+		for (FPHeroStruct HeroStruct : HeroStructArray)
+        	{
+        		SpawnHero(HeroStruct);
+        	}
 	}
 }
 
@@ -62,64 +56,58 @@ void UHeroManager::SetHeroArray(TArray<APHero*> Heroes)
 	HeroArray = Heroes;
 }
 
-
-void UHeroManager::SpawnHero(int32 HeroType, ACharacter* PlayerCharacter, bool bUseHeroIndex, int32 HeroIndex)
+APHero* UHeroManager::FindHero(FName RowName)
 {
-	USkeletalMeshComponent* SMComp = PlayerCharacter->GetMesh();
-	
-	int32 PortNum = GI->GetPlayerManager()->CheckPortNum();
-	//GEngine->AddOnScreenDebugMessage(-1,3,FColor::Blue,FString::FromInt(PortNum));
-	int32 HeroNum = CheckHeroNum();
-
-
-	// HeroIndex를 사용하지 않으면, 빈 곳에 영웅 소환하기
-	if (!bUseHeroIndex && HeroNum < PortNum)
+	FPHeroStruct HeroStruct;
+	static const FString ContextString(TEXT("Hero Null"));
+	if (HeroDataTable)
 	{
-		for (int32 i=0; i<HeroArray.Num(); i++)
+		FPHeroStruct* HeroStructPtr = HeroDataTable->FindRow<FPHeroStruct>(RowName, ContextString);
+		if (HeroStructPtr)
 		{
-			if(HeroArray[i] == nullptr)
-			{
-				HeroIndex = i;
-				break;
-			}
+			HeroStruct = *HeroStructPtr;
+			return SpawnHero(HeroStruct);
 		}
 	}
-	if (HeroIndex == -1)
+	return nullptr;
+}
+
+
+APHero* UHeroManager::SpawnHero(FPHeroStruct HeroStruct)
+{
+	if (HeroStruct.Index == -1)
 	{
-		return;
-	}
+		APHero* Hero = GetWorld()->SpawnActor<APHero>(HeroClass);
+		if (Hero)
+		{
+			int index = CheckHeroNum();
+			// 위치와 종류 부여
+			HeroStruct.Index = index;
 
-	// Offset Array에서 해당 위치에 맞는 값 가져오기
-	TArray<FVector> OffsetArray = GI->GetPlayerManager()->OffsetArray;
-	FVector SocketLocation = SMComp->GetSocketLocation(FName("PortSocket"));
-	FVector RelativeOffset = SocketLocation.ForwardVector*(OffsetArray[HeroIndex].X + HeroOffset.X)
-							+ SocketLocation.RightVector*(OffsetArray[HeroIndex].Y + HeroOffset.Y)
-							+ SocketLocation.UpVector*(OffsetArray[HeroIndex].Z + HeroOffset.Z);
-	FVector SpawnLocation = SocketLocation + RelativeOffset;
-	FActorSpawnParameters SpawnParameters;
-
-	APHero* Hero = GetWorld()->SpawnActor<APHero>(HeroTypeArray[HeroType], SpawnLocation, PlayerCharacter->GetActorRotation(), SpawnParameters);
-
-	if (Hero)
-	{
-		FPHeroStruct HeroStruct = Hero->GetHeroStats();
-
-		//Hero->AttachToComponent(PlayerCharacter->GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
-		Hero->AttachToComponent(SMComp, FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("PortSocket"));
-		Hero->SetActorRelativeLocation(RelativeOffset);
+			// 변경사항 저장
+			HeroArray[index] = Hero;
 		
-		// 콜리전 제거
-		Hero->SetActorEnableCollision(false);
-		Hero->GetCharacterMovement()->GravityScale=0;
+			Hero->Initialize(HeroStruct);
 
-		// 위치와 종류 부여
-		HeroStruct.Index = HeroIndex;
-		HeroStruct.Type = HeroType;
-
-		// 변경사항 저장
-		HeroArray[HeroIndex] = Hero;
-		Hero->SetHeroStats(HeroStruct);
+			return Hero;
+		}
 	}
+	else
+	{
+		APHero* Hero = GetWorld()->SpawnActor<APHero>(HeroClass);
+		if (Hero)
+		{
+
+			// 변경사항 저장
+			HeroArray[HeroStruct.Index] = Hero;
+		
+			Hero->Initialize(HeroStruct);
+
+			return Hero;
+		}
+	}
+	
+	return nullptr;
 }
 
 void UHeroManager::DestroyHero(int32 HeroIndex)
@@ -131,32 +119,14 @@ void UHeroManager::DestroyHero(int32 HeroIndex)
 	}
 }
 
-void UHeroManager::SwapHeroes(TArray<int32> IndexArray, ACharacter* PlayerCharacter)
+TArray<APHero*> UHeroManager::SwapHeroes(TArray<int32> IndexArray)
 {
-	FPHeroStruct HeroStruct;
-	USkeletalMeshComponent* MeshComp = PlayerCharacter->GetMesh();
-	TArray<APHero*> BeforeHeroArray;
-	TArray<FVector> OffsetArray = GI->GetPlayerManager()->OffsetArray;
-	FVector SocketLocation = MeshComp->GetSocketLocation(FName("PortSocket"));
-	BeforeHeroArray.Append(HeroArray);
-	
-	for (int32 HeroIndex=0; HeroIndex<HeroArray.Num(); ++HeroIndex)
+	for (int index : IndexArray)
 	{
-		HeroArray[HeroIndex] = BeforeHeroArray[IndexArray[HeroIndex]];
-		if (HeroArray[HeroIndex] != nullptr)
-		{
-			HeroArray[HeroIndex]->SetActorRelativeLocation(
-				SocketLocation.ForwardVector*(OffsetArray[HeroIndex].X + HeroOffset.X)
-				+ SocketLocation.RightVector*(OffsetArray[HeroIndex].Y + HeroOffset.Y)
-				+ SocketLocation.UpVector*(OffsetArray[HeroIndex].Z + HeroOffset.Z)
-			);
-		
-			// Index 재할당 및 SpawnInformation의 HeroType 고치기
-			HeroStruct = HeroArray[HeroIndex]->GetHeroStats();
-			HeroStruct.Index = HeroIndex;
-			HeroArray[HeroIndex]->SetHeroStats(HeroStruct);
-		}
+		HeroArray[index]->SetIndex(index);
 	}
+
+	return HeroArray;
 }
 
 int32 UHeroManager::LastHeroNum()
@@ -185,3 +155,4 @@ int32 UHeroManager::CheckHeroNum()
 	}
 	return Count;
 }
+

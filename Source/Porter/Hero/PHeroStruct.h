@@ -16,7 +16,10 @@ public:
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FString HeroName;
+	FName Name;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int HP;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int Damage;
@@ -28,6 +31,21 @@ public:
 	USkeletalMesh* SkeletalMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimSequence* IdleAnim;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimSequence* WalkAnim;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimSequence* RunAnim;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimSequence* HitAnim;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimSequence* DieAim;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UAnimMontage* AttackAnim;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -37,10 +55,7 @@ public:
 	float VisionAngle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UStaticMesh* BulletMesh;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float BulletSpeed;
+	bool IsMelee;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 Index = -1;

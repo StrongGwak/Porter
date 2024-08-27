@@ -23,7 +23,7 @@ void UPGameInstance::Init()
 	HeroManager = NewObject<UHeroManager>(this);
 	if (HeroManager)
 	{
-		HeroManager->Initialize(HeroTypeArray);
+		HeroManager->Initialize();
 		HeroManager->SetGameInstance(this);
 	}
 

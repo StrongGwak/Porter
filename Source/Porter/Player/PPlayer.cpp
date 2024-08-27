@@ -37,6 +37,9 @@ APPlayer::APPlayer()
 	bUseControllerRotationYaw = true; 
 
 	FObjectFinderInputManager();
+
+	
+	
 }
 
 // Called when the game starts or when spawned
@@ -53,6 +56,8 @@ void APPlayer::BeginPlay()
 			SubSystem->AddMappingContext(IMC, 0);
 		}
 	}
+	SetStats(Stats);
+	
 }
 
 // Called every frame
@@ -86,7 +91,8 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void APPlayer::SetStats(FPlayerStatsStruct UpdateStat)
 {
 	Stats = UpdateStat;
-	
+
+	// 스탯 저장용
 	MaxHp = Stats.MaxHp;
 	MaxStamina = Stats.MaxStamina;
 	DecreaseStamina = Stats.DecreaseStamina;
@@ -95,6 +101,8 @@ void APPlayer::SetStats(FPlayerStatsStruct UpdateStat)
 	MaxWalkSpeed = Stats.WalkSpeed;
 	BoostSpeed = Stats.BoostSpeed;
 	MaxWeight = Stats.MaxWeight;
+
+	// 
 }
 
 FPlayerStatsStruct APPlayer::GetStats()
@@ -238,8 +246,38 @@ void APPlayer::UpPort()
 
 void APPlayer::UpHeroesFromArray()
 {
-	int32 RandomInt = rand() % 5;
-	GI->GetHeroManager()->SpawnHero(0, this);
+	// 수정했음
+	//int32 RandomInt = rand() % 5;
+	FName RowName = TEXT("Test1");
+	//APHero* Hero = GI->GetHeroManager()->SpawnHero(RowName);
+	APHero* Hero = GI->GetHeroManager()->FindHero(RowName);
+	if (Hero)
+	{
+		// Player에서 처리
+		USkeletalMeshComponent* SMComp = GetMesh();
+	
+		int32 PortNum = GI->GetPlayerManager()->CheckPortNum();
+		//GEngine->AddOnScreenDebugMessage(-1,3,FColor::Blue,FString::FromInt(PortNum));
+		int32 HeroNum = Hero->GetHeroStats().Index;
+
+		// Offset Array에서 해당 위치에 맞는 값 가져오기
+		TArray<FVector> OffsetArray = GI->GetPlayerManager()->OffsetArray;
+		FVector SocketLocation = SMComp->GetSocketLocation(FName("PortSocket"));
+		UE_LOG(LogTemp, Log, TEXT("OffsetArray : %f, %f, %f"), OffsetArray[0].X, OffsetArray[0].Y, OffsetArray[0].Z);
+		UE_LOG(LogTemp, Log, TEXT("OffsetArray2 : %f, %f, %f"), OffsetArray[1].X, OffsetArray[1].Y, OffsetArray[1].Z);
+		FVector RelativeOffset = SocketLocation.ForwardVector*(OffsetArray[HeroNum].X + -40.0f)
+								+ SocketLocation.RightVector*(OffsetArray[HeroNum].Y)
+								+ SocketLocation.UpVector*(OffsetArray[HeroNum].Z);
+		FVector SpawnLocation = SocketLocation + RelativeOffset;
+		
+		Hero->SetActorLocation(SpawnLocation);
+		Hero->SetActorRotation(GetActorRotation());
+
+		Hero->AttachToComponent(SMComp, FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("PortSocket"));
+		Hero->SetActorRelativeLocation(RelativeOffset);
+	}
+	
+	//GI->GetHeroManager()->SpawnHero(0, this);
 	//GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Blue, FString::FromInt(RandomInt));
 }
 
@@ -321,7 +359,7 @@ void APPlayer::PlaySwap()
 {
 	// 0~PortNum
 	TArray<int32> TempArray = {4, 3, 2, 1, 0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
-	GI->GetHeroManager()->SwapHeroes(TempArray, this);
+	TArray<APHero*> HeroArray = GI->GetHeroManager()->SwapHeroes(TempArray);
 }
 
 // 영웅 배치, 지게 늘리거나 영웅 늘릴 때 등 수시로 사용하기  

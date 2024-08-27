@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
 #include "HeroManager.generated.h"
 
 class UPlayerManager;
@@ -20,7 +19,7 @@ class PORTER_API UHeroManager : public UObject
 public:
 	UHeroManager();
 
-	void Initialize(TArray<TSubclassOf<APHero>> Hero);
+	void Initialize();
 	void SetGameInstance(class UPGameInstance* PGameInstance);
 
 	UFUNCTION(BlueprintCallable, Blueprintable)
@@ -37,19 +36,23 @@ public:
 	
 private:
 	UPROPERTY()
-	TArray<class APHero*> HeroArray;
+	TArray<APHero*> HeroArray;
 
 public:
 	UFUNCTION()
-	void SpawnHero(int32 HeroType, ACharacter* PlayerCharacter, bool bUseHeroIndex = false, int32 HeroIndex = -1);
+	APHero* SpawnHero(FPHeroStruct HeroStruct);
 	UFUNCTION()
 	void DestroyHero(int32 HeroIndex);
 	UFUNCTION()
-	void SwapHeroes(TArray<int32> IndexArray, ACharacter* PlayerCharacter);
+	TArray<APHero*> SwapHeroes(TArray<int32> IndexArray);
 	UFUNCTION()
 	int32 LastHeroNum();
 	UFUNCTION()
 	int32 CheckHeroNum();
+
+	UFUNCTION()
+	APHero* FindHero(FName RowName);
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Options")
 	int32 MaximumArraySize = 15;
 
@@ -66,4 +69,11 @@ public:
 	// GI
 	UPROPERTY()
 	class UPGameInstance* GI;
+
+protected:
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class APHero> HeroClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	UDataTable* HeroDataTable;
 };

@@ -2,6 +2,8 @@
 
 
 #include "Hero/PHeroBulletPoolManager.h"
+#include "PHeroBulletStruct.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
 // Sets default values
 APHeroBulletPoolManager::APHeroBulletPoolManager()
@@ -9,6 +11,8 @@ APHeroBulletPoolManager::APHeroBulletPoolManager()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	BulletDataTable = LoadObject<UDataTable>(nullptr, TEXT("/Game/Porter/Develop/Hero/DT_HeroBullet.DT_HeroBullet"));
+	// 투사체 클래스 설정
 	BulletClass = APHeroBullet::StaticClass();
 }
 
@@ -16,23 +20,13 @@ APHeroBulletPoolManager::APHeroBulletPoolManager()
 void APHeroBulletPoolManager::BeginPlay()
 {
 	Super::BeginPlay();
-	if (BulletClass)
-	{
-		// Bullet 생성
-		for (int i = 0; i < PoolSize; i++)
-		{
-			APHeroBullet* Bullet = GetWorld()->SpawnActor<APHeroBullet>(BulletClass);
-			Bullet->SetActorEnableCollision(false);
-			Bullet->SetActorHiddenInGame(true);
-			BulletPool.Add(Bullet);
-		}
-	}
 }
 
 // Called every frame
 void APHeroBulletPoolManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
 
 }
 
@@ -40,7 +34,7 @@ APHeroBullet* APHeroBulletPoolManager::GetBullet()
 {
 	for (APHeroBullet* Bullet : BulletPool)
 	{
-		// 수정할곳
+		// 수정할 곳
 		if (!Bullet->IsActorActive())
 		{
 			Bullet->SetActorEnableCollision(true);
@@ -60,4 +54,40 @@ void APHeroBulletPoolManager::ReturnBullet(APHeroBullet* Bullet)
 	Bullet->SetActorEnableCollision(false);
 	Bullet->SetActorHiddenInGame(true);
 	Bullet->SetActorLocation(FVector::ZeroVector);
+	Bullet->ProjectileMovementComponent->bSimulationEnabled = false;
+}
+
+FPHeroBulletStruct* APHeroBulletPoolManager::FindBullet(FName RowName) const
+{
+	static const FString ContextString(TEXT("Bullet Null"));
+	if (BulletDataTable)
+	{
+		FPHeroBulletStruct* BulletStructptr = BulletDataTable->FindRow<FPHeroBulletStruct>(RowName, ContextString);
+		if (BulletStructptr)
+		{
+			return BulletStructptr;
+		}
+	}
+	return nullptr;
+}
+
+void APHeroBulletPoolManager::Initialize(FName RowName, int Damage)
+{
+	FPHeroBulletStruct* BulletStructptr = FindBullet(RowName);
+	if (BulletStructptr != nullptr)
+	{
+		if (BulletClass)
+		{
+			// Bullet 생성
+			for (int i = 0; i < PoolSize; i++)
+			{
+				APHeroBullet* Bullet = GetWorld()->SpawnActor<APHeroBullet>(BulletClass);
+				Bullet->SetActorEnableCollision(false);
+				Bullet->SetActorHiddenInGame(true);
+				Bullet->SetBulletPoolManager(this);
+				Bullet->Initialize(BulletStructptr, Damage);
+				BulletPool.Add(Bullet);
+			}
+		}
+	}
 }

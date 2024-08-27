@@ -109,7 +109,8 @@ public:
 	void StopBoost();
 	UFUNCTION()
 	void UpdateBoost();
-	
+
+protected:
 	// HP
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	int32 MaxHp = 5;

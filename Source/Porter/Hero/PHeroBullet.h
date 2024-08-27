@@ -4,7 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "PHeroBulletStruct.h"
 #include "PHeroBullet.generated.h"
+
+// 전방 선언
+class APHeroBulletPoolManager;
 
 UCLASS()
 class PORTER_API APHeroBullet : public AActor
@@ -26,9 +30,19 @@ public:
 	UFUNCTION()
 	void OnBoxHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
-	void Initialize(UStaticMesh* NewStaticMesh, float NewSpeed, float NewDamage, FVector FirePosition);
+	void Initialize(FPHeroBulletStruct* Struct, float NewDamage);
 
 	bool IsActorActive() const;
+
+	void Fire(FVector FirePosition) const;
+
+	// 불렛 매니저에 대한 참조 추가
+	void SetBulletPoolManager(APHeroBulletPoolManager* Manager);
+
+	UPROPERTY(EditAnywhere, Category = Projectile, Meta = (AllowPrivateAccess = "true"))
+	class UProjectileMovementComponent* ProjectileMovementComponent;
+
+	void UpdateBullet(int UpdateDamage, int UpdateSpeed);
 
 protected:
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
@@ -44,6 +58,5 @@ protected:
 	class UStaticMeshComponent* StaticMesh;
 	
 	UPROPERTY(EditAnywhere, Category = Projectile, Meta = (AllowPrivateAccess = "true"))
-	class UProjectileMovementComponent* ProjectileMovementComponent;
-
+	APHeroBulletPoolManager* BulletPoolManager;
 };

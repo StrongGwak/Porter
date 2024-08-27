@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "PHeroBulletStruct.h"
 #include "Hero/PHeroBullet.h"
 #include "GameFramework/Actor.h"
 #include "PHeroBulletPoolManager.generated.h"
@@ -28,26 +29,20 @@ public:
 	
 	void ReturnBullet(APHeroBullet* Bullet);
 
-	void Initialize(UStaticMesh* NewStaticMesh, float NewSpeed, float NewDamage);
+	void Initialize(FName RowName, int Damage);
+
+	FPHeroBulletStruct* FindBullet(FName RowName) const;
 
 protected:
-	UPROPERTY(EditAnywhere, Category = Bullet, Meta = (AllowPrivateAccess = "true"))
-	float Speed;
-
-	UPROPERTY(EditAnywhere, Category = Bullet, Meta = (AllowPrivateAccess = "true"))
-	float Damage;
-
-	UPROPERTY(EditAnywhere, Category = Bullet, Meta = (AllowPrivateAccess = "true"))
-	class UStaticMeshComponent* StaticMesh;
-
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class APHeroBullet> BulletClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	UDataTable* BulletDataTable;
 
 	UPROPERTY(EditAnywhere)
 	int32 PoolSize = 15;
 
 	TArray<APHeroBullet*> BulletPool;
-
+	
 };
-
-

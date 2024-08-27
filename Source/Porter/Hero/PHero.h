@@ -5,7 +5,9 @@
 #include "CoreMinimal.h"
 #include "Hero/PHeroBulletPoolManager.h"
 #include "Hero/PHeroStruct.h"
-#include "Hero/PHeroAIController.h"
+#include "Hero/PHeroWeaponStruct.h"
+#include "Hero/PHeroAnimInstance.h"
+#include "Hero/PHeroWeaponAnimInstance.h"
 #include "GameFramework/Character.h"
 #include "PHero.generated.h"
 
@@ -21,25 +23,29 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	
+	FPHeroWeaponStruct* FindWeapon(FName RowName) const;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-private:
-	UPROPERTY()
-	APHeroAIController* AIController = nullptr;
 	
 // Hero Stat
 protected:	
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	FString HName;
+	FName Name;
+
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	int HP;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	int Damage;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	int AttackSpeed;
+
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMesh* SkeletalMesh;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	UAnimMontage* AttackAnim;
@@ -49,6 +55,15 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	float VisionAngle;
+
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	UStaticMesh* BulletMesh;
+	
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	float BulletSpeed;
+
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	bool IsMelee;
 	
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	int32 Index;
@@ -57,19 +72,13 @@ protected:
 	int32 Type;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	FPHeroStruct StatInformation;
-	
-	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	FPHeroStruct TestStruct;
-
-	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	AActor* AttackTarget;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"));
-	class USceneComponent* GunPosition;
+	USceneComponent* GunPosition;
 	
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	class USceneComponent* RangeAttackPosition;
+	USceneComponent* RangeAttackPosition;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	bool bIsLookingTarget;
@@ -83,8 +92,23 @@ protected:
 	UPROPERTY(EditAnywhere)
 	APHeroBulletPoolManager* BulletPoolManager;
 
+	UPROPERTY(EditAnywhere)
+	UPHeroAnimInstance* HeroAniminstance;
+
 	UFUNCTION()
-	void OnMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+	void OnAttackEnded(UAnimMontage* Montage, bool bInterrupted);
+
+	UPROPERTY(EditDefaultsOnly)
+	UDataTable* WeaponDataTable;
+	
+	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMeshComponent* WeaponMesh;
+
+	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"));
+	UBoxComponent* WeaponCollision;
+
+	UPROPERTY(EditAnywhere)
+	UPHeroWeaponAnimInstance* WeaponAniminstance;
 
 public:
 	UPROPERTY(EditAnywhere)
@@ -93,20 +117,27 @@ public:
 	void Initialize(FPHeroStruct HeroStruct);
 	
 	FPHeroStruct GetHeroStats() const;
+	
 	void SetHeroStats(const FPHeroStruct& UpdateStats);
 	
 	void FindTarget(AActor* Target);
+
+	UFUNCTION()
 	void StartAttack();
-	void StopAttack() const;
-	void LookTarget();
-	void LookForward();
-	void RangeAttack() const;
-
 	
-private:
-	FTimerHandle AttackTimerHandle;
+	void StopAttack();
+	
+	void LookTarget();
+	
+	void LookForward();
+	
+	void RangeAttack() const;
+	
+	UFUNCTION(BlueprintCallable, Category="Function")
+	void GetDamage(int TakenDamage);
+	
+	void Die();
+	
+	void SetIndex(int NewIndex);
 
-	FTimerHandle LookForwardTimerHandle;
-
-	FTimerHandle LookTargetTimerHandle;
 };
