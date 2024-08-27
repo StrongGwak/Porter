@@ -7,6 +7,7 @@
 #include "Hero/PHeroStruct.h"
 #include "Hero/PHeroWeaponStruct.h"
 #include "Hero/PHeroAnimInstance.h"
+#include "Hero/PHeroWeaponAnimInstance.h"
 #include "GameFramework/Character.h"
 #include "PHero.generated.h"
 
@@ -105,6 +106,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"));
 	UBoxComponent* WeaponCollision;
+
+	UPROPERTY(EditAnywhere)
+	UPHeroWeaponAnimInstance* WeaponAniminstance;
 
 public:
 	UPROPERTY(EditAnywhere)

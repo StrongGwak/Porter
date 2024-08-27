@@ -57,9 +57,10 @@ APHero::APHero()
 	// 무기 박스 콜리전 생성
 	WeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollision"));
 	WeaponCollision->SetupAttachment(WeaponMesh);
+	WeaponCollision->SetBoxExtent(FVector(0,0,0));
 
 	// 애니메이션 인스턴스 설정
-	static ConstructorHelpers::FClassFinder<UAnimInstance> TempWeaponAnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_HeroWeapon.ABP_HeroWeapon_C"));
+	static ConstructorHelpers::FClassFinder<UAnimInstance> TempWeaponAnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_PHeroWeaponAnimation.ABP_PHeroWeaponAnimation_C"));
 	if (TempWeaponAnimInstance.Succeeded()) 
 	{
 		WeaponMesh->SetAnimInstanceClass(TempWeaponAnimInstance.Class);
@@ -136,6 +137,11 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 		WeaponCollision->SetBoxExtent(WeaponStructptr->HitBoxSize);
 		WeaponCollision->SetRelativeLocation(WeaponStructptr->MeshLocation);
 	}
+
+	if (UAnimInstance* AnimInstance = WeaponMesh->GetAnimInstance())
+	{
+		WeaponAniminstance = Cast<UPHeroWeaponAnimInstance>(AnimInstance);
+	}
 }
 
 FPHeroStruct APHero::GetHeroStats() const
@@ -200,9 +206,14 @@ void APHero::FindTarget(AActor* Target)
 		bIsLookingForward = false;
 		bIsLookingTarget = true;
 	}
+	if (WeaponAniminstance)
+	{
+		WeaponAniminstance->StartAttack();
+	}
 	// 처음 적을 발견시 공격 애니메이션 시작
 	if (HeroAniminstance)
 	{
+		
 		HeroAniminstance->Attack();
 	}
 }
@@ -273,6 +284,10 @@ void APHero::StopAttack()
 	{
 		bIsLookingTarget = false;
 		bIsLookingForward = true;
+	}
+	if (WeaponAniminstance)
+	{
+		WeaponAniminstance->StartAttack();
 	}
 	if (HeroAniminstance)
 	{
