@@ -181,7 +181,8 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 		WeaponCollision->SetRelativeLocation(WeaponStructptr->MeshLocation);
 		if (WeaponStructptr->bIsAttachSocket)
 		{
-			WeaponMesh->SetupAttachment(GetMesh(), TEXT("WeaponSocket"));
+			FName SocketName = TEXT("WeaponSocket");
+			WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, SocketName);
 		}
 		
 	}

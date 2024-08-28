@@ -9,28 +9,8 @@
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_CPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_CPlayer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_Player.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_Player.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/ABP_PHeroAnimation.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/ABP_PHeroAnimation.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/AM_BowAttack.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/AM_Bow_Attack.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/AM_DangpaAttack.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Anim_Dangpa_Attack3_Soldier.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Bow_Attack1_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Bow_Attack1_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Bow_Attack1_UE1.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Bow_Attack2_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Bow_Attack2_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Bow_Attack2_UE1.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/IK_Source.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/IK_Source.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/IK_TestHero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/IK_TestHero.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/RTG_NewRetargeter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/RTG_NewRetargeter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/SittingIdle_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/SittingIdle_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_Hero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_Hero.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroAnimation.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroAnimation.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroWeapon.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroWeapon.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroStruct.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroStruct.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroWeaponStruct.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroWeaponStruct.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -306,6 +286,7 @@
       <workItem from="1724818821422" duration="4455000" />
       <workItem from="1724826617556" duration="2335000" />
       <workItem from="1724836681091" duration="1450000" />
+      <workItem from="1724838941057" duration="759000" />
     </task>
     <servers />
   </component>
