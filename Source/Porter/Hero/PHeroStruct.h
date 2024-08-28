@@ -28,26 +28,23 @@ public:
 	int AttackSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* SkeletalMesh;
+	USkeletalMesh* BodyMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UAnimSequence* IdleAnim;
+	USkeletalMesh* HairMesh;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UAnimSequence* WalkAnim;
+	USkeletalMesh* TopMesh;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UAnimSequence* RunAnim;
+	USkeletalMesh* BottomMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UAnimSequence* HitAnim;
+	USkeletalMesh* ShoesMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UAnimSequence* DieAim;
+	USkeletalMesh* AccessorieMesh;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UAnimMontage* AttackAnim;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float SightRadius;
 

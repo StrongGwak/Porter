@@ -24,13 +24,25 @@ APHero::APHero()
 	GetCapsuleComponent()->SetCollisionObjectType(ECC_GameTraceChannel2);
 	GetCapsuleComponent()->SetCapsuleHalfHeight(60);
 
+	// 스켈레탈메시 생성
+	HairMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("HairMesh"));
+	HairMeshComponent->SetupAttachment(GetMesh());
+	TopMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("TopMesh"));
+	TopMeshComponent->SetupAttachment(GetMesh());
+	BottomMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("BottomMesh"));
+	BottomMeshComponent->SetupAttachment(GetMesh());
+	ShoesMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("ShoesMesh"));
+	ShoesMeshComponent->SetupAttachment(GetMesh());
+	AccessorieMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("AccessorieMesh"));
+	AccessorieMeshComponent->SetupAttachment(GetMesh());
+
 	// 애니메이션 인스턴스 설정
 	static ConstructorHelpers::FClassFinder<UAnimInstance> TempAnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_PHeroAnimation.ABP_PHeroAnimation_C"));
 	if (TempAnimInstance.Succeeded()) 
 	{
 		GetMesh()->SetAnimInstanceClass(TempAnimInstance.Class);
 	}
-
+	
 	GunPosition = CreateDefaultSubobject<USceneComponent>(TEXT("GunPosition"));
 	GunPosition->SetupAttachment(GetCapsuleComponent());
 	
@@ -44,16 +56,20 @@ APHero::APHero()
 	// 월드에 배치되거나 스폰될 때 AI Controller에 의해 제어되도록 설정
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
+	// 투사체 매니저 클래스 할당
 	BulletPoolManagerClass = APHeroBulletPoolManager::StaticClass();
 
+	// 영웅 콜리전 제거 및 중력 제거
 	SetActorEnableCollision(false);
 	GetCharacterMovement()->GravityScale=0;
 
+	// 무기 데이터 테이블 불러오기
 	WeaponDataTable = LoadObject<UDataTable>(nullptr, TEXT("/Game/Porter/Develop/Hero/DT_HeroWeapon.DT_HeroWeapon"));
 	
 	// 무기 스켈레탈 메시 추가
 	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponSkeletalMesh"));
 	WeaponMesh->SetupAttachment(GetMesh());
+	
 	// 무기 박스 콜리전 생성
 	WeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollision"));
 	WeaponCollision->SetupAttachment(WeaponMesh);
@@ -65,6 +81,7 @@ APHero::APHero()
 	{
 		WeaponMesh->SetAnimInstanceClass(TempWeaponAnimInstance.Class);
 	}
+	
 }
 
 // Called when the game starts or when spawned
@@ -96,11 +113,37 @@ void APHero::Tick(float DeltaTime)
 void APHero::Initialize(FPHeroStruct HeroStruct)
 {
 	// 스켈레탈 메시 할당
-	if (HeroStruct.SkeletalMesh)
+	if (HeroStruct.BodyMesh)
 	{
-		GetMesh()->SetSkeletalMesh(HeroStruct.SkeletalMesh);
+		GetMesh()->SetSkeletalMesh(HeroStruct.BodyMesh);
 		GetMesh()->SetRelativeLocation(FVector3d(0.0f, 0.0f, -90.0f));
 		GetMesh()->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
+
+		if(HeroStruct.HairMesh)
+		{
+			HairMeshComponent->SetSkeletalMesh(HeroStruct.HairMesh);
+			HairMeshComponent->SetLeaderPoseComponent(GetMesh());
+		}
+		if(HeroStruct.TopMesh)
+		{
+			TopMeshComponent->SetSkeletalMesh(HeroStruct.TopMesh);
+			TopMeshComponent->SetLeaderPoseComponent(GetMesh());
+		}
+		if(HeroStruct.BottomMesh)
+		{
+			BottomMeshComponent->SetSkeletalMesh(HeroStruct.BottomMesh);
+			BottomMeshComponent->SetLeaderPoseComponent(GetMesh());
+		}
+		if(HeroStruct.ShoesMesh)
+		{
+			ShoesMeshComponent->SetSkeletalMesh(HeroStruct.ShoesMesh);
+			ShoesMeshComponent->SetLeaderPoseComponent(GetMesh());
+		}
+		if(HeroStruct.AccessorieMesh)
+		{
+			AccessorieMeshComponent->SetSkeletalMesh(HeroStruct.AccessorieMesh);
+			AccessorieMeshComponent->SetLeaderPoseComponent(GetMesh());
+		}
 	}
 
 	// Hero Stat 설정
@@ -136,6 +179,11 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 		WeaponMesh->SetSkeletalMesh(WeaponStructptr->SkeletalMesh);
 		WeaponCollision->SetBoxExtent(WeaponStructptr->HitBoxSize);
 		WeaponCollision->SetRelativeLocation(WeaponStructptr->MeshLocation);
+		if (WeaponStructptr->bIsAttachSocket)
+		{
+			WeaponMesh->SetupAttachment(GetMesh(), TEXT("WeaponSocket"));
+		}
+		
 	}
 
 	if (UAnimInstance* AnimInstance = WeaponMesh->GetAnimInstance())
@@ -151,8 +199,12 @@ FPHeroStruct APHero::GetHeroStats() const
 	Stat.HP = HP;
 	Stat.Damage = Damage;
 	Stat.AttackSpeed = AttackSpeed;
-	Stat.SkeletalMesh = SkeletalMesh;
-	Stat.AttackAnim = AttackAnim;
+	Stat.BodyMesh = BodyMesh;
+	Stat.HairMesh = HairMesh;
+	Stat.TopMesh = TopMesh;
+	Stat.BottomMesh = BottomMesh;
+	Stat.ShoesMesh = ShoesMesh;
+	Stat.AccessorieMesh = AccessorieMesh;
 	Stat.SightRadius = SightRadius;
 	Stat.VisionAngle = VisionAngle;
 	Stat.IsMelee = IsMelee;
@@ -167,8 +219,12 @@ void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
 	HP = UpdateStats.HP;
 	Damage = UpdateStats.Damage;
 	AttackSpeed = UpdateStats.AttackSpeed;
-	SkeletalMesh = UpdateStats.SkeletalMesh;
-	AttackAnim = UpdateStats.AttackAnim;
+	BodyMesh = UpdateStats.BodyMesh;
+	HairMesh = UpdateStats.HairMesh;
+	TopMesh = UpdateStats.TopMesh;
+	BottomMesh = UpdateStats.BottomMesh;
+	ShoesMesh = UpdateStats.ShoesMesh;
+	AccessorieMesh = UpdateStats.AccessorieMesh;
 	SightRadius = UpdateStats.SightRadius;
 	VisionAngle = UpdateStats.VisionAngle;
 	IsMelee = UpdateStats.IsMelee;
@@ -213,7 +269,6 @@ void APHero::FindTarget(AActor* Target)
 	// 처음 적을 발견시 공격 애니메이션 시작
 	if (HeroAniminstance)
 	{
-		
 		HeroAniminstance->Attack();
 	}
 }
@@ -273,8 +328,6 @@ void APHero::StartAttack()
 			RangeAttack();
 		}		
 	}
-	
-	
 }
 
 void APHero::StopAttack()

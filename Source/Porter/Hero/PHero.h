@@ -44,11 +44,38 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	int AttackSpeed;
 
-	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	USkeletalMesh* SkeletalMesh;
+	UPROPERTY(EditAnywhere, Category = Mesh, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMesh* BodyMesh;
 
-	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	UAnimMontage* AttackAnim;
+	UPROPERTY(EditAnywhere, Category = Mesh, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMesh* HairMesh;
+
+	UPROPERTY(EditAnywhere, Category = Mesh, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMesh* TopMesh;
+
+	UPROPERTY(EditAnywhere, Category = Mesh, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMesh* BottomMesh;
+
+	UPROPERTY(EditAnywhere, Category = Mesh, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMesh* ShoesMesh;
+
+	UPROPERTY(EditAnywhere, Category = Mesh, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMesh* AccessorieMesh;
+
+	UPROPERTY(EditAnywhere, Category = Mesh, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMeshComponent* HairMeshComponent;
+
+	UPROPERTY(EditAnywhere, Category = Mesh, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMeshComponent* TopMeshComponent;
+
+	UPROPERTY(EditAnywhere, Category = Mesh, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMeshComponent* BottomMeshComponent;
+
+	UPROPERTY(EditAnywhere, Category = Mesh, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMeshComponent* ShoesMeshComponent;
+
+	UPROPERTY(EditAnywhere, Category = Mesh, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMeshComponent* AccessorieMeshComponent;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	float SightRadius;

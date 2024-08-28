@@ -26,4 +26,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector HitBoxSize;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bIsAttachSocket;
 };
