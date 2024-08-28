@@ -99,9 +99,9 @@ public:
 	
 
 	// 나중에 옮기기
-	UFUNCTION(Category="Stats")
+	UFUNCTION(BlueprintCallable, Blueprintable,Category="Stats")
 	void PlusHP(int32 Heal);
-	UFUNCTION(Category="Stats")
+	UFUNCTION(BlueprintCallable, Blueprintable,Category="Stats")
 	void MinusHP(int32 Damage);
 	UFUNCTION()
 	void Boost();
