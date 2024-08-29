@@ -40,7 +40,14 @@ APHero::APHero()
 	static ConstructorHelpers::FClassFinder<UAnimInstance> TempAnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_PHeroAnimation.ABP_PHeroAnimation_C"));
 	if (TempAnimInstance.Succeeded()) 
 	{
-		GetMesh()->SetAnimInstanceClass(TempAnimInstance.Class);
+		AnimClass = TempAnimInstance.Class;
+	}
+
+	static ConstructorHelpers::FClassFinder<UAnimInstance> TempSolAnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_PHeroSoldierAnimation.ABP_PHeroSoldierAnimation_C"));
+	if (TempSolAnimInstance.Succeeded()) 
+	{
+		//GetMesh()->SetAnimInstanceClass(TempSolAnimInstance.Class);
+		SolAnimClass = TempSolAnimInstance.Class;
 	}
 	
 	GunPosition = CreateDefaultSubobject<USceneComponent>(TEXT("GunPosition"));
@@ -165,6 +172,18 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 		AIController->SetSightConfig(SightRadius, SightRadius + 100.0f, VisionAngle);
 	}
 
+
+	if (HeroStruct.IsMelee)
+	{
+		GetMesh()->SetAnimInstanceClass(SolAnimClass);
+	}
+	else
+	{
+		GetMesh()->SetAnimInstanceClass(AnimClass);
+		// 테스트용
+		GetMesh()->SetRelativeLocation(FVector3d(-15.0f, 0.0f, -105.0f));
+	}
+	
 	if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
 	{
 		HeroAniminstance = Cast<UPHeroAnimInstance>(AnimInstance);
@@ -177,6 +196,7 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 	if (WeaponStructptr != nullptr)
 	{
 		WeaponMesh->SetSkeletalMesh(WeaponStructptr->SkeletalMesh);
+		//WeaponMesh->SetRelativeLocation(FVector(-1, 0, 3));
 		WeaponCollision->SetBoxExtent(WeaponStructptr->HitBoxSize);
 		WeaponCollision->SetRelativeLocation(WeaponStructptr->MeshLocation);
 		if (WeaponStructptr->bIsAttachSocket)
@@ -190,6 +210,7 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 	if (UAnimInstance* AnimInstance = WeaponMesh->GetAnimInstance())
 	{
 		WeaponAniminstance = Cast<UPHeroWeaponAnimInstance>(AnimInstance);
+		//AnimInstance->OnMontageEnded.AddDynamic(this, &APHero::OnAttackEnded);
 	}
 }
 
@@ -263,7 +284,7 @@ void APHero::FindTarget(AActor* Target)
 		bIsLookingForward = false;
 		bIsLookingTarget = true;
 	}
-	if (WeaponAniminstance)
+	if (IsMelee && WeaponAniminstance)
 	{
 		WeaponAniminstance->StartAttack();
 	}
@@ -290,7 +311,11 @@ void APHero::OnAttackEnded(UAnimMontage* Montage, bool bInterrupted)
 			{
 				HeroAniminstance->Attack();
 				//무기 애니메이션 인스턴스 적용해서 공격애니메이션해야함
-				//WeaponMesh->GetAnimInstance();
+				if (IsMelee)
+				{
+					WeaponAniminstance->StartAttack();
+				}
+				
 			}
 		}
 	}
@@ -339,9 +364,9 @@ void APHero::StopAttack()
 		bIsLookingTarget = false;
 		bIsLookingForward = true;
 	}
-	if (WeaponAniminstance)
+	if (IsMelee && WeaponAniminstance)
 	{
-		WeaponAniminstance->StartAttack();
+		WeaponAniminstance->StopAttack();
 	}
 	if (HeroAniminstance)
 	{
@@ -361,7 +386,7 @@ void APHero::LookTarget()
 		// 새로운 회전 각도를 설정
 		GunPosition->SetWorldRotation(NewRotation);
 		HeroAniminstance->SetRotator(GunPosition->GetRelativeRotation());
-		
+		WeaponMesh->SetRelativeRotation(FRotator(0, GunPosition->GetRelativeRotation().Yaw, 0));
 		if (NewRotation.Equals(TargetRotation, 0.1f))
 		{
 			bIsLookingTarget = false;
@@ -379,6 +404,7 @@ void APHero::LookForward()
 	// 새로운 회전 각도를 설정
 	GunPosition->SetWorldRotation(NewRotation);
 	HeroAniminstance->SetRotator(NewAnimRotation);
+	WeaponMesh->SetRelativeRotation(NewAnimRotation);
 	
 	if (NewRotation.Equals(TargetRotation, 0.1f))
 	{

@@ -63,6 +63,9 @@ protected:
 	USkeletalMesh* AccessorieMesh;
 
 	UPROPERTY(EditAnywhere, Category = Mesh, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMeshComponent* BodyMeshComponent;
+	
+	UPROPERTY(EditAnywhere, Category = Mesh, Meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* HairMeshComponent;
 
 	UPROPERTY(EditAnywhere, Category = Mesh, Meta = (AllowPrivateAccess = "true"))
@@ -136,6 +139,12 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	UPHeroWeaponAnimInstance* WeaponAniminstance;
+
+	UPROPERTY(EditAnywhere)
+	UClass* AnimClass;
+	
+	UPROPERTY(EditAnywhere)
+	UClass* SolAnimClass;
 
 public:
 	UPROPERTY(EditAnywhere)

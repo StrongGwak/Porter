@@ -14,6 +14,9 @@ struct FPHeroAnimationStruct :public FTableRowBase
 {
 public:
 	GENERATED_BODY()
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimSequence* SittingAnim;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UAnimSequence* IdleAnim;

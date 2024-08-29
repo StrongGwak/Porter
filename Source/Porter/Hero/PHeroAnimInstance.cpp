@@ -15,6 +15,7 @@ void UPHeroAnimInstance::SetAnimation(FName RowName)
 
 	if (AnimationStructptr != nullptr)
 	{
+		SittingAnim = AnimationStructptr->SittingAnim;
 		IdleAnim = AnimationStructptr->IdleAnim;
 		WalkAnim = AnimationStructptr->WalkAnim;
 		RunAnim = AnimationStructptr->RunAnim;
@@ -59,6 +60,7 @@ void UPHeroAnimInstance::StopAttack()
 void UPHeroAnimInstance::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
+	
 
 }
 

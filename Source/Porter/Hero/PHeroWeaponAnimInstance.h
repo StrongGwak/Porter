@@ -26,4 +26,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool bIsAttack;
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UAnimMontage* Attack;
+	
 };

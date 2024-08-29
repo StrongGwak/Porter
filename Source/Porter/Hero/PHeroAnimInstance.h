@@ -47,6 +47,9 @@ protected:
 	FRotator RotationToTarget;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
+	UAnimSequence* SittingAnim;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
 	UAnimSequence* IdleAnim;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
