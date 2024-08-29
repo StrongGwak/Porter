@@ -114,7 +114,8 @@ void UHeroManager::DestroyHero(int32 HeroIndex)
 {
 	if (HeroArray[HeroIndex] != nullptr)
 	{
-		HeroArray[HeroIndex]->Destroy();
+		HeroArray[HeroIndex]->Die();
+		//HeroArray[HeroIndex]->Destroy();
 		HeroArray[HeroIndex] = nullptr;
 	}
 }
