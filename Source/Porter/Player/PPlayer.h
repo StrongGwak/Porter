@@ -156,8 +156,8 @@ public:
 	void UpPort();
 	UFUNCTION()
 	void DownPort();
-	UFUNCTION()
-	void UpHeroesFromArray();
+	UFUNCTION(BlueprintCallable, Blueprintable)
+	void UpHeroesFromArray(FName RowName = TEXT("Test1"));
 	UFUNCTION()
 	void FObjectFinderInputManager();
 	UFUNCTION()
@@ -175,6 +175,8 @@ public:
 	void SaveSpawn();
 	UFUNCTION()
 	void OpenSpawn();
-	
+
+	UFUNCTION()
+	void TempTest();
 
 };
