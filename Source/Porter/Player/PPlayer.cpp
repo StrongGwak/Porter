@@ -57,6 +57,8 @@ void APPlayer::BeginPlay()
 		}
 	}
 	SetStats(Stats);
+
+	UpPort();
 	
 }
 
@@ -80,7 +82,7 @@ void APPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Started, this, &APPlayer::Boost);
 	EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Completed, this, &APPlayer::StopBoost);
 	EnhancedInputComponent->BindAction(SwapAction, ETriggerEvent::Started, this, &APPlayer::PlaySwap);
-	EnhancedInputComponent->BindAction(TestHeroUpAction, ETriggerEvent::Started, this, &APPlayer::UpHeroesFromArray);
+	EnhancedInputComponent->BindAction(TestHeroUpAction, ETriggerEvent::Started, this, &APPlayer::TempTest);
 	EnhancedInputComponent->BindAction(TestHeroKill, ETriggerEvent::Started, this, &APPlayer::MakeHeroHPZero);
 	EnhancedInputComponent->BindAction(TestDamage, ETriggerEvent::Started, this, &APPlayer::GetDamage);
 	EnhancedInputComponent->BindAction(TestSave, ETriggerEvent::Started, this, &APPlayer::SaveSpawn);
@@ -244,19 +246,25 @@ void APPlayer::UpPort()
 	SpringArm->TargetArmLength = 400 + GI->GetPlayerManager()->SpawnPort(0, this);
 }
 
-void APPlayer::UpHeroesFromArray()
+void APPlayer::UpHeroesFromArray(FName RowName)
 {
 	// 수정했음
 	//int32 RandomInt = rand() % 5;
-	FName RowName = TEXT("Test1");
+	//RowName = TEXT("Test1");
 	//APHero* Hero = GI->GetHeroManager()->SpawnHero(RowName);
 	APHero* Hero = GI->GetHeroManager()->FindHero(RowName);
 	if (Hero)
 	{
+		// hero 숫자가 더 많으면 지게도 쌓아올리기
+		int32 PortNum = GI->GetPlayerManager()->CheckPortNum();
+		int32 LastHeroIndex = GI->GetHeroManager()->LastHeroNum();
+		if (PortNum <= LastHeroIndex)
+		{
+			UpPort();
+		}
 		// Player에서 처리
 		USkeletalMeshComponent* SMComp = GetMesh();
-	
-		int32 PortNum = GI->GetPlayerManager()->CheckPortNum();
+		
 		//GEngine->AddOnScreenDebugMessage(-1,3,FColor::Blue,FString::FromInt(PortNum));
 		int32 HeroNum = Hero->GetHeroStats().Index;
 
@@ -426,4 +434,9 @@ void APPlayer::OpenSpawn()
 	GI->GetPlayerManager()->OpenSpawnInformation(this);
 	GI->GetHeroManager()->OpenSpawnInformation(this);
 	SpringArm->TargetArmLength = 400 + GI->GetPlayerManager()->AddCameraLength * GI->GetPlayerManager()->PortFloorArray[GI->GetPlayerManager()->CheckPortNum()];
+}
+
+void APPlayer::TempTest()
+{
+	UpHeroesFromArray();
 }
