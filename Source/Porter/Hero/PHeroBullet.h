@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "PHeroBulletStruct.h"
 #include "PHeroBullet.generated.h"
 
 // 전방 선언
@@ -29,7 +30,7 @@ public:
 	UFUNCTION()
 	void OnBoxHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
-	void Initialize(UStaticMesh* NewStaticMesh, float NewSpeed, float NewDamage);
+	void Initialize(FPHeroBulletStruct* Struct, float NewDamage);
 
 	bool IsActorActive() const;
 
@@ -40,6 +41,8 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = Projectile, Meta = (AllowPrivateAccess = "true"))
 	class UProjectileMovementComponent* ProjectileMovementComponent;
+
+	void UpdateBullet(int UpdateDamage, int UpdateSpeed);
 
 protected:
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
