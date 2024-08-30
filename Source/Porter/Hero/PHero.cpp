@@ -42,7 +42,8 @@ APHero::APHero()
 	{
 		AnimClass = TempAnimInstance.Class;
 	}
-
+	
+	// 테스트용
 	static ConstructorHelpers::FClassFinder<UAnimInstance> TempSolAnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_PHeroSoldierAnimation.ABP_PHeroSoldierAnimation_C"));
 	if (TempSolAnimInstance.Succeeded()) 
 	{
@@ -284,6 +285,7 @@ void APHero::FindTarget(AActor* Target)
 		bIsLookingForward = false;
 		bIsLookingTarget = true;
 	}
+	
 	if (IsMelee && WeaponAniminstance)
 	{
 		WeaponAniminstance->StartAttack();
