@@ -28,6 +28,9 @@ public:
 	int AttackSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimBlueprint* AnimBlueprint;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* BodyMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -54,9 +57,4 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsMelee;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 Index = -1;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 Type = -1;
 };
