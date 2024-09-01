@@ -28,7 +28,7 @@ public:
 	int AttackSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UAnimBlueprint* AnimBlueprint;
+	TSubclassOf<UAnimBlueprint*> AnimBlueprintClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* BodyMesh;

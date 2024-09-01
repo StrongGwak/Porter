@@ -174,7 +174,7 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 	}
 
 
-	if (HeroStruct.IsMelee)
+	/*if (HeroStruct.IsMelee)
 	{
 		GetMesh()->SetAnimInstanceClass(SolAnimClass);
 	}
@@ -183,7 +183,10 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 		GetMesh()->SetAnimInstanceClass(AnimClass);
 		// 테스트용
 		GetMesh()->SetRelativeLocation(FVector3d(-15.0f, 0.0f, -105.0f));
-	}
+	}*/
+
+	// 애니메이션 블루프린트 구조체에서 할당
+	GetMesh()->SetAnimInstanceClass(HeroStruct.AnimBlueprintClass);
 	
 	if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
 	{
@@ -231,8 +234,6 @@ FPHeroStruct APHero::GetHeroStats() const
 	Stat.SightRadius = SightRadius;
 	Stat.VisionAngle = VisionAngle;
 	Stat.IsMelee = IsMelee;
-	Stat.Index = Index;
-	Stat.Type = Type;
 	return Stat;
 }
 
@@ -251,8 +252,6 @@ void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
 	SightRadius = UpdateStats.SightRadius;
 	VisionAngle = UpdateStats.VisionAngle;
 	IsMelee = UpdateStats.IsMelee;
-	Index = UpdateStats.Index;
-	Type = UpdateStats.Type;
 }
 
 

@@ -99,6 +99,6 @@ Content/*
 Content/Porter/*
 !Content/Porter/Develop/
 
-workspace.xml
+.idea/.idea.Porter/.idea/workspace.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/unrealengine
