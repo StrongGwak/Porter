@@ -124,7 +124,7 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 	if (HeroStruct.BodyMesh)
 	{
 		GetMesh()->SetSkeletalMesh(HeroStruct.BodyMesh);
-		GetMesh()->SetRelativeLocation(FVector3d(0.0f, 0.0f, -90.0f));
+		GetMesh()->SetRelativeLocation(HeroStruct.MeshLocation);
 		GetMesh()->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 
 		if(HeroStruct.HairMesh)
@@ -173,16 +173,9 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 		AIController->SetSightConfig(SightRadius, SightRadius + 100.0f, VisionAngle);
 	}
 
-
-	if (HeroStruct.IsMelee)
+	if (HeroStruct.AnimationBlueprint)
 	{
-		GetMesh()->SetAnimInstanceClass(SolAnimClass);
-	}
-	else
-	{
-		GetMesh()->SetAnimInstanceClass(AnimClass);
-		// 테스트용
-		GetMesh()->SetRelativeLocation(FVector3d(-15.0f, 0.0f, -105.0f));
+		//GetMesh()->SetAnimInstanceClass(AnimationBlueprint);
 	}
 	
 	if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())

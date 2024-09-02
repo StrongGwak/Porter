@@ -28,6 +28,9 @@ public:
 	int AttackSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector MeshLocation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* BodyMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -55,8 +58,5 @@ public:
 	bool IsMelee;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 Index = -1;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 Type = -1;
+	TSubclassOf<UAnimBlueprint> AnimationBlueprint;
 };
