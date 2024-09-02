@@ -36,21 +36,6 @@ APHero::APHero()
 	AccessorieMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("AccessorieMesh"));
 	AccessorieMeshComponent->SetupAttachment(GetMesh());
 
-	// 애니메이션 인스턴스 설정
-	static ConstructorHelpers::FClassFinder<UAnimInstance> TempAnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_PHeroAnimation.ABP_PHeroAnimation_C"));
-	if (TempAnimInstance.Succeeded()) 
-	{
-		AnimClass = TempAnimInstance.Class;
-	}
-	
-	// 테스트용
-	static ConstructorHelpers::FClassFinder<UAnimInstance> TempSolAnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_PHeroSoldierAnimation.ABP_PHeroSoldierAnimation_C"));
-	if (TempSolAnimInstance.Succeeded()) 
-	{
-		//GetMesh()->SetAnimInstanceClass(TempSolAnimInstance.Class);
-		SolAnimClass = TempSolAnimInstance.Class;
-	}
-	
 	GunPosition = CreateDefaultSubobject<USceneComponent>(TEXT("GunPosition"));
 	GunPosition->SetupAttachment(GetCapsuleComponent());
 	
@@ -173,24 +158,19 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 		AIController->SetSightConfig(SightRadius, SightRadius + 100.0f, VisionAngle);
 	}
 
-	if (HeroStruct.AnimationBlueprint)
+	if (AnimInstance)
 	{
-		//GetMesh()->SetAnimInstanceClass(AnimationBlueprint);
-	}
-	
-	if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
-	{
-		HeroAniminstance = Cast<UPHeroAnimInstance>(AnimInstance);
+		GetMesh()->SetAnimInstanceClass(AnimInstance);
+		HeroAniminstance = Cast<UPHeroAnimInstance>(GetMesh()->GetAnimInstance());
 		HeroAniminstance->SetAnimation(Name);
 		HeroAniminstance->OnAttackNotifyDelegate.AddDynamic(this, &APHero::StartAttack);
-		AnimInstance->OnMontageEnded.AddDynamic(this, &APHero::OnAttackEnded);
+		GetMesh()->GetAnimInstance()->OnMontageEnded.AddDynamic(this, &APHero::OnAttackEnded);
 	}
-
+	
 	FPHeroWeaponStruct* WeaponStructptr = FindWeapon(Name);
 	if (WeaponStructptr != nullptr)
 	{
 		WeaponMesh->SetSkeletalMesh(WeaponStructptr->SkeletalMesh);
-		//WeaponMesh->SetRelativeLocation(FVector(-1, 0, 3));
 		WeaponCollision->SetBoxExtent(WeaponStructptr->HitBoxSize);
 		WeaponCollision->SetRelativeLocation(WeaponStructptr->MeshLocation);
 		if (WeaponStructptr->bIsAttachSocket)
@@ -201,9 +181,9 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 		
 	}
 
-	if (UAnimInstance* AnimInstance = WeaponMesh->GetAnimInstance())
+	if (UAnimInstance* WeaponAnimInstance = WeaponMesh->GetAnimInstance())
 	{
-		WeaponAniminstance = Cast<UPHeroWeaponAnimInstance>(AnimInstance);
+		WeaponAniminstance = Cast<UPHeroWeaponAnimInstance>(WeaponAnimInstance);
 		//AnimInstance->OnMontageEnded.AddDynamic(this, &APHero::OnAttackEnded);
 	}
 }
@@ -212,9 +192,12 @@ FPHeroStruct APHero::GetHeroStats() const
 {
 	FPHeroStruct Stat;
 	Stat.Name = Name;
+	Stat.KorName = KorName;
 	Stat.HP = HP;
 	Stat.Damage = Damage;
 	Stat.AttackSpeed = AttackSpeed;
+	Stat.MeshLocation = MeshLocation;
+	Stat.AnimInstance = AnimInstance;
 	Stat.BodyMesh = BodyMesh;
 	Stat.HairMesh = HairMesh;
 	Stat.TopMesh = TopMesh;
@@ -224,15 +207,19 @@ FPHeroStruct APHero::GetHeroStats() const
 	Stat.SightRadius = SightRadius;
 	Stat.VisionAngle = VisionAngle;
 	Stat.IsMelee = IsMelee;
+	Stat.Index = Index;
 	return Stat;
 }
 
 void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
 {
 	Name = UpdateStats.Name;
+	KorName = UpdateStats.KorName;
 	HP = UpdateStats.HP;
 	Damage = UpdateStats.Damage;
 	AttackSpeed = UpdateStats.AttackSpeed;
+	MeshLocation = UpdateStats.MeshLocation;
+	AnimInstance = UpdateStats.AnimInstance;
 	BodyMesh = UpdateStats.BodyMesh;
 	HairMesh = UpdateStats.HairMesh;
 	TopMesh = UpdateStats.TopMesh;
@@ -242,12 +229,7 @@ void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
 	SightRadius = UpdateStats.SightRadius;
 	VisionAngle = UpdateStats.VisionAngle;
 	IsMelee = UpdateStats.IsMelee;
-}
-
-
-void APHero::SetIndex(int NewIndex)
-{
-	Index = NewIndex;
+	Index = UpdateStats.Index;
 }
 
 FPHeroWeaponStruct* APHero::FindWeapon(FName RowName) const
@@ -415,4 +397,9 @@ void APHero::GetDamage(int TakenDamage)
 void APHero::Die()
 {
 	UE_LOG(LogTemp, Log, TEXT("%s Hero Die"), *GetName());
+}
+
+void APHero::SetIndex(int NewIndex)
+{
+	Index = NewIndex;
 }

@@ -20,12 +20,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UAnimSequence* IdleAnim;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UAnimSequence* WalkAnim;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UAnimSequence* RunAnim;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UAnimSequence* HitAnim;
