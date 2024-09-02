@@ -116,6 +116,8 @@ void APHeroBullet::Initialize(FPHeroBulletStruct* Struct, float NewDamage)
 	StaticMesh->SetStaticMesh(Struct->Mesh);
 	// 위치 설정
 	StaticMesh->SetRelativeLocation(Struct->MeshLocation);
+	// 회전 설정
+	StaticMesh->SetRelativeRotation(Struct->MeshRotator);
 	// 박스 콜리전 크기 조절
 	BulletBoxCollision->SetBoxExtent(Struct->HitBoxSize);
 	// 투사체의 속도와 데미지 설정

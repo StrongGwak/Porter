@@ -20,11 +20,17 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector MeshLocation;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FRotator MeshRotator;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Speed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector HitBoxSize;
+
+	/*UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector HitBoxLocation;*/
 
 };

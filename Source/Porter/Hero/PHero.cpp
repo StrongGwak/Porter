@@ -42,7 +42,7 @@ APHero::APHero()
 	// 투사체 생성 위치
 	RangeAttackPosition = CreateDefaultSubobject<USceneComponent>(TEXT("RangeAttackPosition"));
 	RangeAttackPosition->SetupAttachment(GunPosition);
-	RangeAttackPosition->SetRelativeLocation(FVector3d(50, 0, 50.0f));
+	RangeAttackPosition->SetRelativeLocation(FVector3d(60, 0, 35.0f));
 	
 	// AI Controller 할당
 	AIControllerClass = APHeroAIController::StaticClass();
