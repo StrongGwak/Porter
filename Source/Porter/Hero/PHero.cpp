@@ -224,8 +224,6 @@ FPHeroStruct APHero::GetHeroStats() const
 	Stat.SightRadius = SightRadius;
 	Stat.VisionAngle = VisionAngle;
 	Stat.IsMelee = IsMelee;
-	Stat.Index = Index;
-	Stat.Type = Type;
 	return Stat;
 }
 
@@ -244,8 +242,6 @@ void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
 	SightRadius = UpdateStats.SightRadius;
 	VisionAngle = UpdateStats.VisionAngle;
 	IsMelee = UpdateStats.IsMelee;
-	Index = UpdateStats.Index;
-	Type = UpdateStats.Type;
 }
 
 

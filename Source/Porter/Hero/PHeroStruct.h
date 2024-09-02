@@ -31,6 +31,9 @@ public:
 	FVector MeshLocation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UAnimBlueprint> AnimBlueprintClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* BodyMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -56,7 +59,5 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsMelee;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<UAnimBlueprint> AnimationBlueprint;
+	
 };
