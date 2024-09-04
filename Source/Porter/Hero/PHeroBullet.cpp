@@ -98,7 +98,7 @@ void APHeroBullet::OnBoxHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UP
 						// 맞은 위치로 흔적 위치 설정
 						StaticMeshComponent->SetWorldLocation(HitComp->GetComponentLocation());
 						// 투사체 각도로 흔적 각도 설정
-						StaticMeshComponent->SetWorldRotation(GetActorRotation() + StaticMesh->GetRelativeRotation());
+						StaticMeshComponent->SetWorldRotation(StaticMesh->GetComponentRotation());
 						// 타이머로 시간 경과 시 흔적 비활성화
 						FTimerHandle HitTimerHandle;
 						FTimerDelegate Callback = FTimerDelegate::CreateLambda([StaticMeshComponent]() { StaticMeshComponent->SetHiddenInGame(true); });
