@@ -59,4 +59,7 @@ protected:
 	
 	UPROPERTY(EditAnywhere, Category = Projectile, Meta = (AllowPrivateAccess = "true"))
 	APHeroBulletPoolManager* BulletPoolManager;
+
+	UPROPERTY(EditAnywhere, Category = Rotating, Meta = (AllowPrivateAccess = "true"))
+	class URotatingMovementComponent* RotatingComponent;
 };
