@@ -17,8 +17,6 @@ void UPHeroAnimInstance::SetAnimation(FName RowName)
 	{
 		SittingAnim = AnimationStructptr->SittingAnim;
 		IdleAnim = AnimationStructptr->IdleAnim;
-		WalkAnim = AnimationStructptr->WalkAnim;
-		RunAnim = AnimationStructptr->RunAnim;
 		HitAnim = AnimationStructptr->HitAnim;
 		DieAim = AnimationStructptr->DieAim;
 		AttackAnim = AnimationStructptr->AttackAnim;
