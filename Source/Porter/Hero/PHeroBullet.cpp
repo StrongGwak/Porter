@@ -29,6 +29,7 @@ APHeroBullet::APHeroBullet()
 	// 스태틱 메시 초기화
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	// 메시의 콜리전 비활성화
+	StaticMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	StaticMesh->SetCollisionProfileName("NoCollision");
 	// 메시 추가
 	StaticMesh->SetupAttachment(RootComponent);
@@ -122,7 +123,7 @@ void APHeroBullet::Initialize(FPHeroBulletStruct* Struct, float NewDamage)
 	// 회전 설정
 	StaticMesh->SetRelativeRotation(Struct->MeshRotator);
 	// 박스 콜리전 크기 조절
-	BulletBoxCollision->SetBoxExtent(Struct->HitBoxSize);
+	BulletBoxCollision->SetBoxExtent(Struct->HitBoxSize);// 박스 콜리전 크기 조절
 	// 투사체의 속도와 데미지 설정
 	Speed = Struct->Speed;
 	Damage = NewDamage;

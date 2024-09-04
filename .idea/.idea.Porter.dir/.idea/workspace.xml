@@ -9,8 +9,26 @@
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Haena/A_Standing_Bow_Idle.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Haena/A_Standing_Draw_Arrow_v02.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Haena/A_Standing_Shoot_v02.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Haena/Bow_Attack1_UE.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Haena/Bow_Attack2_UE.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/Test/Anim_Dangpa_Idle2_Soldier.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_HeroBullet.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_HeroBullet.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_TestEnemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_TestEnemy.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_Hero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_Hero.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroBullet.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroBullet.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroWeapon.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroWeapon.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Test.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAnimInstance.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAnimInstance.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAnimInstance.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroAnimInstance.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBullet.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBullet.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBulletStruct.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroBulletStruct.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroStruct.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroStruct.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -296,7 +314,8 @@
       <workItem from="1725008122787" duration="557000" />
       <workItem from="1725238041102" duration="9062000" />
       <workItem from="1725264299368" duration="3089000" />
-      <workItem from="1725416934539" duration="5021000" />
+      <workItem from="1725416934539" duration="12259000" />
+      <workItem from="1725435981320" duration="4337000" />
     </task>
     <servers />
   </component>

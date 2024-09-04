@@ -42,9 +42,9 @@ FPHeroAnimationStruct* UPHeroAnimInstance::FindAnimation(FName RowName) const
 	return nullptr;
 }
 
-void UPHeroAnimInstance::Attack()
+void UPHeroAnimInstance::Attack(float AttackSpeed)
 {
-	Montage_Play(AttackAnim);
+	Montage_Play(AttackAnim, AttackSpeed);
 }
 
 void UPHeroAnimInstance::StopAttack()

@@ -45,7 +45,7 @@ protected:
 	int Damage;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	int AttackSpeed;
+	float AttackSpeed;
 
 	UPROPERTY(EditAnywhere, Category = Mesh, Meta = (AllowPrivateAccess = "true"))
 	FVector MeshLocation;

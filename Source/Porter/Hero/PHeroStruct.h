@@ -28,7 +28,7 @@ public:
 	int Damage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int AttackSpeed;
+	float AttackSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector MeshLocation;

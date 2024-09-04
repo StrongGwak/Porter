@@ -27,7 +27,7 @@ public:
 
 	FPHeroAnimationStruct* FindAnimation(FName RowName) const;
 
-	void Attack();
+	void Attack(float AttackSpeed);
 
 	void StopAttack();
 
@@ -52,12 +52,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
 	UAnimSequence* IdleAnim;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
-	UAnimSequence* WalkAnim;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
-	UAnimSequence* RunAnim;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
 	UAnimSequence* HitAnim;
 

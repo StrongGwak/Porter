@@ -171,6 +171,7 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 	if (WeaponStructptr != nullptr)
 	{
 		WeaponMesh->SetSkeletalMesh(WeaponStructptr->SkeletalMesh);
+		WeaponMesh->SetLeaderPoseComponent(GetMesh());
 		WeaponCollision->SetBoxExtent(WeaponStructptr->HitBoxSize);
 		WeaponCollision->SetRelativeLocation(WeaponStructptr->MeshLocation);
 		if (WeaponStructptr->bIsAttachSocket)
@@ -264,7 +265,7 @@ void APHero::FindTarget(AActor* Target)
 	// 처음 적을 발견시 공격 애니메이션 시작
 	if (HeroAniminstance)
 	{
-		HeroAniminstance->Attack();
+		HeroAniminstance->Attack(AttackSpeed);
 	}
 }
 
@@ -282,7 +283,7 @@ void APHero::OnAttackEnded(UAnimMontage* Montage, bool bInterrupted)
 		{
 			if (HeroAniminstance)
 			{
-				HeroAniminstance->Attack();
+				HeroAniminstance->Attack(AttackSpeed);
 				//무기 애니메이션 인스턴스 적용해서 공격애니메이션해야함
 				if (IsMelee)
 				{
