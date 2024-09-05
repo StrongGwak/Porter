@@ -25,6 +25,8 @@ public:
 
 	void SetRotator(FRotator NewRotator);
 
+	void SetSubHandTransform(FTransform NewTransform);
+
 	FPHeroAnimationStruct* FindAnimation(FName RowName) const;
 
 	void Attack(float AttackSpeed);
@@ -43,23 +45,26 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	UDataTable* AnimationDataTable;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
 	FRotator RotationToTarget;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
 	UAnimSequence* SittingAnim;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
 	UAnimSequence* IdleAnim;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
 	UAnimSequence* HitAnim;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
 	UAnimSequence* DieAim;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
 	UAnimMontage* AttackAnim;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
+	FTransform SubHand;
 
 private:
 	UFUNCTION()

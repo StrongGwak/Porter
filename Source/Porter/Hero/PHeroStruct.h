@@ -61,7 +61,7 @@ public:
 	float VisionAngle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool IsMelee;
+	bool bIsMelee;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 Index;

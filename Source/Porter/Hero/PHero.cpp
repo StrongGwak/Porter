@@ -101,6 +101,23 @@ void APHero::Tick(float DeltaTime)
 		LookTarget();
 	}
 
+	if (bIsMelee && bIsTwoHand)
+	{
+		// 수정해야함 소켓의 월드좌표를 얻어야한다
+		FVector SocketWorldTransform =  WeaponMesh->GetComponentLocation();
+		UE_LOG(LogTemp, Log, TEXT("Socket : %s"), *SocketWorldTransform.ToString());
+		DrawDebugPoint(GetWorld(), SocketWorldTransform, 10, FColor(200, 1, 1), true);
+		UE_LOG(LogTemp, Log, TEXT("TransForm : %s"), *GetMesh()->GetBoneLocation(FName("Wrist_R")).ToString());
+		DrawDebugPoint(GetWorld(), GetMesh()->GetBoneLocation(FName("Wrist_R")), 10, FColor(52, 220, 239), true);
+		/*FVector OutVector;
+		FRotator OutRotator;
+		GetMesh()->TransformToBoneSpace(FName("Wrist_R"), SocketWorldTransform.GetLocation(),
+			FRotator::ZeroRotator, OutVector, OutRotator);
+		SocketWorldTransform.SetLocation(OutVector);
+		SocketWorldTransform.SetRotation(FQuat(OutRotator));*/
+		//HeroAniminstance->SetSubHandTransform(SocketWorldTransform);
+	}
+
 }
 
 void APHero::Initialize(FPHeroStruct HeroStruct)
@@ -142,7 +159,7 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 	// Hero Stat 설정
 	SetHeroStats(HeroStruct);
 
-	if (!IsMelee)
+	if (!bIsMelee)
 	{
 		if (BulletPoolManagerClass) {
 			BulletPoolManager = GetWorld()->SpawnActor<APHeroBulletPoolManager>(BulletPoolManagerClass);
@@ -176,8 +193,9 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 		WeaponCollision->SetRelativeLocation(WeaponStructptr->MeshLocation);
 		if (WeaponStructptr->bIsAttachSocket)
 		{
-			FName SocketName = TEXT("WeaponSocket");
-			WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, SocketName);
+			bIsTwoHand = WeaponStructptr->bTwoHand;
+			SubSocketName = WeaponStructptr->SubSocketName;
+			WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, WeaponStructptr->MainSocketName);
 		}
 		
 	}
@@ -207,7 +225,7 @@ FPHeroStruct APHero::GetHeroStats() const
 	Stat.AccessorieMesh = AccessorieMesh;
 	Stat.SightRadius = SightRadius;
 	Stat.VisionAngle = VisionAngle;
-	Stat.IsMelee = IsMelee;
+	Stat.bIsMelee = bIsMelee;
 	Stat.Index = Index;
 	return Stat;
 }
@@ -229,7 +247,7 @@ void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
 	AccessorieMesh = UpdateStats.AccessorieMesh;
 	SightRadius = UpdateStats.SightRadius;
 	VisionAngle = UpdateStats.VisionAngle;
-	IsMelee = UpdateStats.IsMelee;
+	bIsMelee = UpdateStats.bIsMelee;
 	Index = UpdateStats.Index;
 }
 
@@ -258,7 +276,7 @@ void APHero::FindTarget(AActor* Target)
 		bIsLookingTarget = true;
 	}
 	
-	if (IsMelee && WeaponAniminstance)
+	if (bIsMelee && WeaponAniminstance)
 	{
 		WeaponAniminstance->StartAttack();
 	}
@@ -285,7 +303,7 @@ void APHero::OnAttackEnded(UAnimMontage* Montage, bool bInterrupted)
 			{
 				HeroAniminstance->Attack(AttackSpeed);
 				//무기 애니메이션 인스턴스 적용해서 공격애니메이션해야함
-				if (IsMelee)
+				if (bIsMelee)
 				{
 					WeaponAniminstance->StartAttack();
 				}
@@ -323,7 +341,7 @@ void APHero::StartAttack()
 		bIsLookingTarget = true;
 
 		//원거리 공격
-		if (!IsMelee)
+		if (!bIsMelee)
 		{
 			RangeAttack();
 		}		
@@ -338,7 +356,7 @@ void APHero::StopAttack()
 		bIsLookingTarget = false;
 		bIsLookingForward = true;
 	}
-	if (IsMelee && WeaponAniminstance)
+	if (bIsMelee && WeaponAniminstance)
 	{
 		WeaponAniminstance->StopAttack();
 	}

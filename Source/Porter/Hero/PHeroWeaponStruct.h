@@ -29,4 +29,19 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bIsAttachSocket;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bLeftHand;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bRightHand;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bTwoHand;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName MainSocketName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName SubSocketName;
 };
