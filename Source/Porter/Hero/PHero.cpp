@@ -101,23 +101,6 @@ void APHero::Tick(float DeltaTime)
 		LookTarget();
 	}
 
-	if (bIsMelee && bIsTwoHand)
-	{
-		// 수정해야함 소켓의 월드좌표를 얻어야한다
-		FVector SocketWorldTransform =  WeaponMesh->GetComponentLocation();
-		UE_LOG(LogTemp, Log, TEXT("Socket : %s"), *SocketWorldTransform.ToString());
-		DrawDebugPoint(GetWorld(), SocketWorldTransform, 10, FColor(200, 1, 1), true);
-		UE_LOG(LogTemp, Log, TEXT("TransForm : %s"), *GetMesh()->GetBoneLocation(FName("Wrist_R")).ToString());
-		DrawDebugPoint(GetWorld(), GetMesh()->GetBoneLocation(FName("Wrist_R")), 10, FColor(52, 220, 239), true);
-		/*FVector OutVector;
-		FRotator OutRotator;
-		GetMesh()->TransformToBoneSpace(FName("Wrist_R"), SocketWorldTransform.GetLocation(),
-			FRotator::ZeroRotator, OutVector, OutRotator);
-		SocketWorldTransform.SetLocation(OutVector);
-		SocketWorldTransform.SetRotation(FQuat(OutRotator));*/
-		//HeroAniminstance->SetSubHandTransform(SocketWorldTransform);
-	}
-
 }
 
 void APHero::Initialize(FPHeroStruct HeroStruct)
@@ -188,13 +171,10 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 	if (WeaponStructptr != nullptr)
 	{
 		WeaponMesh->SetSkeletalMesh(WeaponStructptr->SkeletalMesh);
-		WeaponMesh->SetLeaderPoseComponent(GetMesh());
 		WeaponCollision->SetBoxExtent(WeaponStructptr->HitBoxSize);
 		WeaponCollision->SetRelativeLocation(WeaponStructptr->MeshLocation);
 		if (WeaponStructptr->bIsAttachSocket)
 		{
-			bIsTwoHand = WeaponStructptr->bTwoHand;
-			SubSocketName = WeaponStructptr->SubSocketName;
 			WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, WeaponStructptr->MainSocketName);
 		}
 		
