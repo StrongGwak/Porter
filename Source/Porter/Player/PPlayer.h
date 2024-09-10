@@ -104,11 +104,11 @@ public:
 	void PlusHP(int32 Heal);
 	UFUNCTION(BlueprintCallable, Blueprintable,Category="Stats")
 	void MinusHP(int32 Damage);
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Blueprintable,Category="Stats")
 	void Boost();
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Blueprintable,Category="Stats")
 	void StopBoost();
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Blueprintable,Category="Stats")
 	void UpdateBoost();
 
 protected:
@@ -136,7 +136,7 @@ protected:
 	float CurrentStamina = 100;
 	UPROPERTY()
 	float TempStamina = 100;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	bool bIsBoost = false;
 	UPROPERTY()
 	bool bCanBoost = true;
