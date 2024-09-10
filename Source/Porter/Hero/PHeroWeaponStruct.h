@@ -23,6 +23,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector MeshLocation;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FRotator MeshRotation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector HitBoxSize;
@@ -31,13 +34,7 @@ public:
 	bool bIsAttachSocket;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bLeftHand;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bRightHand;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bTwoHand;
+	bool bIsSetLeaderMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FName MainSocketName;
