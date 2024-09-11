@@ -11,10 +11,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/ABP_PHeroAnimation.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/ABP_PHeroAnimation.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/IK_Source.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/IK_Source.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/RTG_Manny.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/Animation/RTG_Manny.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_Hero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_Hero.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroAnimation.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroAnimation.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroWeapon.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroWeapon.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Hero/PHeroWeaponStruct.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Hero/PHeroWeaponStruct.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -305,6 +306,7 @@
       <workItem from="1725496176130" duration="23695000" />
       <workItem from="1725587598135" duration="8306000" />
       <workItem from="1725942898913" duration="4201000" />
+      <workItem from="1726037525132" duration="2043000" />
     </task>
     <servers />
   </component>

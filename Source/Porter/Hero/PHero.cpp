@@ -363,7 +363,7 @@ void APHero::LookTarget()
 		// 새로운 회전 각도를 설정
 		GunPosition->SetWorldRotation(NewRotation);
 		HeroAniminstance->SetRotator(GunPosition->GetRelativeRotation());
-		WeaponMesh->SetRelativeRotation(FRotator(0, GunPosition->GetRelativeRotation().Yaw, 0));
+		//WeaponMesh->SetRelativeRotation(FRotator(0, GunPosition->GetRelativeRotation().Yaw, 0));
 		if (NewRotation.Equals(TargetRotation, 0.1f))
 		{
 			bIsLookingTarget = false;
@@ -381,7 +381,7 @@ void APHero::LookForward()
 	// 새로운 회전 각도를 설정
 	GunPosition->SetWorldRotation(NewRotation);
 	HeroAniminstance->SetRotator(NewAnimRotation);
-	WeaponMesh->SetRelativeRotation(NewAnimRotation);
+	//WeaponMesh->SetRelativeRotation(NewAnimRotation);
 	
 	if (NewRotation.Equals(TargetRotation, 0.1f))
 	{
