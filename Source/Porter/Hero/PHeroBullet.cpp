@@ -5,6 +5,7 @@
 
 #include "PHeroBulletPoolManager.h"
 #include "Components/BoxComponent.h"
+#include "Engine/DamageEvents.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 // Sets default values
@@ -21,8 +22,6 @@ APHeroBullet::APHeroBullet()
 	BulletBoxCollision->SetCollisionResponseToChannel(ECC_GameTraceChannel2, ECR_Ignore);
 	// 온박스히트 함수 추가
 	BulletBoxCollision->OnComponentHit.AddDynamic(this, &APHeroBullet::OnBoxHit);
-	// 박스 콜리전 크기 조절
-	BulletBoxCollision->SetBoxExtent(FVector3d(4.0f, 4.0f, 4.0f));
 	// 박스 콜리전 추가
 	RootComponent = BulletBoxCollision;
 
@@ -64,6 +63,10 @@ void APHeroBullet::OnBoxHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UP
 	// Enemy인지 태그로 식별
 	if (Hit.GetActor()->ActorHasTag("Enemy"))
 	{
+		// 블루프린트 AnyDamage 이벤트 호출
+		FDamageEvent DamageEvent;   // Generic damage event
+		Hit.GetActor()->TakeDamage(Damage, DamageEvent, nullptr, this);
+		
 		// 맞은 컴포넌트 유효성 검사
 		UPrimitiveComponent* TargetComponent = Hit.GetComponent();
 		if (TargetComponent && TargetComponent->IsA<USceneComponent>())
@@ -76,7 +79,7 @@ void APHeroBullet::OnBoxHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UP
 			SceneComponent ->GetChildrenComponents(true, ChildComponents);
 			for (USceneComponent* Child : ChildComponents)
 			{
-				if (Child)
+				if (Child->ComponentHasTag("HitProjectile"))
 				{
 					// 컴포넌트 식별
 					if (Child->bHiddenInGame)
@@ -107,14 +110,16 @@ void APHeroBullet::OnBoxHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UP
 	BulletPoolManager->ReturnBullet(this);
 }
 
-void APHeroBullet::Initialize(UStaticMesh* NewStaticMesh, float NewSpeed, float NewDamage)
+void APHeroBullet::Initialize(FPHeroBulletStruct* Struct, float NewDamage)
 {
 	// 스태틱 메시 할당
-	StaticMesh->SetStaticMesh(NewStaticMesh);
+	StaticMesh->SetStaticMesh(Struct->Mesh);
 	// 위치 설정
-	StaticMesh->SetRelativeLocation(FVector3d(0, 0, -10.0f));
+	StaticMesh->SetRelativeLocation(Struct->MeshLocation);
+	// 박스 콜리전 크기 조절
+	BulletBoxCollision->SetBoxExtent(Struct->HitBoxSize);
 	// 투사체의 속도와 데미지 설정
-	Speed = NewSpeed;
+	Speed = Struct->Speed;
 	Damage = NewDamage;
 
 	// 투사체 속도 설정
@@ -143,4 +148,10 @@ void APHeroBullet::SetBulletPoolManager(APHeroBulletPoolManager* Manager)
 {
 	// 매니저 설정
 	BulletPoolManager = Manager;
+}
+
+void APHeroBullet::UpdateBullet(int UpdateDamage, int UpdateSpeed)
+{
+	Damage = UpdateDamage;
+	Speed = UpdateSpeed;
 }

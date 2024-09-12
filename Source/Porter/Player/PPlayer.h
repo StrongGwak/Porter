@@ -19,6 +19,7 @@ class PORTER_API APPlayer : public ACharacter
 {
 	GENERATED_BODY()
 
+
 public:
 	// Sets default values for this character's properties
 	APPlayer();
@@ -99,9 +100,9 @@ public:
 	
 
 	// 나중에 옮기기
-	UFUNCTION(Category="Stats")
+	UFUNCTION(BlueprintCallable, Blueprintable,Category="Stats")
 	void PlusHP(int32 Heal);
-	UFUNCTION(Category="Stats")
+	UFUNCTION(BlueprintCallable, Blueprintable,Category="Stats")
 	void MinusHP(int32 Damage);
 	UFUNCTION()
 	void Boost();
@@ -156,8 +157,8 @@ public:
 	void UpPort();
 	UFUNCTION()
 	void DownPort();
-	UFUNCTION()
-	void UpHeroesFromArray();
+	UFUNCTION(BlueprintCallable, Blueprintable)
+	void UpHeroesFromArray(FName RowName = TEXT("Test1"));
 	UFUNCTION()
 	void FObjectFinderInputManager();
 	UFUNCTION()
@@ -175,6 +176,8 @@ public:
 	void SaveSpawn();
 	UFUNCTION()
 	void OpenSpawn();
-	
+
+	UFUNCTION()
+	void TempTest();
 
 };

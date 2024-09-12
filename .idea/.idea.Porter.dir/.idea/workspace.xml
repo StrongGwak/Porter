@@ -9,8 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/BP_Player.uasset" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +37,8 @@
     <setting file="mock://C:/UE5/Porter/Source/Porter/Hero/PHero.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PHeroAIController.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PHeroAIController.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/UE5/Porter/Source/Porter/Hero/PHeroStruct.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/UE5/Porter/Source/Porter/Hero/PHeroStruct.h" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -52,7 +53,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Uproject.Porter.executor": "Run",
-    "git-widget-placeholder": "Yang-Player-GM",
+    "git-widget-placeholder": "Gwak-Hero",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -77,7 +78,7 @@
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
         <option name="EXECUTABLE_PATH" value="C:\Program Files\Epic Games\UE_5.4\Engine\Binaries\Win64\UnrealEditor.exe" />
-        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\Users\12345\Documents\Unreal Projects\Porter\Porter.uproject&quot;" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\UE5\Porter\Porter.uproject&quot;" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
         <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
         <option name="PASS_PARENT_ENVS" value="1" />
@@ -90,7 +91,7 @@
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
         <option name="EXECUTABLE_PATH" value="C:\Program Files\Epic Games\UE_5.4\Engine\Binaries\Win64\UnrealEditor-Win64-DebugGame.exe" />
-        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\Users\12345\Documents\Unreal Projects\Porter\Porter.uproject&quot;" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\UE5\Porter\Porter.uproject&quot;" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
         <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
         <option name="PASS_PARENT_ENVS" value="1" />
@@ -102,7 +103,7 @@
         <option name="PLATFORM" value="Win64" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
-        <option name="EXECUTABLE_PATH" value="C:\Users\12345\Documents\Unreal Projects\Porter\Binaries\Win64\Porter-Win64-DebugGame.exe" />
+        <option name="EXECUTABLE_PATH" value="C:\UE5\Porter\Binaries\Win64\Porter-Win64-DebugGame.exe" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
         <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
@@ -115,7 +116,7 @@
         <option name="PLATFORM" value="Win64" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
-        <option name="EXECUTABLE_PATH" value="C:\Users\12345\Documents\Unreal Projects\Porter\Binaries\Win64\Porter.exe" />
+        <option name="EXECUTABLE_PATH" value="C:\UE5\Porter\Binaries\Win64\Porter.exe" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
         <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
@@ -128,7 +129,79 @@
         <option name="PLATFORM" value="Win64" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
-        <option name="EXECUTABLE_PATH" value="C:\Users\12345\Documents\Unreal Projects\Porter\Binaries\Win64\Porter-Win64-Shipping.exe" />
+        <option name="EXECUTABLE_PATH" value="C:\UE5\Porter\Binaries\Win64\Porter-Win64-Shipping.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+      </configuration_5>
+      <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
+      <option name="AUTO_SELECT_PRIORITY" value="10010" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Uproject" factoryName="rider.uproject">
+      <configuration_1>
+        <option name="CONFIGURATION" value="Development Editor" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="C:\Program Files\Epic Games\UE_5.4\Engine\Binaries\Win64\UnrealEditor.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\UE5\Porter\Porter.uproject&quot;" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+      </configuration_1>
+      <configuration_2>
+        <option name="CONFIGURATION" value="DebugGame Editor" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="C:\Program Files\Epic Games\UE_5.4\Engine\Binaries\Win64\UnrealEditor-Win64-DebugGame.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\UE5\Porter\Porter.uproject&quot;" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+      </configuration_2>
+      <configuration_3>
+        <option name="CONFIGURATION" value="DebugGame" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="C:\UE5\Porter\Binaries\Win64\Porter-Win64-DebugGame.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+      </configuration_3>
+      <configuration_4>
+        <option name="CONFIGURATION" value="Development" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="C:\UE5\Porter\Binaries\Win64\Porter.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+      </configuration_4>
+      <configuration_5>
+        <option name="CONFIGURATION" value="Shipping" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="C:\UE5\Porter\Binaries\Win64\Porter-Win64-Shipping.exe" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
         <option name="WORKING_DIRECTORY" value="C:\Program Files\Epic Games\UE_5.4" />
@@ -183,7 +256,44 @@
       <workItem from="1722921606716" duration="15620000" />
       <workItem from="1722990049630" duration="24625000" />
       <workItem from="1723077834393" duration="6671000" />
-      <workItem from="1723098671294" duration="2683000" />
+      <workItem from="1723163443355" duration="1262000" />
+      <workItem from="1723171552993" duration="13117000" />
+      <workItem from="1723422717432" duration="24253000" />
+      <workItem from="1723453666088" duration="185000" />
+      <workItem from="1723510681004" duration="1124000" />
+      <workItem from="1723511944733" duration="9559000" />
+      <workItem from="1723595848040" duration="638000" />
+      <workItem from="1723596529610" duration="9589000" />
+      <workItem from="1723617408228" duration="2198000" />
+      <workItem from="1723620463960" duration="2921000" />
+      <workItem from="1724047522877" duration="4361000" />
+      <workItem from="1724053858506" duration="2709000" />
+      <workItem from="1724113465892" duration="2791000" />
+      <workItem from="1724137819857" duration="5250000" />
+      <workItem from="1724218128668" duration="3397000" />
+      <workItem from="1724288703394" duration="1772000" />
+      <workItem from="1724290529728" duration="42000" />
+      <workItem from="1724290612203" duration="146000" />
+      <workItem from="1724291173879" duration="1163000" />
+      <workItem from="1724293138796" duration="1836000" />
+      <workItem from="1724295372988" duration="5017000" />
+      <workItem from="1724303175870" duration="2307000" />
+      <workItem from="1724305771631" duration="1217000" />
+      <workItem from="1724376447502" duration="2291000" />
+      <workItem from="1724636331596" duration="23087000" />
+      <workItem from="1724719305128" duration="1231000" />
+      <workItem from="1724720757317" duration="1705000" />
+      <workItem from="1724743073554" duration="1908000" />
+      <workItem from="1724818821422" duration="4455000" />
+      <workItem from="1724826617556" duration="2335000" />
+      <workItem from="1724836681091" duration="1450000" />
+      <workItem from="1724838941057" duration="759000" />
+      <workItem from="1724890587059" duration="8625000" />
+      <workItem from="1724913323327" duration="6307000" />
+      <workItem from="1724920632885" duration="1790000" />
+      <workItem from="1724978074531" duration="78000" />
+      <workItem from="1725008122787" duration="557000" />
+      <workItem from="1725238041102" duration="9062000" />
     </task>
     <servers />
   </component>
