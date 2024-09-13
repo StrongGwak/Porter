@@ -5,6 +5,7 @@
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "PPlayer.h"
+#include "../Core/PGameInstance.h"
 
 // Sets default values
 APChangeLevel::APChangeLevel()
@@ -25,7 +26,12 @@ APChangeLevel::APChangeLevel()
 void APChangeLevel::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	GI = Cast<UPGameInstance>(GetGameInstance());
+
+	// 먼저 소환하기
+	//APPlayer* Player = Cast<APPlayer>(PPlayer);
+	//GI->GetPlayerManager()->OpenSpawnInformation(Player);
 }
 
 // Called every frame
@@ -42,6 +48,8 @@ void APChangeLevel::OnPlayerBeginOverlap(AActor* ThisActor, AActor* PPlayer)
 	{
 		bIsLoading = true;
 
+		// 정보 저장
+		GI->GetPlayerManager()->SaveSpawnInformation();
 		// 로딩맵으로 이동
 		if (!LoadingLevel.IsNone())
 		{

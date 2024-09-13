@@ -47,4 +47,6 @@ private:
 	bool bIsLoading;
 	
 	void TransitionToNewMap();
+
+	class UPGameInstance* GI;
 };
