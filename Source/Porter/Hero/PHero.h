@@ -152,6 +152,9 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UPHeroWeaponAnimInstance* WeaponAniminstance;
 
+	UFUNCTION()
+	void Detach();
+
 	
 
 public:

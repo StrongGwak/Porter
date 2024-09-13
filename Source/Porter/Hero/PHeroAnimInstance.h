@@ -25,17 +25,25 @@ public:
 
 	void SetRotator(FRotator NewRotator);
 
-	void SetSubHandTransform(FTransform NewTransform);
-
 	FPHeroAnimationStruct* FindAnimation(FName RowName) const;
 
 	void Attack(float AttackSpeed);
 
 	void StopAttack();
 
-	// 공격 노티파이 델리게이트
+	void Hit();
+
+	void Die();
+
+	//노티파이 델리게이트
 	UPROPERTY()
 	FOnAttackNotifyDelegate OnAttackNotifyDelegate;
+
+	UPROPERTY()
+	FOnAttackNotifyDelegate OnHitNotifyDelegate;
+
+	UPROPERTY()
+	FOnAttackNotifyDelegate OnDieNotifyDelegate;
 
 protected:
 	virtual void NativeInitializeAnimation() override; //애니메이션이 생성되면 호출되는 함수
@@ -55,20 +63,23 @@ protected:
 	UAnimSequence* IdleAnim;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
-	UAnimSequence* HitAnim;
+	UAnimMontage* HitAnim;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
-	UAnimSequence* DieAim;
+	UAnimMontage* DieAnim;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
 	UAnimMontage* AttackAnim;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
-	FTransform SubHand;
-
 private:
 	UFUNCTION()
-	void AnimNotify_Fire();
+	void AnimNotify_Fire() const;
+
+	UFUNCTION()
+	void AnimNotify_Hit() const;
+
+	UFUNCTION()
+	void AnimNotify_Die() const;
 
 	
 	

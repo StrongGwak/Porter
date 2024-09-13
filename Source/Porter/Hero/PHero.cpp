@@ -21,7 +21,9 @@ APHero::APHero()
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Bullet이 Player Type을 무시하기 때문에 Hero도 Object Type을 Player로 설정
-	GetCapsuleComponent()->SetCollisionObjectType(ECC_GameTraceChannel2);
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Hero"));
+	GetMesh()->SetCollisionProfileName(TEXT("Hero"));
+	//GetCapsuleComponent()->SetCollisionObjectType(ECC_GameTraceChannel4);
 	GetCapsuleComponent()->SetCapsuleHalfHeight(60);
 
 	// 스켈레탈메시 생성
@@ -37,7 +39,7 @@ APHero::APHero()
 	AccessorieMeshComponent->SetupAttachment(GetMesh());
 
 	GunPosition = CreateDefaultSubobject<USceneComponent>(TEXT("GunPosition"));
-	GunPosition->SetupAttachment(GetCapsuleComponent());
+	//GunPosition->SetupAttachment(GetCapsuleComponent());
 	
 	// 투사체 생성 위치
 	RangeAttackPosition = CreateDefaultSubobject<USceneComponent>(TEXT("RangeAttackPosition"));
@@ -67,7 +69,7 @@ APHero::APHero()
 	WeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollision"));
 	WeaponCollision->SetupAttachment(WeaponMesh);
 	WeaponCollision->SetBoxExtent(FVector(0,0,0));
-
+	
 	// 애니메이션 인스턴스 설정
 	static ConstructorHelpers::FClassFinder<UAnimInstance> TempWeaponAnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_PHeroWeaponAnimation.ABP_PHeroWeaponAnimation_C"));
 	if (TempWeaponAnimInstance.Succeeded()) 
@@ -164,6 +166,7 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 		HeroAniminstance = Cast<UPHeroAnimInstance>(GetMesh()->GetAnimInstance());
 		HeroAniminstance->SetAnimation(Name);
 		HeroAniminstance->OnAttackNotifyDelegate.AddDynamic(this, &APHero::StartAttack);
+		HeroAniminstance->OnDieNotifyDelegate.AddDynamic(this, &APHero::Detach);
 		GetMesh()->GetAnimInstance()->OnMontageEnded.AddDynamic(this, &APHero::OnAttackEnded);
 	}
 	
@@ -401,6 +404,28 @@ void APHero::GetDamage(int TakenDamage)
 void APHero::Die()
 {
 	UE_LOG(LogTemp, Log, TEXT("%s Hero Die"), *GetName());
+	if (bIsMelee && WeaponAniminstance)
+	{
+		WeaponAniminstance->StopAttack();
+	}
+	if (HeroAniminstance)
+	{
+		HeroAniminstance->StopAttack();
+		HeroAniminstance->Die();
+	}
+}
+
+
+void APHero::Detach()
+{
+	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+	// 영웅 콜리전 제거 및 중력 제거
+	SetActorEnableCollision(true);
+	GetMesh()->SetSimulatePhysics(true);
+	WeaponMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+	WeaponMesh->SetSimulatePhysics(true);
+	//GetCharacterMovement()->GravityScale=1;
+	//DetachRootComponentFromParent();
 }
 
 void APHero::SetIndex(int NewIndex)

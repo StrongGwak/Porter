@@ -36,7 +36,6 @@ UPlayerManager::UPlayerManager()
 void UPlayerManager::Initialize(TArray<TSubclassOf<AActor>> Port)
 {
 	PortTypeArray = Port;
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Player Manager")));
 }
 
 void UPlayerManager::SetGameInstance(UPGameInstance* PGameInstance)
