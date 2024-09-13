@@ -28,7 +28,7 @@ public:
 	int Damage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int AttackSpeed;
+	float AttackSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector MeshLocation;
@@ -61,7 +61,7 @@ public:
 	float VisionAngle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool IsMelee;
+	bool bIsMelee;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 Index;

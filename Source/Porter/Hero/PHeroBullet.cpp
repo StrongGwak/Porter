@@ -7,6 +7,7 @@
 #include "Components/BoxComponent.h"
 #include "Engine/DamageEvents.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "GameFramework/RotatingMovementComponent.h"
 
 // Sets default values
 APHeroBullet::APHeroBullet()
@@ -28,6 +29,7 @@ APHeroBullet::APHeroBullet()
 	// 스태틱 메시 초기화
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	// 메시의 콜리전 비활성화
+	StaticMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	StaticMesh->SetCollisionProfileName("NoCollision");
 	// 메시 추가
 	StaticMesh->SetupAttachment(RootComponent);
@@ -42,6 +44,8 @@ APHeroBullet::APHeroBullet()
 	ProjectileMovementComponent->bShouldBounce = false;
 	// 컴포넌트 추가
 	ProjectileMovementComponent->SetUpdatedComponent(GetRootComponent());
+
+	RotatingComponent = CreateDefaultSubobject<URotatingMovementComponent>(TEXT("Rotating"));
 }
 
 // Called when the game starts or when spawned
@@ -76,7 +80,7 @@ void APHeroBullet::OnBoxHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UP
 			// 자식 컴포넌트 배열 생성
 			TArray<USceneComponent*> ChildComponents;
 			// 자식 컴포넌트 배열에 할당
-			SceneComponent ->GetChildrenComponents(true, ChildComponents);
+			SceneComponent->GetChildrenComponents(true, ChildComponents);
 			for (USceneComponent* Child : ChildComponents)
 			{
 				if (Child->ComponentHasTag("HitProjectile"))
@@ -95,7 +99,7 @@ void APHeroBullet::OnBoxHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UP
 						// 맞은 위치로 흔적 위치 설정
 						StaticMeshComponent->SetWorldLocation(HitComp->GetComponentLocation());
 						// 투사체 각도로 흔적 각도 설정
-						StaticMeshComponent->SetWorldRotation(GetActorRotation());
+						StaticMeshComponent->SetWorldRotation(StaticMesh->GetComponentRotation());
 						// 타이머로 시간 경과 시 흔적 비활성화
 						FTimerHandle HitTimerHandle;
 						FTimerDelegate Callback = FTimerDelegate::CreateLambda([StaticMeshComponent]() { StaticMeshComponent->SetHiddenInGame(true); });
@@ -119,7 +123,7 @@ void APHeroBullet::Initialize(FPHeroBulletStruct* Struct, float NewDamage)
 	// 회전 설정
 	StaticMesh->SetRelativeRotation(Struct->MeshRotator);
 	// 박스 콜리전 크기 조절
-	BulletBoxCollision->SetBoxExtent(Struct->HitBoxSize);
+	BulletBoxCollision->SetBoxExtent(Struct->HitBoxSize);// 박스 콜리전 크기 조절
 	// 투사체의 속도와 데미지 설정
 	Speed = Struct->Speed;
 	Damage = NewDamage;
@@ -127,6 +131,12 @@ void APHeroBullet::Initialize(FPHeroBulletStruct* Struct, float NewDamage)
 	// 투사체 속도 설정
 	ProjectileMovementComponent->InitialSpeed = Speed;
 	ProjectileMovementComponent->MaxSpeed = 8000;
+
+	if (Struct->IsThrow)
+	{
+		RotatingComponent->RotationRate = Struct->SpinRotation;
+		RotatingComponent->PivotTranslation = Struct->SpinPivot;
+	}
 
 }
 

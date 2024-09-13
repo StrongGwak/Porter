@@ -30,7 +30,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector HitBoxSize;
 
-	/*UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector HitBoxLocation;*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool IsThrow;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FRotator SpinRotation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector SpinPivot;
 
 };

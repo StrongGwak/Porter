@@ -23,10 +23,22 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector MeshLocation;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FRotator MeshRotation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector HitBoxSize;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bIsAttachSocket;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bIsSetLeaderMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName MainSocketName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName SubSocketName;
 };

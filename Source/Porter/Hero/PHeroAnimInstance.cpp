@@ -28,6 +28,11 @@ void UPHeroAnimInstance::SetRotator(FRotator NewRotator)
 	RotationToTarget = NewRotator;
 }
 
+void UPHeroAnimInstance::SetSubHandTransform(FTransform NewTransform)
+{
+	SubHand = NewTransform;
+}
+
 FPHeroAnimationStruct* UPHeroAnimInstance::FindAnimation(FName RowName) const
 {
 	static const FString ContextString(TEXT("Animation Null"));
@@ -42,9 +47,9 @@ FPHeroAnimationStruct* UPHeroAnimInstance::FindAnimation(FName RowName) const
 	return nullptr;
 }
 
-void UPHeroAnimInstance::Attack()
+void UPHeroAnimInstance::Attack(float AttackSpeed)
 {
-	Montage_Play(AttackAnim);
+	Montage_Play(AttackAnim, AttackSpeed);
 }
 
 void UPHeroAnimInstance::StopAttack()
