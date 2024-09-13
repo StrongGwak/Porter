@@ -42,7 +42,7 @@ APHero::APHero()
 	// 투사체 생성 위치
 	RangeAttackPosition = CreateDefaultSubobject<USceneComponent>(TEXT("RangeAttackPosition"));
 	RangeAttackPosition->SetupAttachment(GunPosition);
-	RangeAttackPosition->SetRelativeLocation(FVector3d(50, 0, 50.0f));
+	RangeAttackPosition->SetRelativeLocation(FVector3d(60, 0, 35.0f));
 	
 	// AI Controller 할당
 	AIControllerClass = APHeroAIController::StaticClass();
@@ -142,7 +142,7 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 	// Hero Stat 설정
 	SetHeroStats(HeroStruct);
 
-	if (!IsMelee)
+	if (!bIsMelee)
 	{
 		if (BulletPoolManagerClass) {
 			BulletPoolManager = GetWorld()->SpawnActor<APHeroBulletPoolManager>(BulletPoolManagerClass);
@@ -173,10 +173,14 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 		WeaponMesh->SetSkeletalMesh(WeaponStructptr->SkeletalMesh);
 		WeaponCollision->SetBoxExtent(WeaponStructptr->HitBoxSize);
 		WeaponCollision->SetRelativeLocation(WeaponStructptr->MeshLocation);
+		WeaponCollision->SetRelativeRotation(WeaponStructptr->MeshRotation);
 		if (WeaponStructptr->bIsAttachSocket)
 		{
-			FName SocketName = TEXT("WeaponSocket");
-			WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, SocketName);
+			WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, WeaponStructptr->MainSocketName);
+		}
+		if (WeaponStructptr->bIsSetLeaderMesh)
+		{
+			WeaponMesh->SetLeaderPoseComponent(GetMesh());
 		}
 		
 	}
@@ -206,7 +210,7 @@ FPHeroStruct APHero::GetHeroStats() const
 	Stat.AccessorieMesh = AccessorieMesh;
 	Stat.SightRadius = SightRadius;
 	Stat.VisionAngle = VisionAngle;
-	Stat.IsMelee = IsMelee;
+	Stat.bIsMelee = bIsMelee;
 	Stat.Index = Index;
 	return Stat;
 }
@@ -228,7 +232,7 @@ void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
 	AccessorieMesh = UpdateStats.AccessorieMesh;
 	SightRadius = UpdateStats.SightRadius;
 	VisionAngle = UpdateStats.VisionAngle;
-	IsMelee = UpdateStats.IsMelee;
+	bIsMelee = UpdateStats.bIsMelee;
 	Index = UpdateStats.Index;
 }
 
@@ -257,14 +261,14 @@ void APHero::FindTarget(AActor* Target)
 		bIsLookingTarget = true;
 	}
 	
-	if (IsMelee && WeaponAniminstance)
+	if (bIsMelee && WeaponAniminstance)
 	{
 		WeaponAniminstance->StartAttack();
 	}
 	// 처음 적을 발견시 공격 애니메이션 시작
 	if (HeroAniminstance)
 	{
-		HeroAniminstance->Attack();
+		HeroAniminstance->Attack(AttackSpeed);
 	}
 }
 
@@ -282,9 +286,9 @@ void APHero::OnAttackEnded(UAnimMontage* Montage, bool bInterrupted)
 		{
 			if (HeroAniminstance)
 			{
-				HeroAniminstance->Attack();
+				HeroAniminstance->Attack(AttackSpeed);
 				//무기 애니메이션 인스턴스 적용해서 공격애니메이션해야함
-				if (IsMelee)
+				if (bIsMelee && WeaponAniminstance)
 				{
 					WeaponAniminstance->StartAttack();
 				}
@@ -322,7 +326,7 @@ void APHero::StartAttack()
 		bIsLookingTarget = true;
 
 		//원거리 공격
-		if (!IsMelee)
+		if (!bIsMelee)
 		{
 			RangeAttack();
 		}		
@@ -337,7 +341,7 @@ void APHero::StopAttack()
 		bIsLookingTarget = false;
 		bIsLookingForward = true;
 	}
-	if (IsMelee && WeaponAniminstance)
+	if (bIsMelee && WeaponAniminstance)
 	{
 		WeaponAniminstance->StopAttack();
 	}
@@ -359,7 +363,7 @@ void APHero::LookTarget()
 		// 새로운 회전 각도를 설정
 		GunPosition->SetWorldRotation(NewRotation);
 		HeroAniminstance->SetRotator(GunPosition->GetRelativeRotation());
-		WeaponMesh->SetRelativeRotation(FRotator(0, GunPosition->GetRelativeRotation().Yaw, 0));
+		//WeaponMesh->SetRelativeRotation(FRotator(0, GunPosition->GetRelativeRotation().Yaw, 0));
 		if (NewRotation.Equals(TargetRotation, 0.1f))
 		{
 			bIsLookingTarget = false;
@@ -377,7 +381,7 @@ void APHero::LookForward()
 	// 새로운 회전 각도를 설정
 	GunPosition->SetWorldRotation(NewRotation);
 	HeroAniminstance->SetRotator(NewAnimRotation);
-	WeaponMesh->SetRelativeRotation(NewAnimRotation);
+	//WeaponMesh->SetRelativeRotation(NewAnimRotation);
 	
 	if (NewRotation.Equals(TargetRotation, 0.1f))
 	{
