@@ -422,6 +422,8 @@ void APHero::Detach()
 	// 영웅 콜리전 제거 및 중력 제거
 	SetActorEnableCollision(true);
 	GetMesh()->SetSimulatePhysics(true);
+	GetMesh()->SetLinearDamping(5);
+	GetMesh()->SetAngularDamping(1);
 	WeaponMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 	WeaponMesh->SetSimulatePhysics(true);
 	//GetCharacterMovement()->GravityScale=1;

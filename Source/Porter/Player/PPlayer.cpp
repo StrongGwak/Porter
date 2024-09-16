@@ -144,7 +144,7 @@ void APPlayer::MinusHP(int32 Damage)
 			CurrentHP = MaxHp;
 		}
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Debug %d"), CurrentHP));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Debug %d"), CurrentHP));
 }
 
 void APPlayer::Move(const FInputActionValue& Value)
@@ -236,7 +236,7 @@ void APPlayer::UpdateBoost()
 			CurrentStamina = MaxStamina;
 		}
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentStamina));
+	//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentStamina));
 }
 
 void APPlayer::UpPort()
@@ -413,7 +413,7 @@ void APPlayer::MakeHeroHPZero()
 			IndexChecker = HeroArray[i]->GetHeroStats().Index;
 			if (IndexChecker == 3)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Player Manager")));
+				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Player Manager")));
 				HeroArray[i]->Destroy();
 				HeroArray[i] = nullptr;
 			}
