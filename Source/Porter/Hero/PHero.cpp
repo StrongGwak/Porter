@@ -39,7 +39,7 @@ APHero::APHero()
 	AccessorieMeshComponent->SetupAttachment(GetMesh());
 
 	GunPosition = CreateDefaultSubobject<USceneComponent>(TEXT("GunPosition"));
-	//GunPosition->SetupAttachment(GetCapsuleComponent());
+	GunPosition->SetupAttachment(GetCapsuleComponent());
 	
 	// 투사체 생성 위치
 	RangeAttackPosition = CreateDefaultSubobject<USceneComponent>(TEXT("RangeAttackPosition"));
@@ -64,6 +64,7 @@ APHero::APHero()
 	// 무기 스켈레탈 메시 추가
 	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponSkeletalMesh"));
 	WeaponMesh->SetupAttachment(GetMesh());
+	WeaponMesh->SetCollisionProfileName(TEXT("Hero"));
 	
 	// 무기 박스 콜리전 생성
 	WeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollision"));
@@ -423,9 +424,12 @@ void APHero::Detach()
 	SetActorEnableCollision(true);
 	GetMesh()->SetSimulatePhysics(true);
 	GetMesh()->SetLinearDamping(5);
-	GetMesh()->SetAngularDamping(1);
-	WeaponMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+	GetMesh()->SetAngularDamping(5);
+	GetMesh()->AddImpulse(FVector(0, 100, 0));
+	//WeaponMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 	WeaponMesh->SetSimulatePhysics(true);
+	WeaponMesh->SetLinearDamping(5);
+	WeaponMesh->SetAngularDamping(5);
 	//GetCharacterMovement()->GravityScale=1;
 	//DetachRootComponentFromParent();
 }
