@@ -43,8 +43,11 @@ public:
 	UFUNCTION(Blueprintable, BlueprintCallable)
 	void OnPlayerBeginOverlap(AActor* ThisActor, AActor* PPlayer);
 
-private:
+public:
 	bool bIsLoading;
+
+	UFUNCTION(Blueprintable, BlueprintCallable)
+	void OpenOthers();
 	
 	void TransitionToNewMap();
 

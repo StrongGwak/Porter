@@ -5,6 +5,8 @@
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "PPlayer.h"
+#include "PHero.h"
+#include "PHeroStruct.h"
 #include "../Core/PGameInstance.h"
 
 // Sets default values
@@ -28,10 +30,6 @@ void APChangeLevel::BeginPlay()
 	Super::BeginPlay();
 
 	GI = Cast<UPGameInstance>(GetGameInstance());
-
-	// 먼저 소환하기
-	//APPlayer* Player = Cast<APPlayer>(PPlayer);
-	//GI->GetPlayerManager()->OpenSpawnInformation(Player);
 }
 
 // Called every frame
@@ -59,6 +57,22 @@ void APChangeLevel::OnPlayerBeginOverlap(AActor* ThisActor, AActor* PPlayer)
 		// 1초 후에 맵 전환
 		FTimerHandle TimerHandle;
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &APChangeLevel::TransitionToNewMap, 1.0f, false);
+	}
+}
+
+void APChangeLevel::OpenOthers()
+{
+	// 먼저 소환하기
+	//APPlayer* Player = Cast<APPlayer>(PPlayer);
+	//GI->GetPlayerManager()->OpenSpawnInformation(Player);
+	GI->GetPlayerManager()->OpenSpawnInformation(GetWorld()->GetFirstPlayerController()->GetCharacter());
+
+	TArray<APHero*> HeroArray = GI->GetHeroManager()->GetHeroArray();
+	int32 HeroCount = HeroArray.Num();
+	for (int32 i = 0; i < HeroCount; i++)
+	{
+		FPHeroStruct HeroStruct = HeroArray[i]->GetHeroStats();
+		GI->GetHeroManager()->SpawnHero(HeroStruct);
 	}
 }
 
