@@ -425,7 +425,7 @@ void APHero::Detach()
 	GetMesh()->SetSimulatePhysics(true);
 	GetMesh()->SetLinearDamping(5);
 	GetMesh()->SetAngularDamping(5);
-	GetMesh()->AddImpulse(FVector(0, 100, 0));
+	GetMesh()->AddImpulse(GetActorForwardVector() * -10000);
 	//WeaponMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 	WeaponMesh->SetSimulatePhysics(true);
 	WeaponMesh->SetLinearDamping(5);
