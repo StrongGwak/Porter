@@ -92,3 +92,8 @@ void UPHeroAnimInstance::AnimNotify_Die() const
 {
 	OnDieNotifyDelegate.Broadcast();
 }
+
+void UPHeroAnimInstance::AnimNotify_Drow() const
+{
+	OnDrowNotifyDelegate.Broadcast();
+}

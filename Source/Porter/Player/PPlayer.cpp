@@ -272,7 +272,6 @@ void APPlayer::UpHeroesFromArray(FName RowName)
 		TArray<FVector> OffsetArray = GI->GetPlayerManager()->OffsetArray;
 		FVector SocketLocation = SMComp->GetSocketLocation(FName("PortSocket"));
 		UE_LOG(LogTemp, Log, TEXT("OffsetArray : %f, %f, %f"), OffsetArray[0].X, OffsetArray[0].Y, OffsetArray[0].Z);
-		UE_LOG(LogTemp, Log, TEXT("OffsetArray2 : %f, %f, %f"), OffsetArray[1].X, OffsetArray[1].Y, OffsetArray[1].Z);
 		FVector RelativeOffset = SocketLocation.ForwardVector*(OffsetArray[HeroNum].X + -40.0f)
 								+ SocketLocation.RightVector*(OffsetArray[HeroNum].Y)
 								+ SocketLocation.UpVector*(OffsetArray[HeroNum].Z);
@@ -438,5 +437,5 @@ void APPlayer::OpenSpawn()
 
 void APPlayer::TempTest()
 {
-	UpHeroesFromArray();
+	UpHeroesFromArray("Soldier");
 }
