@@ -5,6 +5,7 @@
 #include "PGameInstance.h"
 #include "Commandlets/GatherTextFromSourceCommandlet.h"
 #include "../Hero/PHero.h"
+#include "Player/PPlayer.h"
 
 UPlayerManager::UPlayerManager()
 {
@@ -53,10 +54,22 @@ void UPlayerManager::SaveSpawnInformation()
 // 레벨 넘어간 후 저장된 Port 수만큼 Port 소환
 void UPlayerManager::OpenSpawnInformation(ACharacter* PlayerCharacter)
 {
-	for (int32 i=0; i<SavedPortNum; ++i)
+	for (int32 i=0; i<SavedPortNum - 1; ++i)
 	{
 		SpawnPort(0, PlayerCharacter);
 	}
+}
+
+void UPlayerManager::SavePlayerStats(ACharacter* PlayerCharacter)
+{
+	APPlayer* Player = Cast<APPlayer>(PlayerCharacter);
+	PPlayerStats = Player->GetStats();
+}
+
+void UPlayerManager::OpenPlayerStats(ACharacter* PlayerCharacter)
+{
+	APPlayer* Player = Cast<APPlayer>(PlayerCharacter);
+	Player->SetStats(PPlayerStats);
 }
 
 int32 UPlayerManager::SpawnPort(int32 PortType, ACharacter* PlayerCharacter)

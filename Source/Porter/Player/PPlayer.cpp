@@ -37,9 +37,6 @@ APPlayer::APPlayer()
 	bUseControllerRotationYaw = true; 
 
 	FObjectFinderInputManager();
-
-	
-	
 }
 
 // Called when the game starts or when spawned

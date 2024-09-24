@@ -129,9 +129,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	float ZeroToHundredIncreaseStamina = 10; // 속력
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
-	float MaxWalkSpeed = 400;
+	float MaxWalkSpeed = 300;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
-	float BoostSpeed = 1000;
+	float BoostSpeed = 500;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	float CurrentStamina = 100;
 	UPROPERTY()

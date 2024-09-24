@@ -5,10 +5,11 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "../Hero/PHeroStruct.h"
-
+#include "Player/PlayerStatStruct.h"
 #include "PlayerManager.generated.h"
 
 class APHero;
+struct FPlayerStatsStruct;
 /**
  * 
  */
@@ -29,6 +30,10 @@ public:
 	void SaveSpawnInformation();
 	UFUNCTION(BlueprintCallable, Blueprintable)
 	void OpenSpawnInformation(ACharacter* PlayerCharacter);
+	UFUNCTION(BlueprintCallable, Blueprintable)
+	void SavePlayerStats(ACharacter* PlayerCharacter);
+	UFUNCTION(BlueprintCallable, Blueprintable)
+	void OpenPlayerStats(ACharacter* PlayerCharacter);
 
 	int32 SavedPortNum;
 	
@@ -65,9 +70,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
 	float ZeroToHundredIncreaseStamina = 10; // 속력
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
-	float PlayerWalkSpeed = 400;
+	float PlayerWalkSpeed = 300;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats|Player")
-	float PlayerBoostSpeed = 1000;
+	float PlayerBoostSpeed = 500;
 
 	TArray<FVector> OffsetArray;
 	float OffsetX = 0;
@@ -90,6 +95,9 @@ public:
 	UPROPERTY(EditAnywhere, Category="Stats|Port")
 	int32 MaxWeight = 10;
 
+	UPROPERTY(EditAnywhere, Category="Stats|Port")
+	FPlayerStatsStruct PPlayerStats;
+	
 public:
 
 	UPROPERTY()

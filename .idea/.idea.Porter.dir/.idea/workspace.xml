@@ -9,6 +9,16 @@
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_CPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_CPlayer.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/BS_Porter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/BS_Porter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/ItemActor/BP_HeroActor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/ItemActor/BP_HeroActor.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/HeroManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Core/PlayerManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/PlayerManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Core/PlayerManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/PlayerManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Player/PlayerStatStruct.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Player/PlayerStatStruct.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,13 +41,12 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Program Files/Epic Games/UE_5.4/Engine/Source/Runtime/Core/Public/Containers/Array.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/Porter/UHT/PHero.gen.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/UE5/Porter/Source/Porter/Hero/PHero.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/UE5/Porter/Source/Porter/Hero/PHero.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PHeroAIController.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PHeroAIController.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/UE5/Porter/Source/Porter/Hero/PHeroStruct.h" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/UE5/Porter/Source/Porter/Hero/PHeroStruct.h" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -51,14 +60,14 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Uproject.Porter.executor": "Run",
+    "Uproject.Porter.executor": "Debug",
     "git-widget-placeholder": "Yang-Player-Anim",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "CppCodeGenerationId",
+    "settings.editor.selected.configurable": "UnrealLogSettings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -129,19 +138,6 @@
         <option name="USE_EXTERNAL_CONSOLE" value="1" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
       </configuration_5>
-      <configuration_6>
-        <option name="CONFIGURATION" value="" />
-        <option name="PLATFORM" value="" />
-        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
-        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
-        <option name="EXECUTABLE_PATH" value="" />
-        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
-        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
-        <option name="WORKING_DIRECTORY" value="" />
-        <option name="PASS_PARENT_ENVS" value="1" />
-        <option name="USE_EXTERNAL_CONSOLE" value="1" />
-        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="AUTO_DETECT" />
-      </configuration_6>
       <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Porter.uproject" />
       <option name="AUTO_SELECT_PRIORITY" value="10010" />
       <method v="2">
@@ -230,6 +226,7 @@
       <workItem from="1725331577655" duration="561000" />
       <workItem from="1725942180992" duration="3682000" />
       <workItem from="1726171464113" duration="13031000" />
+      <workItem from="1727137059913" duration="10584000" />
     </task>
     <servers />
   </component>

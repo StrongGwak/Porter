@@ -43,5 +43,5 @@ public:
 	
 	FPlayerStatsStruct()
 		: MaxHp(5), MaxStamina(100), DecreaseStamina(33), IncreaseStamina(20), \
-			ZeroToHundredIncreaseStamina(10), WalkSpeed(400), BoostSpeed(1000), MaxWeight(10) {}
+			ZeroToHundredIncreaseStamina(10), WalkSpeed(300), BoostSpeed(500), MaxWeight(10) {}
 };
