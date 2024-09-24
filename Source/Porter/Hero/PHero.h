@@ -45,7 +45,7 @@ protected:
 	int Damage;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	int AttackSpeed;
+	float AttackSpeed;
 
 	UPROPERTY(EditAnywhere, Category = Mesh, Meta = (AllowPrivateAccess = "true"))
 	FVector MeshLocation;
@@ -102,7 +102,7 @@ protected:
 	float BulletSpeed;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
-	bool IsMelee;
+	bool bIsMelee;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	int32 Index;
@@ -138,19 +138,34 @@ protected:
 	UDataTable* WeaponDataTable;
 	
 	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"))
-	USkeletalMeshComponent* WeaponMesh;
+	USkeletalMeshComponent* MainWeaponMesh;
 
 	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"));
-	UBoxComponent* WeaponCollision;
+	UBoxComponent* MainWeaponCollision;
+
+	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMeshComponent* SubWeaponMesh;
+
+	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"));
+	UBoxComponent* SubWeaponCollision;
+
+	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"));
+	bool bIsTwoHand;
+
+	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"));
+	FName SubSocketName;
 
 	UPROPERTY(EditAnywhere)
 	UPHeroWeaponAnimInstance* WeaponAniminstance;
 
-	UPROPERTY(EditAnywhere)
-	UClass* AnimClass;
-	
-	UPROPERTY(EditAnywhere)
-	UClass* SolAnimClass;
+	UFUNCTION()
+	void Detach();
+
+	UFUNCTION()
+	void DestroyHero();
+
+	UFUNCTION()
+	void Drow();
 
 public:
 	UPROPERTY(EditAnywhere)

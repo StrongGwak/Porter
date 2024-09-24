@@ -12,7 +12,7 @@ APPort::APPort()
 	Port = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Port"));
 	RootComponent = Port;
 
-	ConstructorHelpers::FObjectFinder<UStaticMesh> SMPort(TEXT("/Script/Engine.StaticMesh'/Game/Porter/Develop/Hero/SM_Port.SM_Port'"));
+	ConstructorHelpers::FObjectFinder<UStaticMesh> SMPort(TEXT("/Script/Engine.StaticMesh'/Game/Porter/Develop/Hero/SM_Port2.SM_Port2'"));
 	if (SMPort.Succeeded())
 	{
 		Port->SetStaticMesh(SMPort.Object);

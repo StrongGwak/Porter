@@ -15,7 +15,7 @@ UHeroManager::UHeroManager()
 
 void UHeroManager::Initialize()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Hero Manager")));
+	
 }
 
 void UHeroManager::SetGameInstance(UPGameInstance* PGameInstance)
