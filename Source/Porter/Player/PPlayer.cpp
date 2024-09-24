@@ -37,9 +37,6 @@ APPlayer::APPlayer()
 	bUseControllerRotationYaw = true; 
 
 	FObjectFinderInputManager();
-
-	
-	
 }
 
 // Called when the game starts or when spawned
@@ -57,6 +54,7 @@ void APPlayer::BeginPlay()
 		}
 	}
 	SetStats(Stats);
+	GetCharacterMovement()->MaxWalkSpeed = Stats.WalkSpeed;
 
 	UpPort();
 	
@@ -251,7 +249,13 @@ void APPlayer::UpHeroesFromArray(FName RowName)
 	// 수정했음
 	//int32 RandomInt = rand() % 5;
 	//RowName = TEXT("Test1");
-	//APHero* Hero = GI->GetHeroManager()->SpawnHero(RowName);
+	int32 RealHeroArrayNum = GI->GetHeroManager()->CheckHeroNum();
+	int32 MaximumArraySize = GI->GetHeroManager()->MaximumArraySize;
+	if(RealHeroArrayNum >= MaximumArraySize)
+	{
+		return;
+	}
+	
 	APHero* Hero = GI->GetHeroManager()->FindHero(RowName);
 	if (Hero)
 	{
