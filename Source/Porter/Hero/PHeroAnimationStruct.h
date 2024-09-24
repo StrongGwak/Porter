@@ -22,10 +22,10 @@ public:
 	UAnimSequence* IdleAnim;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UAnimSequence* HitAnim;
+	UAnimMontage* HitAnim;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UAnimSequence* DieAim;
+	UAnimMontage* DieAim;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UAnimMontage* AttackAnim;

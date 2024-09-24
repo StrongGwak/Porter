@@ -42,6 +42,8 @@ public:
 	UFUNCTION()
 	APHero* SpawnHero(FPHeroStruct HeroStruct);
 	UFUNCTION()
+	APHero* SpawnHeroUsingOpen(FPHeroStruct HeroStruct, ACharacter* PlayerCharacter);
+	UFUNCTION()
 	void DestroyHero(int32 HeroIndex);
 	UFUNCTION()
 	TArray<APHero*> SwapHeroes(TArray<int32> IndexArray);

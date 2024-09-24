@@ -138,10 +138,16 @@ protected:
 	UDataTable* WeaponDataTable;
 	
 	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"))
-	USkeletalMeshComponent* WeaponMesh;
+	USkeletalMeshComponent* MainWeaponMesh;
 
 	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"));
-	UBoxComponent* WeaponCollision;
+	UBoxComponent* MainWeaponCollision;
+
+	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"))
+	USkeletalMeshComponent* SubWeaponMesh;
+
+	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"));
+	UBoxComponent* SubWeaponCollision;
 
 	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"));
 	bool bIsTwoHand;
@@ -152,7 +158,14 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UPHeroWeaponAnimInstance* WeaponAniminstance;
 
-	
+	UFUNCTION()
+	void Detach();
+
+	UFUNCTION()
+	void DestroyHero();
+
+	UFUNCTION()
+	void Drow();
 
 public:
 	UPROPERTY(EditAnywhere)

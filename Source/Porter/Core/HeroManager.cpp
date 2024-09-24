@@ -8,13 +8,14 @@
 UHeroManager::UHeroManager()
 {
 	HeroArray.Init(nullptr, MaximumArraySize);
+	HeroStructArray.Empty();
 	HeroDataTable = LoadObject<UDataTable>(nullptr, TEXT("/Game/Porter/Develop/Hero/DT_Hero.DT_Hero"));
 	HeroClass = APHero::StaticClass();
 }
 
 void UHeroManager::Initialize()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Hero Manager")));
+	
 }
 
 void UHeroManager::SetGameInstance(UPGameInstance* PGameInstance)
@@ -25,11 +26,11 @@ void UHeroManager::SetGameInstance(UPGameInstance* PGameInstance)
 // 레벨 넘어가기 전 hero stat 저장
 void UHeroManager::SaveSpawnInformation()
 {
-	if (!HeroArray.IsEmpty())
+	for (APHero* Hero : HeroArray)
 	{
-		for (APHero* Hero : HeroArray)
+		if (Hero != nullptr)
 		{
-			HeroStructArray.Add(Hero->GetHeroStats());
+			HeroStructArray.Emplace(Hero->GetHeroStats());
 		}
 	}
 }
@@ -40,10 +41,11 @@ void UHeroManager::OpenSpawnInformation(ACharacter* PlayerCharacter)
 	if (!HeroArray.IsEmpty())
 	{
 		for (FPHeroStruct HeroStruct : HeroStructArray)
-        	{
-        		SpawnHero(HeroStruct);
-        	}
+        {
+        	SpawnHeroUsingOpen(HeroStruct, PlayerCharacter);
+        }
 	}
+	HeroStructArray.Empty();
 }
 
 TArray<APHero*> UHeroManager::GetHeroArray()
@@ -109,6 +111,43 @@ APHero* UHeroManager::SpawnHero(FPHeroStruct HeroStruct)
 	
 	return nullptr;
 }
+
+APHero* UHeroManager::SpawnHeroUsingOpen(FPHeroStruct HeroStruct, ACharacter* PlayerCharacter)
+{
+	APHero* Hero = GetWorld()->SpawnActor<APHero>(HeroClass);
+	if (Hero)
+	{
+		// 변경사항 저장
+		HeroArray[HeroStruct.Index] = Hero;
+		
+		Hero->Initialize(HeroStruct);
+
+		USkeletalMeshComponent* SMComp = PlayerCharacter->GetMesh();
+
+		//GEngine->AddOnScreenDebugMessage(-1,3,FColor::Blue,FString::FromInt(PortNum));
+		int32 HeroNum = Hero->GetHeroStats().Index;
+
+		// Offset Array에서 해당 위치에 맞는 값 가져오기
+		TArray<FVector> OffsetArray = GI->GetPlayerManager()->OffsetArray;
+		FVector SocketLocation = SMComp->GetSocketLocation(FName("PortSocket"));
+		UE_LOG(LogTemp, Log, TEXT("OffsetArray : %f, %f, %f"), OffsetArray[0].X, OffsetArray[0].Y, OffsetArray[0].Z);
+		UE_LOG(LogTemp, Log, TEXT("OffsetArray2 : %f, %f, %f"), OffsetArray[1].X, OffsetArray[1].Y, OffsetArray[1].Z);
+		FVector RelativeOffset = SocketLocation.ForwardVector*(OffsetArray[HeroNum].X + -40.0f)
+								+ SocketLocation.RightVector*(OffsetArray[HeroNum].Y)
+								+ SocketLocation.UpVector*(OffsetArray[HeroNum].Z);
+		FVector SpawnLocation = SocketLocation + RelativeOffset;
+		
+		Hero->SetActorLocation(SpawnLocation);
+		Hero->SetActorRotation(PlayerCharacter->GetActorRotation());
+
+		Hero->AttachToComponent(SMComp, FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("PortSocket"));
+		Hero->SetActorRelativeLocation(RelativeOffset);
+		
+		return Hero;
+	}
+	return nullptr;
+}
+
 
 void UHeroManager::DestroyHero(int32 HeroIndex)
 {

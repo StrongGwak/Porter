@@ -22,11 +22,13 @@ public:
 
 	void StopAttack();
 
-protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bIsAttack;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UAnimMontage* Attack;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UAnimSequence* Idle;
 	
 };
