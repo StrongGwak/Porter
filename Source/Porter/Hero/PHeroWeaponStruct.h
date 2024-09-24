@@ -16,19 +16,28 @@ public:
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* SkeletalMesh;
+	USkeletalMesh* MainMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UAnimSequence* Animation;
+	USkeletalMesh* SubMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector MeshLocation;
+	FVector MainMeshLocation;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FRotator MeshRotation;
+	FRotator MainMeshRotation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector HitBoxSize;
+	FVector MainHitBoxSize;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector SubMeshLocation;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FRotator SubMeshRotation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector SubHitBoxSize;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bIsAttachSocket;
