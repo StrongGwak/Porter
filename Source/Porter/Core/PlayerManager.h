@@ -91,9 +91,9 @@ public:
 	float PortWeight = 0.2;
 
 	UPROPERTY(EditAnywhere, Category="Stats|Port")
-	int32 MaxPortNum = 10;
+	int32 MaxPortNum = 15;
 	UPROPERTY(EditAnywhere, Category="Stats|Port")
-	int32 MaxWeight = 10;
+	int32 MaxWeight = 15;
 
 	UPROPERTY(EditAnywhere, Category="Stats|Port")
 	FPlayerStatsStruct PPlayerStats;
