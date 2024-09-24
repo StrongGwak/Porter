@@ -6,11 +6,11 @@
 
 UPHeroWeaponAnimInstance::UPHeroWeaponAnimInstance()
 {
-	static ConstructorHelpers::FObjectFinder<UAnimMontage> TempAnim(TEXT("/Script/Engine.AnimMontage'/Game/Porter/Develop/Hero/Animation/Soldier/AM_Dangpa.AM_Dangpa'"));
+	/*static ConstructorHelpers::FObjectFinder<UAnimMontage> TempAnim(TEXT("/Script/Engine.AnimMontage'/Game/Porter/Develop/Hero/Animation/Soldier/AM_Dangpa.AM_Dangpa'"));
 	if (TempAnim.Succeeded()) 
 	{
 		Attack = TempAnim.Object;
-	}
+	}*/
 }
 
 void UPHeroWeaponAnimInstance::StartAttack()

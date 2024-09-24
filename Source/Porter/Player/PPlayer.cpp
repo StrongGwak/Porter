@@ -437,5 +437,5 @@ void APPlayer::OpenSpawn()
 
 void APPlayer::TempTest()
 {
-	UpHeroesFromArray("Soldier");
+	UpHeroesFromArray("JangChang");
 }
