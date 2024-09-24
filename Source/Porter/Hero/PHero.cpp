@@ -13,6 +13,7 @@
 #include "Hero/PHeroBulletPoolManager.h"
 #include "Hero/PHeroBullet.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "WorldPartition/ContentBundle/ContentBundleLog.h"
 
 // Sets default values
 APHero::APHero()
@@ -85,7 +86,7 @@ APHero::APHero()
 	static ConstructorHelpers::FClassFinder<UAnimInstance> TempWeaponAnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_PHeroWeaponAnimation.ABP_PHeroWeaponAnimation_C"));
 	if (TempWeaponAnimInstance.Succeeded()) 
 	{
-		MainWeaponMesh->SetAnimInstanceClass(TempWeaponAnimInstance.Class);
+		//MainWeaponMesh->SetAnimInstanceClass(TempWeaponAnimInstance.Class);
 	}
 	
 }
@@ -112,6 +113,19 @@ void APHero::Tick(float DeltaTime)
 	if (bIsLookingTarget)
 	{
 		LookTarget();
+	}
+
+	if(bIsMelee)
+	{
+		FVector HandSocketLocation = GetMesh()->GetSocketLocation(FName("LeftHandSocket"));
+		DrawDebugPoint(GetWorld(), HandSocketLocation, 10, FColor(52, 220, 239), true);
+
+		FVector WeaponEndLocation = MainWeaponMesh->GetComponentLocation();
+		DrawDebugPoint(GetWorld(), WeaponEndLocation, 10, FColor(52, 220, 239), true);
+		FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(WeaponEndLocation, HandSocketLocation);
+		UE_LOG(LogTemp, Log, TEXT("rotation : %f, %f, %f"), NewRotation.Pitch, NewRotation.Yaw, NewRotation.Roll);
+		FRotator AdjustedRotation = NewRotation + FRotator(90.0f, 0.0f, 0.0f); // X축에서 90도 회전하여 밑면이 바라보도록 설정
+		MainWeaponMesh->SetWorldRotation(AdjustedRotation);
 	}
 
 }

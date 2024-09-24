@@ -104,11 +104,11 @@ public:
 	void PlusHP(int32 Heal);
 	UFUNCTION(BlueprintCallable, Blueprintable,Category="Stats")
 	void MinusHP(int32 Damage);
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Blueprintable,Category="Stats")
 	void Boost();
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Blueprintable,Category="Stats")
 	void StopBoost();
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Blueprintable,Category="Stats")
 	void UpdateBoost();
 
 protected:
@@ -129,14 +129,14 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	float ZeroToHundredIncreaseStamina = 10; // 속력
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
-	float MaxWalkSpeed = 400;
+	float MaxWalkSpeed = 300;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
-	float BoostSpeed = 1000;
+	float BoostSpeed = 500;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	float CurrentStamina = 100;
 	UPROPERTY()
 	float TempStamina = 100;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
 	bool bIsBoost = false;
 	UPROPERTY()
 	bool bCanBoost = true;
