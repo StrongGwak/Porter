@@ -83,11 +83,11 @@ APHero::APHero()
 	SubWeaponCollision->SetBoxExtent(FVector(0,0,0));
 	
 	// 애니메이션 인스턴스 설정
-	static ConstructorHelpers::FClassFinder<UAnimInstance> TempWeaponAnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_PHeroWeaponAnimation.ABP_PHeroWeaponAnimation_C"));
+	/*static ConstructorHelpers::FClassFinder<UAnimInstance> TempWeaponAnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_PHeroWeaponAnimation.ABP_PHeroWeaponAnimation_C"));
 	if (TempWeaponAnimInstance.Succeeded()) 
 	{
 		//MainWeaponMesh->SetAnimInstanceClass(TempWeaponAnimInstance.Class);
-	}
+	}*/
 	
 }
 
@@ -115,17 +115,9 @@ void APHero::Tick(float DeltaTime)
 		LookTarget();
 	}
 
-	if(bIsMelee)
+	if(bIsKorean)
 	{
-		FVector HandSocketLocation = GetMesh()->GetSocketLocation(FName("LeftHandSocket"));
-		DrawDebugPoint(GetWorld(), HandSocketLocation, 10, FColor(52, 220, 239), true);
-
-		FVector WeaponEndLocation = MainWeaponMesh->GetComponentLocation();
-		DrawDebugPoint(GetWorld(), WeaponEndLocation, 10, FColor(52, 220, 239), true);
-		FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(WeaponEndLocation, HandSocketLocation);
-		UE_LOG(LogTemp, Log, TEXT("rotation : %f, %f, %f"), NewRotation.Pitch, NewRotation.Yaw, NewRotation.Roll);
-		FRotator AdjustedRotation = NewRotation + FRotator(90.0f, 0.0f, 0.0f); // X축에서 90도 회전하여 밑면이 바라보도록 설정
-		MainWeaponMesh->SetWorldRotation(AdjustedRotation);
+		TwoHandAttachRotation();
 	}
 
 }
@@ -215,15 +207,24 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 			MainWeaponMesh->SetLeaderPoseComponent(GetMesh());
 			SubWeaponMesh->SetLeaderPoseComponent(GetMesh());
 		}
+		if(bIsKorean)
+		{
+			FVector HandSocketLocation = GetMesh()->GetSocketLocation(FName("LeftHandSocket"));
+			FVector WeaponLocation = MainWeaponMesh->GetComponentLocation();
+			FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(WeaponLocation, HandSocketLocation);
+			FRotator AdjustedRotation = LookAtRotation + FRotator(90.0f, 0.0f, 0.0f); // X축에서 90도 회전하여 밑면이 바라보도록 설정
+			MainWeaponMesh->SetWorldRotation(AdjustedRotation);
+		}
 		// Sub Weapon도 기능 추가하기
 		
 	}
 
+	/*
 	if (UAnimInstance* WeaponAnimInstance = MainWeaponMesh->GetAnimInstance())
 	{
 		WeaponAniminstance = Cast<UPHeroWeaponAnimInstance>(WeaponAnimInstance);
 		//AnimInstance->OnMontageEnded.AddDynamic(this, &APHero::OnAttackEnded);
-	}
+	}*/
 }
 
 FPHeroStruct APHero::GetHeroStats() const
@@ -246,6 +247,7 @@ FPHeroStruct APHero::GetHeroStats() const
 	Stat.VisionAngle = VisionAngle;
 	Stat.bIsMelee = bIsMelee;
 	Stat.Index = Index;
+	Stat.bIsKorean = bIsKorean;
 	return Stat;
 }
 
@@ -268,6 +270,7 @@ void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
 	VisionAngle = UpdateStats.VisionAngle;
 	bIsMelee = UpdateStats.bIsMelee;
 	Index = UpdateStats.Index;
+	bIsKorean = UpdateStats.bIsKorean;
 }
 
 FPHeroWeaponStruct* APHero::FindWeapon(FName RowName) const
@@ -295,10 +298,10 @@ void APHero::FindTarget(AActor* Target)
 		bIsLookingTarget = true;
 	}
 	
-	if (bIsMelee && WeaponAniminstance)
+	/*if (bIsMelee && WeaponAniminstance)
 	{
 		WeaponAniminstance->StartAttack();
-	}
+	}*/
 	// 처음 적을 발견시 공격 애니메이션 시작
 	if (HeroAniminstance)
 	{
@@ -322,10 +325,10 @@ void APHero::OnAttackEnded(UAnimMontage* Montage, bool bInterrupted)
 			{
 				HeroAniminstance->Attack(AttackSpeed);
 				//무기 애니메이션 인스턴스 적용해서 공격애니메이션해야함
-				if (bIsMelee && WeaponAniminstance)
+				/*if (bIsMelee && WeaponAniminstance)
 				{
 					WeaponAniminstance->StartAttack();
-				}
+				}*/
 				
 			}
 		}
@@ -376,10 +379,10 @@ void APHero::StopAttack()
 		bIsLookingTarget = false;
 		bIsLookingForward = true;
 	}
-	if (bIsMelee && WeaponAniminstance)
+	/*if (bIsMelee && WeaponAniminstance)
 	{
 		WeaponAniminstance->StopAttack();
-	}
+	}*/
 	if (HeroAniminstance)
 	{
 		HeroAniminstance->StopAttack();
@@ -424,6 +427,18 @@ void APHero::LookForward()
 	}
 }
 
+void APHero::TwoHandAttachRotation()
+{
+	FVector HandSocketLocation = GetMesh()->GetSocketLocation(FName("LeftHandSocket"));
+	FVector WeaponLocation = MainWeaponMesh->GetComponentLocation();
+	FRotator CurrentRotation = MainWeaponMesh->GetComponentRotation();
+	FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(WeaponLocation, HandSocketLocation);
+	FRotator AdjustedRotation = LookAtRotation + FRotator(90.0f, 0.0f, 0.0f); // X축에서 90도 회전하여 밑면이 바라보도록 설정
+	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, AdjustedRotation, GetWorld()->GetDeltaSeconds(), 5.0f); // 5.0f는 회전 속도
+
+	MainWeaponMesh->SetWorldRotation(NewRotation);
+}
+
 void APHero::GetDamage(int TakenDamage)
 {
 	HP -= TakenDamage;
@@ -436,10 +451,10 @@ void APHero::GetDamage(int TakenDamage)
 void APHero::Die()
 {
 	UE_LOG(LogTemp, Log, TEXT("%s Hero Die"), *GetName());
-	if (bIsMelee && WeaponAniminstance)
+	/*if (bIsMelee && WeaponAniminstance)
 	{
 		WeaponAniminstance->StopAttack();
-	}
+	}*/
 	if (HeroAniminstance)
 	{
 		HeroAniminstance->StopAttack();

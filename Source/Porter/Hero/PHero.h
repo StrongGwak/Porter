@@ -108,6 +108,9 @@ protected:
 	int32 Index;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	bool bIsKorean;
+
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	AActor* AttackTarget;
 
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"));
@@ -187,6 +190,8 @@ public:
 	void LookTarget();
 	
 	void LookForward();
+
+	void TwoHandAttachRotation();
 	
 	void RangeAttack() const;
 	

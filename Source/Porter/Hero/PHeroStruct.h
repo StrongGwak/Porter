@@ -65,5 +65,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 Index;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bIsKorean;
 	
 };
