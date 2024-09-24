@@ -8,10 +8,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Porter/Develop/Maps/BP_ChangeLevel.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Porter/Develop/Maps/BP_OpenLevel.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Maps/Lv_Shop.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Maps/Lv_Shop.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap2.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Player/Test/TestPlayerMap2.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Core/PlayerManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Core/PlayerManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +55,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Uproject.Porter.executor": "Run",
-    "git-widget-placeholder": "Yang-Player-Anim",
+    "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
