@@ -25,6 +25,8 @@ public:
 
 	void SetRotator(FRotator NewRotator);
 
+	FRotator GetRotator() const;
+
 	FPHeroAnimationStruct* FindAnimation(FName RowName) const;
 
 	void Attack(float AttackSpeed);
