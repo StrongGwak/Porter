@@ -9,137 +9,8 @@
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/ABP_Porter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/ABP_Porter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_CPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_CPlayer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/BS_Porter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/BS_Porter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/MSP_GenericLeftFoot.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/MSP_GenericLeftFoot.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/MSP_GenericRightFoot.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/MSP_GenericRightFoot.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/ABP_PHeroAnimation.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/ABP_PHeroAnimation.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/ABP_PHeroSoldierAnimation.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/ABP_PHeroSoldierAnimation.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/ABP_PHeroWeaponAnimation.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/ABP_PHeroWeaponAnimation.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_HeroBullet.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/BP_HeroBullet.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_Hero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_Hero.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroAnimation.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroAnimation.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroBullet.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroBullet.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroWeapon.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Hero/DT_HeroWeapon.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/Bow_Attack1_UE.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/Bow_Attack1_UE1.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/Drag/WB_Hero.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/Drag/WB_Hero.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/Enum_ItemDrop.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/ItemActor/BP_HeroActor.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/ItemActor/BP_ItemActor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/ItemActor/BP_ItemActor.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/MoveAsset/BP_Camere.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/MoveAsset/CT_HeroCamera.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/MoveAsset/CT_HeroCamera.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/MoveAsset/MI_BackgroundColor.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/MoveAsset/M_BackgroundColor.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/MoveAsset/M_HeroCamera.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/MoveAsset/M_HeroCamera.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/MoveAsset/M_Text.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/MoveAsset/RT_HeroText.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/WB/WB_ChooseHero.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/WB/WB_ChooseHero_main.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/WB/WB_ChooseItem_.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/WB/WB_ChooseItem_1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/WB/WB_ChooseItem_1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/WB/WB_ChooseItem_main.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/WB/WB_ChooseItem_main1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/WB/WB_ChooseItem_main1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/WB/WB_ItemInven.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/WB/WB_Text.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/WB/WB_TextBox.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/WB/WB_TextBox.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/Contour_Epic.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/Contour_Epic.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/Contour_Legendary.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/Contour_Legendary.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/Contour_Normal.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/Contour_Normal.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/Contour_RaraItem.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/Contour_RaraItem.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/DALL·E-2024-08-29-11_44_55-A-plain-and-traditional-Korean-hanji-background-suitable-for-general-use.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/Hero_bow_1-removebg-preview.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/Image_EpicImageItem.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/Image_LegendaryItem.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/Image_RaraItem.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/background.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/ground.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/hero_Dangpa_1-removebg-preview.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/hero_Hwando_1-removebg-preview.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Item/image/heroimage.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Maps/BP_ChangeLevel.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Maps/BP_ChangeLevel.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Maps/BP_OpenLevel.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Maps/BP_OpenLevel.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_BrushBlack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_BrushBlack.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_BrushWhite.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_BrushWhite.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_ChooseItemBlue1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_ChooseItemBlue1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_ChooseItemGreen1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_ChooseItemGreen1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_ChooseItemPurple1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_ChooseItemPurple1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_ChooseItemRed1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_ChooseItemRed1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_ChooseItemWhite1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_ChooseItemWhite1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_FullScreenSize.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_FullScreenSize.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_ItemBoxDown1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_ItemBoxDown1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_ItemBoxUp1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_ItemBoxUp1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_Main_BG1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_Main_BG1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_Main_BG2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_Main_BG2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_Main_BG3.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_Main_BG3.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_Main_BG4.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_Main_BG4.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_Main_BG5.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_Main_BG5.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_OptionLeft2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_OptionLeft2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_OptionLeftHovered2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_OptionLeftHovered2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_OptionRight2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_OptionRight2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_OptionRightHovered2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_OptionRightHovered2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_Option_BG_Test1.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_Option_BG_Test2.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_PauseBGHorizontal.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_PauseBGHorizontal.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_PauseBGVertical.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_PauseBGVertical.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_Porter_Title_Backpack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_Porter_Title_Backpack.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_Porter_Title_Black.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_Porter_Title_Black.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_SelectBlue.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_SelectBlue.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_SelectGreen.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_SelectGreen.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_SelectRed.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_SelectRed.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_UELogo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/Image_UELogo.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/item-Image_SelectWhite.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Source/item-Image_SelectWhite.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Widget/WBP_MainTitle.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Widget/WBP_MainTitle.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Widget/WBP_NewGameQuestion.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Widget/WBP_NewGameQuestion.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Widget/WBP_SelectSave.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Widget/WBP_SelectSave.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Widget/Widget_NewOption/NewOptionCategory/WBP_OptionCategoryDisplay.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Widget/Widget_NewOption/NewOptionCategory/WBP_OptionCategoryDisplay.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Widget/Widget_NewOption/WBP_MainNewOption.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Widget/Widget_NewOption/WBP_MainNewOption.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_Brush2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_Brush2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_Brush3.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_Brush3.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_Brush4.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_Brush4.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_BrushFinish.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_BrushFinish.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_BrushStart.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_BrushStart.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_Paper3.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_Paper3.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_Paper4.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_Paper4.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_PaperFinish.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_PaperFinish.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_PaperStart.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_PaperStart.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_paper2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Cartoon_Source/Cartoon_paper2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/BMEULJIROTTF.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/BMEULJIROTTF.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/ChosunCentennial_ttf.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/ChosunCentennial_ttf.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/DeogonPrincess.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/DeogonPrincess.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/DeogonPrincessClassic.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/DeogonPrincessClassic.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/DimibangOTF.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/DimibangOTF.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/EBSJSKLarge.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/EBSJSKLarge.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/EBSJSKMedium.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/EBSJSKMedium.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/EBSJSKSmall.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/EBSJSKSmall.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/GGM_Bold.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/GGM_Bold.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/GGM_Light.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/GGM_Light.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/GGOksam.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/GGOksam.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/GGSeum.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/GGSeum.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/GGTuntun.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/GGTuntun.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/GeneralKimJwajin_Bold.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/GeneralKimJwajin_Bold.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/GeneralKimJwajin_Regular.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/GeneralKimJwajin_Regular.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/KdgTTFLight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/KdgTTFLight.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/KdgTTFMedium.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/KdgTTFMedium.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/Shilla_Culture_B_.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/Shilla_Culture_B_.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/Shilla_Culture_M_.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/Shilla_Culture_M_.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/Shilla_Culture_M__Font.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/Shilla_Culture_M__Font.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/dimibang.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Font_Source/dimibang.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/NewPauseOption/PauseOptionCategory/WBP_PauseControl.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/NewPauseOption/PauseOptionCategory/WBP_PauseControl.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/NewPauseOption/PauseOptionCategory/WBP_PauseDisplay.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/NewPauseOption/PauseOptionCategory/WBP_PauseDisplay.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/NewPauseOption/PauseOptionCategory/WBP_PauseGameplay.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/NewPauseOption/PauseOptionCategory/WBP_PauseGameplay.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/NewPauseOption/PauseOptionCategory/WBP_PauseLanguage.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/NewPauseOption/PauseOptionCategory/WBP_PauseLanguage.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/NewPauseOption/PauseOptionCategory/WBP_PauseSound.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/NewPauseOption/PauseOptionCategory/WBP_PauseSound.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/NewPauseOption/WBP_PauseDefault.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/NewPauseOption/WBP_PauseDefault.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/WBP_GameOver.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/WBP_GameOver.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/WBP_GamePause.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/WBP_GamePause.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/WBP_PauseQuit.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/WBP_PauseQuit.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/WBP_PauseRestart.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/WBP_PauseRestart.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/WBP_TestHealth.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/WBP_TestHealth.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestPotion/BP_HealthPotion.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestPotion/BP_HealthPotion.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_Widget/Level_MainTitle.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_Widget/Level_MainTitle.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Sound_Source/Sound_SFX_Paper.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Sound_Source/Sound_SFX_Paper.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Effects/NS_Portal_L.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Effects/NS_Portal_L.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,12 +34,20 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/Porter/UHT/PHero.gen.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/UE5/Porter/Source/Porter/Hero/PHero.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/UE5/Porter/Source/Porter/Hero/PHero.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Porter/Core/PGameInstance.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Porter/Core/PlayerManager.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PHero.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PHero.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PHeroAIController.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PHeroAIController.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/UE5/Porter/Source/Porter/Hero/PHeroStruct.h" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/UE5/Porter/Source/Porter/Hero/PHeroStruct.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PHeroAnimInstance.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PHeroAnimInstance.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PHeroBullet.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PHeroBullet.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PHeroStruct.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PHeroWeaponAnimInstance.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Porter/Hero/PHeroWeaponStruct.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Porter/Player/PPlayer.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -183,7 +62,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Uproject.Porter.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Gwak-Hero&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;leveltemp&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -438,6 +317,7 @@
       <workItem from="1727152648547" duration="4323000" />
       <workItem from="1727157884052" duration="2832000" />
       <workItem from="1727163031118" duration="876000" />
+      <workItem from="1727247116401" duration="221000" />
     </task>
     <servers />
   </component>
