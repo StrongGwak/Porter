@@ -441,5 +441,5 @@ void APPlayer::OpenSpawn()
 
 void APPlayer::TempTest()
 {
-	UpHeroesFromArray("Korean1Jangchang");
+	UpHeroesFromArray("Korean1Ssanggeom");
 }

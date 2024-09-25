@@ -31,6 +31,12 @@ public:
 	FVector MainHitBoxSize;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector MainHitBoxLocation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FRotator MainHitBoxRotation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector SubMeshLocation;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -38,6 +44,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector SubHitBoxSize;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector SubHitBoxLocation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FRotator SubHitBoxRotation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bIsAttachSocket;

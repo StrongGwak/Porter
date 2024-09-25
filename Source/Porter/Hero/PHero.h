@@ -158,9 +158,6 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"));
 	FName SubSocketName;
 
-	UPROPERTY(EditAnywhere)
-	UPHeroWeaponAnimInstance* WeaponAniminstance;
-
 	UFUNCTION()
 	void Detach();
 
@@ -171,9 +168,6 @@ protected:
 	void Drow();
 
 public:
-	UPROPERTY(EditAnywhere)
-	FRotator AnimRotation;
-
 	void Initialize(FPHeroStruct HeroStruct);
 	
 	FPHeroStruct GetHeroStats() const;
@@ -197,9 +191,13 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category="Function")
 	void GetDamage(int TakenDamage);
-	
+
 	void Die();
 	
 	void SetIndex(int NewIndex);
 
+	UFUNCTION()
+	void OnHitBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
+						UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, 
+						bool bFromSweep, const FHitResult& SweepResult);
 };
