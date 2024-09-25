@@ -13,6 +13,7 @@
 #include "Hero/PHeroBulletPoolManager.h"
 #include "Hero/PHeroBullet.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "WorldPartition/ContentBundle/ContentBundleLog.h"
 
 // Sets default values
 APHero::APHero()
@@ -21,7 +22,9 @@ APHero::APHero()
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Bullet이 Player Type을 무시하기 때문에 Hero도 Object Type을 Player로 설정
-	GetCapsuleComponent()->SetCollisionObjectType(ECC_GameTraceChannel2);
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Hero"));
+	GetMesh()->SetCollisionProfileName(TEXT("Hero"));
+	//GetCapsuleComponent()->SetCollisionObjectType(ECC_GameTraceChannel4);
 	GetCapsuleComponent()->SetCapsuleHalfHeight(60);
 
 	// 스켈레탈메시 생성
@@ -42,7 +45,7 @@ APHero::APHero()
 	// 투사체 생성 위치
 	RangeAttackPosition = CreateDefaultSubobject<USceneComponent>(TEXT("RangeAttackPosition"));
 	RangeAttackPosition->SetupAttachment(GunPosition);
-	RangeAttackPosition->SetRelativeLocation(FVector3d(50, 0, 50.0f));
+	RangeAttackPosition->SetRelativeLocation(FVector3d(60, 0, 45.0f));
 	
 	// AI Controller 할당
 	AIControllerClass = APHeroAIController::StaticClass();
@@ -60,19 +63,30 @@ APHero::APHero()
 	WeaponDataTable = LoadObject<UDataTable>(nullptr, TEXT("/Game/Porter/Develop/Hero/DT_HeroWeapon.DT_HeroWeapon"));
 	
 	// 무기 스켈레탈 메시 추가
-	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponSkeletalMesh"));
-	WeaponMesh->SetupAttachment(GetMesh());
+	MainWeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponSkeletalMesh"));
+	MainWeaponMesh->SetupAttachment(GetMesh());
+	MainWeaponMesh->SetCollisionProfileName(TEXT("Hero"));
 	
 	// 무기 박스 콜리전 생성
-	WeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollision"));
-	WeaponCollision->SetupAttachment(WeaponMesh);
-	WeaponCollision->SetBoxExtent(FVector(0,0,0));
+	MainWeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollision"));
+	MainWeaponCollision->SetupAttachment(MainWeaponMesh);
+	MainWeaponCollision->SetBoxExtent(FVector(0,0,0));
 
+	// 무기 스켈레탈 메시 추가
+	SubWeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SubWeaponSkeletalMesh"));
+	SubWeaponMesh->SetupAttachment(GetMesh());
+	SubWeaponMesh->SetCollisionProfileName(TEXT("Hero"));
+	
+	// 무기 박스 콜리전 생성
+	SubWeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("SubWeaponCollision"));
+	SubWeaponCollision->SetupAttachment(SubWeaponMesh);
+	SubWeaponCollision->SetBoxExtent(FVector(0,0,0));
+	
 	// 애니메이션 인스턴스 설정
 	static ConstructorHelpers::FClassFinder<UAnimInstance> TempWeaponAnimInstance(TEXT("/Game/Porter/Develop/Hero/ABP_PHeroWeaponAnimation.ABP_PHeroWeaponAnimation_C"));
 	if (TempWeaponAnimInstance.Succeeded()) 
 	{
-		WeaponMesh->SetAnimInstanceClass(TempWeaponAnimInstance.Class);
+		//MainWeaponMesh->SetAnimInstanceClass(TempWeaponAnimInstance.Class);
 	}
 	
 }
@@ -99,6 +113,19 @@ void APHero::Tick(float DeltaTime)
 	if (bIsLookingTarget)
 	{
 		LookTarget();
+	}
+
+	if(bIsMelee)
+	{
+		FVector HandSocketLocation = GetMesh()->GetSocketLocation(FName("LeftHandSocket"));
+		DrawDebugPoint(GetWorld(), HandSocketLocation, 10, FColor(52, 220, 239), true);
+
+		FVector WeaponEndLocation = MainWeaponMesh->GetComponentLocation();
+		DrawDebugPoint(GetWorld(), WeaponEndLocation, 10, FColor(52, 220, 239), true);
+		FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(WeaponEndLocation, HandSocketLocation);
+		UE_LOG(LogTemp, Log, TEXT("rotation : %f, %f, %f"), NewRotation.Pitch, NewRotation.Yaw, NewRotation.Roll);
+		FRotator AdjustedRotation = NewRotation + FRotator(90.0f, 0.0f, 0.0f); // X축에서 90도 회전하여 밑면이 바라보도록 설정
+		MainWeaponMesh->SetWorldRotation(AdjustedRotation);
 	}
 
 }
@@ -142,7 +169,7 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 	// Hero Stat 설정
 	SetHeroStats(HeroStruct);
 
-	if (!IsMelee)
+	if (!bIsMelee)
 	{
 		if (BulletPoolManagerClass) {
 			BulletPoolManager = GetWorld()->SpawnActor<APHeroBulletPoolManager>(BulletPoolManagerClass);
@@ -164,24 +191,35 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 		HeroAniminstance = Cast<UPHeroAnimInstance>(GetMesh()->GetAnimInstance());
 		HeroAniminstance->SetAnimation(Name);
 		HeroAniminstance->OnAttackNotifyDelegate.AddDynamic(this, &APHero::StartAttack);
+		HeroAniminstance->OnDrowNotifyDelegate.AddDynamic(this, &APHero::Drow);
+		HeroAniminstance->OnDieNotifyDelegate.AddDynamic(this, &APHero::Detach);
 		GetMesh()->GetAnimInstance()->OnMontageEnded.AddDynamic(this, &APHero::OnAttackEnded);
 	}
 	
 	FPHeroWeaponStruct* WeaponStructptr = FindWeapon(Name);
 	if (WeaponStructptr != nullptr)
 	{
-		WeaponMesh->SetSkeletalMesh(WeaponStructptr->SkeletalMesh);
-		WeaponCollision->SetBoxExtent(WeaponStructptr->HitBoxSize);
-		WeaponCollision->SetRelativeLocation(WeaponStructptr->MeshLocation);
+		MainWeaponMesh->SetSkeletalMesh(WeaponStructptr->MainMesh);
+		MainWeaponCollision->SetBoxExtent(WeaponStructptr->MainHitBoxSize);
+		MainWeaponMesh->SetRelativeLocation(WeaponStructptr->MainMeshLocation);
+		MainWeaponMesh->SetRelativeRotation(WeaponStructptr->MainMeshRotation);
+		SubWeaponMesh->SetSkeletalMesh(WeaponStructptr->SubMesh);
+		SubWeaponMesh->SetHiddenInGame(true);
 		if (WeaponStructptr->bIsAttachSocket)
 		{
-			FName SocketName = TEXT("WeaponSocket");
-			WeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, SocketName);
+			MainWeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, WeaponStructptr->MainSocketName);
+			SubWeaponMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, WeaponStructptr->SubSocketName);
 		}
+		if (WeaponStructptr->bIsSetLeaderMesh)
+		{
+			MainWeaponMesh->SetLeaderPoseComponent(GetMesh());
+			SubWeaponMesh->SetLeaderPoseComponent(GetMesh());
+		}
+		// Sub Weapon도 기능 추가하기
 		
 	}
 
-	if (UAnimInstance* WeaponAnimInstance = WeaponMesh->GetAnimInstance())
+	if (UAnimInstance* WeaponAnimInstance = MainWeaponMesh->GetAnimInstance())
 	{
 		WeaponAniminstance = Cast<UPHeroWeaponAnimInstance>(WeaponAnimInstance);
 		//AnimInstance->OnMontageEnded.AddDynamic(this, &APHero::OnAttackEnded);
@@ -206,7 +244,7 @@ FPHeroStruct APHero::GetHeroStats() const
 	Stat.AccessorieMesh = AccessorieMesh;
 	Stat.SightRadius = SightRadius;
 	Stat.VisionAngle = VisionAngle;
-	Stat.IsMelee = IsMelee;
+	Stat.bIsMelee = bIsMelee;
 	Stat.Index = Index;
 	return Stat;
 }
@@ -228,7 +266,7 @@ void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
 	AccessorieMesh = UpdateStats.AccessorieMesh;
 	SightRadius = UpdateStats.SightRadius;
 	VisionAngle = UpdateStats.VisionAngle;
-	IsMelee = UpdateStats.IsMelee;
+	bIsMelee = UpdateStats.bIsMelee;
 	Index = UpdateStats.Index;
 }
 
@@ -257,14 +295,14 @@ void APHero::FindTarget(AActor* Target)
 		bIsLookingTarget = true;
 	}
 	
-	if (IsMelee && WeaponAniminstance)
+	if (bIsMelee && WeaponAniminstance)
 	{
 		WeaponAniminstance->StartAttack();
 	}
 	// 처음 적을 발견시 공격 애니메이션 시작
 	if (HeroAniminstance)
 	{
-		HeroAniminstance->Attack();
+		HeroAniminstance->Attack(AttackSpeed);
 	}
 }
 
@@ -282,9 +320,9 @@ void APHero::OnAttackEnded(UAnimMontage* Montage, bool bInterrupted)
 		{
 			if (HeroAniminstance)
 			{
-				HeroAniminstance->Attack();
+				HeroAniminstance->Attack(AttackSpeed);
 				//무기 애니메이션 인스턴스 적용해서 공격애니메이션해야함
-				if (IsMelee)
+				if (bIsMelee && WeaponAniminstance)
 				{
 					WeaponAniminstance->StartAttack();
 				}
@@ -322,9 +360,10 @@ void APHero::StartAttack()
 		bIsLookingTarget = true;
 
 		//원거리 공격
-		if (!IsMelee)
+		if (!bIsMelee)
 		{
 			RangeAttack();
+			SubWeaponMesh->SetHiddenInGame(true);
 		}		
 	}
 }
@@ -337,7 +376,7 @@ void APHero::StopAttack()
 		bIsLookingTarget = false;
 		bIsLookingForward = true;
 	}
-	if (IsMelee && WeaponAniminstance)
+	if (bIsMelee && WeaponAniminstance)
 	{
 		WeaponAniminstance->StopAttack();
 	}
@@ -359,7 +398,7 @@ void APHero::LookTarget()
 		// 새로운 회전 각도를 설정
 		GunPosition->SetWorldRotation(NewRotation);
 		HeroAniminstance->SetRotator(GunPosition->GetRelativeRotation());
-		WeaponMesh->SetRelativeRotation(FRotator(0, GunPosition->GetRelativeRotation().Yaw, 0));
+		//MainWeaponMesh->SetRelativeRotation(GunPosition->GetRelativeRotation());
 		if (NewRotation.Equals(TargetRotation, 0.1f))
 		{
 			bIsLookingTarget = false;
@@ -377,7 +416,7 @@ void APHero::LookForward()
 	// 새로운 회전 각도를 설정
 	GunPosition->SetWorldRotation(NewRotation);
 	HeroAniminstance->SetRotator(NewAnimRotation);
-	WeaponMesh->SetRelativeRotation(NewAnimRotation);
+	//MainWeaponMesh->SetRelativeRotation(NewAnimRotation);
 	
 	if (NewRotation.Equals(TargetRotation, 0.1f))
 	{
@@ -397,6 +436,45 @@ void APHero::GetDamage(int TakenDamage)
 void APHero::Die()
 {
 	UE_LOG(LogTemp, Log, TEXT("%s Hero Die"), *GetName());
+	if (bIsMelee && WeaponAniminstance)
+	{
+		WeaponAniminstance->StopAttack();
+	}
+	if (HeroAniminstance)
+	{
+		HeroAniminstance->StopAttack();
+		HeroAniminstance->Die();
+	}
+	FTimerHandle TimerHandle;
+	GetWorldTimerManager().SetTimer(TimerHandle, this, &APHero::DestroyHero, 5.0f, false);
+}
+
+void APHero::Drow()
+{
+	SubWeaponMesh->SetHiddenInGame(false);
+}
+
+
+void APHero::Detach()
+{
+	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+	// 영웅 콜리전 제거 및 중력 제거
+	SetActorEnableCollision(true);
+	GetMesh()->SetSimulatePhysics(true);
+	GetMesh()->SetLinearDamping(5);
+	GetMesh()->SetAngularDamping(5);
+	GetMesh()->AddImpulse(GetActorForwardVector() * -10000);
+	//WeaponMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+	MainWeaponMesh->SetSimulatePhysics(true);
+	MainWeaponMesh->SetLinearDamping(5);
+	MainWeaponMesh->SetAngularDamping(5);
+	//GetCharacterMovement()->GravityScale=1;
+	//DetachRootComponentFromParent();
+}
+
+void APHero::DestroyHero()
+{
+	Destroy();
 }
 
 void APHero::SetIndex(int NewIndex)

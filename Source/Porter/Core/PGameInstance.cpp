@@ -14,7 +14,6 @@ void UPGameInstance::Init()
 	PlayerManager = NewObject<UPlayerManager>(this);
 	if (PlayerManager)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Game Instance")));
 		PlayerManager->Initialize(PortTypeArray);
 		PlayerManager->SetGameInstance(this);
 		
