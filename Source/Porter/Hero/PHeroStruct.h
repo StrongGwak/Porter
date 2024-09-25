@@ -19,13 +19,22 @@ public:
 	FName Name;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName KorName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int HP;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int Damage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int AttackSpeed;
+	float AttackSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector MeshLocation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UAnimInstance> AnimInstance;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* BodyMesh;
@@ -52,11 +61,9 @@ public:
 	float VisionAngle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool IsMelee;
+	bool bIsMelee;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 Index = -1;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 Type = -1;
+	int32 Index;
+	
 };

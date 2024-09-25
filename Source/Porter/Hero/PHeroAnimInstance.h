@@ -27,13 +27,26 @@ public:
 
 	FPHeroAnimationStruct* FindAnimation(FName RowName) const;
 
-	void Attack();
+	void Attack(float AttackSpeed);
 
 	void StopAttack();
 
-	// 공격 노티파이 델리게이트
+	void Hit();
+
+	void Die();
+
+	//노티파이 델리게이트
 	UPROPERTY()
 	FOnAttackNotifyDelegate OnAttackNotifyDelegate;
+
+	UPROPERTY()
+	FOnAttackNotifyDelegate OnHitNotifyDelegate;
+
+	UPROPERTY()
+	FOnAttackNotifyDelegate OnDieNotifyDelegate;
+
+	UPROPERTY()
+	FOnAttackNotifyDelegate OnDrowNotifyDelegate;
 
 protected:
 	virtual void NativeInitializeAnimation() override; //애니메이션이 생성되면 호출되는 함수
@@ -43,33 +56,36 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	UDataTable* AnimationDataTable;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
 	FRotator RotationToTarget;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
 	UAnimSequence* SittingAnim;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
 	UAnimSequence* IdleAnim;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
-	UAnimSequence* WalkAnim;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
-	UAnimSequence* RunAnim;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
+	UAnimMontage* HitAnim;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
-	UAnimSequence* HitAnim;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
+	UAnimMontage* DieAnim;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
-	UAnimSequence* DieAim;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hero")
 	UAnimMontage* AttackAnim;
 
 private:
 	UFUNCTION()
-	void AnimNotify_Fire();
+	void AnimNotify_Fire() const;
+
+	UFUNCTION()
+	void AnimNotify_Hit() const;
+
+	UFUNCTION()
+	void AnimNotify_Die() const;
+
+	UFUNCTION()
+	void AnimNotify_Drow() const;
 
 	
 	

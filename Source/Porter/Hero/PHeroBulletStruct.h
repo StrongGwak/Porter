@@ -20,11 +20,23 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector MeshLocation;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FRotator MeshRotator;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Speed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector HitBoxSize;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool IsThrow;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FRotator SpinRotation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector SpinPivot;
 
 };

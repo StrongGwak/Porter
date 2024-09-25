@@ -17,10 +17,8 @@ void UPHeroAnimInstance::SetAnimation(FName RowName)
 	{
 		SittingAnim = AnimationStructptr->SittingAnim;
 		IdleAnim = AnimationStructptr->IdleAnim;
-		WalkAnim = AnimationStructptr->WalkAnim;
-		RunAnim = AnimationStructptr->RunAnim;
 		HitAnim = AnimationStructptr->HitAnim;
-		DieAim = AnimationStructptr->DieAim;
+		DieAnim = AnimationStructptr->DieAim;
 		AttackAnim = AnimationStructptr->AttackAnim;
 	}
 }
@@ -44,9 +42,9 @@ FPHeroAnimationStruct* UPHeroAnimInstance::FindAnimation(FName RowName) const
 	return nullptr;
 }
 
-void UPHeroAnimInstance::Attack()
+void UPHeroAnimInstance::Attack(float AttackSpeed)
 {
-	Montage_Play(AttackAnim);
+	Montage_Play(AttackAnim, AttackSpeed);
 }
 
 void UPHeroAnimInstance::StopAttack()
@@ -55,6 +53,16 @@ void UPHeroAnimInstance::StopAttack()
 	{
 		Montage_Stop(0.25f, AttackAnim);
 	}
+}
+
+void UPHeroAnimInstance::Hit()
+{
+	Montage_Play(HitAnim);
+}
+
+void UPHeroAnimInstance::Die()
+{
+	Montage_Play(DieAnim);
 }
 
 void UPHeroAnimInstance::NativeInitializeAnimation()
@@ -70,8 +78,22 @@ void UPHeroAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 }
 
-void UPHeroAnimInstance::AnimNotify_Fire()
+void UPHeroAnimInstance::AnimNotify_Fire() const
 {
 	// 공격 노티파이 델리게이트 호출
 	OnAttackNotifyDelegate.Broadcast();
+}
+
+void UPHeroAnimInstance::AnimNotify_Hit() const
+{
+}
+
+void UPHeroAnimInstance::AnimNotify_Die() const
+{
+	OnDieNotifyDelegate.Broadcast();
+}
+
+void UPHeroAnimInstance::AnimNotify_Drow() const
+{
+	OnDrowNotifyDelegate.Broadcast();
 }

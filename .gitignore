@@ -92,6 +92,7 @@ Build/Android/res/*/*
 # Ignore plugins binaries on deep subfolders
 Plugins/**/Binaries/*
 Plugins/**/Intermediate/*
+Plugins/*
 
 # Content
 Content/*
@@ -99,6 +100,7 @@ Content/*
 Content/Porter/*
 !Content/Porter/Develop/
 
-workspace.xml
+.idea/.idea.Porter/.idea/workspace.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/unrealengine
+.idea/.idea.Porter.dir/.idea/workspace.xml

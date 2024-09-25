@@ -37,9 +37,6 @@ APPlayer::APPlayer()
 	bUseControllerRotationYaw = true; 
 
 	FObjectFinderInputManager();
-
-	
-	
 }
 
 // Called when the game starts or when spawned
@@ -57,6 +54,7 @@ void APPlayer::BeginPlay()
 		}
 	}
 	SetStats(Stats);
+	GetCharacterMovement()->MaxWalkSpeed = Stats.WalkSpeed;
 
 	UpPort();
 	
@@ -144,7 +142,7 @@ void APPlayer::MinusHP(int32 Damage)
 			CurrentHP = MaxHp;
 		}
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Debug %d"), CurrentHP));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Debug %d"), CurrentHP));
 }
 
 void APPlayer::Move(const FInputActionValue& Value)
@@ -236,7 +234,7 @@ void APPlayer::UpdateBoost()
 			CurrentStamina = MaxStamina;
 		}
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentStamina));
+	//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, FString::FromInt(CurrentStamina));
 }
 
 void APPlayer::UpPort()
@@ -251,7 +249,13 @@ void APPlayer::UpHeroesFromArray(FName RowName)
 	// 수정했음
 	//int32 RandomInt = rand() % 5;
 	//RowName = TEXT("Test1");
-	//APHero* Hero = GI->GetHeroManager()->SpawnHero(RowName);
+	int32 RealHeroArrayNum = GI->GetHeroManager()->CheckHeroNum();
+	int32 MaximumArraySize = GI->GetHeroManager()->MaximumArraySize;
+	if(RealHeroArrayNum >= MaximumArraySize)
+	{
+		return;
+	}
+	
 	APHero* Hero = GI->GetHeroManager()->FindHero(RowName);
 	if (Hero)
 	{
@@ -272,7 +276,6 @@ void APPlayer::UpHeroesFromArray(FName RowName)
 		TArray<FVector> OffsetArray = GI->GetPlayerManager()->OffsetArray;
 		FVector SocketLocation = SMComp->GetSocketLocation(FName("PortSocket"));
 		UE_LOG(LogTemp, Log, TEXT("OffsetArray : %f, %f, %f"), OffsetArray[0].X, OffsetArray[0].Y, OffsetArray[0].Z);
-		UE_LOG(LogTemp, Log, TEXT("OffsetArray2 : %f, %f, %f"), OffsetArray[1].X, OffsetArray[1].Y, OffsetArray[1].Z);
 		FVector RelativeOffset = SocketLocation.ForwardVector*(OffsetArray[HeroNum].X + -40.0f)
 								+ SocketLocation.RightVector*(OffsetArray[HeroNum].Y)
 								+ SocketLocation.UpVector*(OffsetArray[HeroNum].Z);
@@ -413,7 +416,7 @@ void APPlayer::MakeHeroHPZero()
 			IndexChecker = HeroArray[i]->GetHeroStats().Index;
 			if (IndexChecker == 3)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Player Manager")));
+				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Player Manager")));
 				HeroArray[i]->Destroy();
 				HeroArray[i] = nullptr;
 			}
@@ -438,5 +441,5 @@ void APPlayer::OpenSpawn()
 
 void APPlayer::TempTest()
 {
-	UpHeroesFromArray();
+	UpHeroesFromArray("JangChang");
 }
