@@ -28,6 +28,11 @@ void UPHeroAnimInstance::SetRotator(FRotator NewRotator)
 	RotationToTarget = NewRotator;
 }
 
+FRotator UPHeroAnimInstance::GetRotator() const
+{
+	return RotationToTarget;
+}
+
 FPHeroAnimationStruct* UPHeroAnimInstance::FindAnimation(FName RowName) const
 {
 	static const FString ContextString(TEXT("Animation Null"));
