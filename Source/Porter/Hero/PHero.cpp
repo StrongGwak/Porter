@@ -13,8 +13,8 @@
 #include "Hero/PHeroAIController.h"
 #include "Hero/PHeroBulletPoolManager.h"
 #include "Hero/PHeroBullet.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "WorldPartition/ContentBundle/ContentBundleLog.h"
 
 // Sets default values
 APHero::APHero()
@@ -40,13 +40,16 @@ APHero::APHero()
 	AccessorieMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("AccessorieMesh"));
 	AccessorieMeshComponent->SetupAttachment(GetMesh());
 
+	
 	GunPosition = CreateDefaultSubobject<USceneComponent>(TEXT("GunPosition"));
 	GunPosition->SetupAttachment(GetCapsuleComponent());
+	GunPosition->SetRelativeLocation(FVector3d(-10, 0, 30.0f));
 	
 	// 투사체 생성 위치
 	RangeAttackPosition = CreateDefaultSubobject<USceneComponent>(TEXT("RangeAttackPosition"));
 	RangeAttackPosition->SetupAttachment(GunPosition);
-	RangeAttackPosition->SetRelativeLocation(FVector3d(60, 0, 45.0f));
+	RangeAttackPosition->SetWorldLocation(GunPosition->GetComponentLocation());
+	RangeAttackPosition->SetRelativeLocation(FVector3d(50, 0, 0.0f));
 	
 	// AI Controller 할당
 	AIControllerClass = APHeroAIController::StaticClass();
@@ -113,7 +116,12 @@ void APHero::Tick(float DeltaTime)
 	{
 		TwoHandAttachRotation();
 	}
-
+	//DrawDebugPoint(GetWorld(), GunPosition->GetComponentLocation(), 10, FColor(52, 220, 239), true);
+	//DrawDebugPoint(GetWorld(), RangeAttackPosition->GetComponentLocation(), 10, FColor(52, 0, 0), true);
+	if (AttackTarget)
+	{
+		//DrawDebugLine(GetWorld(), GunPosition->GetComponentLocation(), AttackTarget->GetActorLocation(), FColor::Emerald, false, 5, 0, 5);
+	}
 }
 
 void APHero::Initialize(FPHeroStruct HeroStruct)
@@ -177,7 +185,7 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 		HeroAniminstance = Cast<UPHeroAnimInstance>(GetMesh()->GetAnimInstance());
 		HeroAniminstance->SetAnimation(Name);
 		HeroAniminstance->OnAttackNotifyDelegate.AddDynamic(this, &APHero::StartAttack);
-		HeroAniminstance->OnDrowNotifyDelegate.AddDynamic(this, &APHero::Drow);
+		HeroAniminstance->OnDrawNotifyDelegate.AddDynamic(this, &APHero::Draw);
 		HeroAniminstance->OnDieNotifyDelegate.AddDynamic(this, &APHero::Detach);
 		GetMesh()->GetAnimInstance()->OnMontageEnded.AddDynamic(this, &APHero::OnAttackEnded);
 	}
@@ -251,6 +259,10 @@ FPHeroStruct APHero::GetHeroStats() const
 	Stat.bIsMelee = bIsMelee;
 	Stat.Index = Index;
 	Stat.bIsKorean = bIsKorean;
+	Stat.AttackSound = AttackSound;
+	Stat.DrawSound = DrawSound;
+	Stat.DieSound = DieSound;
+	Stat.HitSound = HitSound;
 	return Stat;
 }
 
@@ -274,6 +286,10 @@ void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
 	bIsMelee = UpdateStats.bIsMelee;
 	Index = UpdateStats.Index;
 	bIsKorean = UpdateStats.bIsKorean;
+	AttackSound = UpdateStats.AttackSound;
+	DrawSound = UpdateStats.DrawSound;
+	DieSound = UpdateStats.DieSound;
+	HitSound = UpdateStats.HitSound;
 }
 
 FPHeroWeaponStruct* APHero::FindWeapon(FName RowName) const
@@ -301,7 +317,7 @@ void APHero::FindTarget(AActor* Target)
 		bIsLookingTarget = true;
 	}
 	// 처음 적을 발견시 공격 애니메이션 시작
-	if (HeroAniminstance)
+	if (HeroAniminstance && !bIsDead)
 	{
 		HeroAniminstance->Attack(AttackSpeed);
 	}
@@ -350,13 +366,13 @@ void APHero::RangeAttack() const
 		if (Bullet)
 		{
 			// 투사체 발사 위치에서 타겟을 바라보는 방향 계산
-			FRotator LookAtRotator = UKismetMathLibrary::FindLookAtRotation(RangeAttackPosition->GetComponentLocation(), AttackTarget->GetActorLocation());
+			FRotator LookAtRotator = UKismetMathLibrary::FindLookAtRotation(GunPosition->GetComponentLocation(), AttackTarget->GetActorLocation());
 			// 투사체 회전 설정 투사체의 방향이 위를 바라보기 때문에 Pitch - 90
 			Bullet->SetActorRotation(FRotator(LookAtRotator.Pitch - 90, LookAtRotator.Yaw, LookAtRotator.Roll));
 			// 투사체 발사 위치로 설정
 			Bullet->SetActorLocation(RangeAttackPosition->GetComponentLocation());
 			// 투사체에 힘 적용
-			Bullet->Fire(RangeAttackPosition->GetForwardVector());
+			Bullet->Fire(GunPosition->GetForwardVector());
 		}
 	}
 }
@@ -368,6 +384,8 @@ void APHero::StartAttack()
 		bIsLookingForward = false;
 		bIsLookingTarget = true;
 
+		UGameplayStatics::PlaySoundAtLocation(this, AttackSound, GetActorLocation());
+		
 		//원거리 공격
 		if (!bIsMelee)
 		{
@@ -399,13 +417,17 @@ void APHero::LookTarget()
 	{
 		FRotator CurrentRotation = GunPosition->GetComponentRotation();
 		FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(GunPosition->GetComponentLocation(), AttackTarget->GetActorLocation());
-		FRotator TargetRotation = FRotator(0, LookAtRotation.Yaw, LookAtRotation.Roll);
-		FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 5.0f); // 5.0f는 회전 속도
-
+		FRotator TargetRotation = FRotator(0, LookAtRotation.Yaw, LookAtRotation.Roll - 10);
+		FRotator NewRotation = FMath::RInterpTo(CurrentRotation, LookAtRotation, GetWorld()->GetDeltaSeconds(), 5.0f); // 5.0f는 회전 속도
+		
 		// 새로운 회전 각도를 설정
-		GunPosition->SetWorldRotation(NewRotation);
-		HeroAniminstance->SetRotator(GunPosition->GetRelativeRotation());
-		if (NewRotation.Equals(TargetRotation, 0.1f))
+		GunPosition->SetWorldRotation(LookAtRotation);
+		UE_LOG(LogTemp, Log, TEXT("GunPosition Rotation : %f, %f, %f"), GunPosition->GetRelativeRotation().Pitch, GunPosition->GetRelativeRotation().Yaw, GunPosition->GetRelativeRotation().Roll);
+		
+		HeroAniminstance->SetRotator(FRotator(0, GunPosition->GetRelativeRotation().Yaw,GunPosition->GetRelativeRotation().Roll + 30));
+		UE_LOG(LogTemp, Log, TEXT("Anim Rotation : %f, %f, %f"), HeroAniminstance->GetRotator().Pitch, HeroAniminstance->GetRotator().Yaw, HeroAniminstance->GetRotator().Roll);
+		
+		if (NewRotation.Equals(LookAtRotation, 0.1f))
 		{
 			bIsLookingTarget = false;
 		}
@@ -435,14 +457,15 @@ void APHero::TwoHandAttachRotation()
 	FRotator CurrentRotation = MainWeaponMesh->GetComponentRotation();
 	FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(WeaponLocation, HandSocketLocation);
 	FRotator AdjustedRotation = LookAtRotation + FRotator(90.0f, 0.0f, 0.0f); // X축에서 90도 회전하여 밑면이 바라보도록 설정
-	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, AdjustedRotation, GetWorld()->GetDeltaSeconds(), 5.0f); // 5.0f는 회전 속도
+	//FRotator NewRotation = FMath::RInterpTo(CurrentRotation, AdjustedRotation, GetWorld()->GetDeltaSeconds(), 5.0f); // 5.0f는 회전 속도
 
-	MainWeaponMesh->SetWorldRotation(NewRotation);
+	MainWeaponMesh->SetWorldRotation(AdjustedRotation);
 }
 
 void APHero::GetDamage(int TakenDamage)
 {
 	HP -= TakenDamage;
+	UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
 	if (HP < 1)
 	{
 		Die();
@@ -452,18 +475,22 @@ void APHero::GetDamage(int TakenDamage)
 
 void APHero::Die()
 {
+	bIsDead = true;
 	if (HeroAniminstance)
 	{
 		HeroAniminstance->StopAttack();
 		HeroAniminstance->Die();
 	}
+	UGameplayStatics::PlaySoundAtLocation(this, DieSound, GetActorLocation());
+	
 	FTimerHandle TimerHandle;
 	GetWorldTimerManager().SetTimer(TimerHandle, this, &APHero::DestroyHero, 5.0f, false);
 }
 
-void APHero::Drow()
+void APHero::Draw()
 {
 	SubWeaponMesh->SetHiddenInGame(false);
+	UGameplayStatics::PlaySoundAtLocation(this, DrawSound, GetActorLocation());
 }
 
 void APHero::Detach()
@@ -478,6 +505,9 @@ void APHero::Detach()
 	MainWeaponMesh->SetSimulatePhysics(true);
 	MainWeaponMesh->SetLinearDamping(5);
 	MainWeaponMesh->SetAngularDamping(5);
+	SubWeaponMesh->SetSimulatePhysics(true);
+	SubWeaponMesh->SetLinearDamping(5);
+	SubWeaponMesh->SetAngularDamping(5);
 }
 
 void APHero::DestroyHero()
