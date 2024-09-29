@@ -361,9 +361,11 @@ void APPlayer::FObjectFinderInputManager()
 	}
 }
 
-void APPlayer::Die()
+bool APPlayer::Die()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("YOU DIE"));
+	//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("YOU DIE"));
+	bIsDead = true;
+	return bIsDead;
 }
 
 void APPlayer::PlaySwap()
@@ -441,5 +443,5 @@ void APPlayer::OpenSpawn()
 
 void APPlayer::TempTest()
 {
-	UpHeroesFromArray("Korean1Ssanggeom");
+	//UpHeroesFromArray("Korean1Ssanggeom");
 }
