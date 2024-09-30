@@ -48,7 +48,7 @@ public:
 	FOnAttackNotifyDelegate OnDieNotifyDelegate;
 
 	UPROPERTY()
-	FOnAttackNotifyDelegate OnDrowNotifyDelegate;
+	FOnAttackNotifyDelegate OnDrawNotifyDelegate;
 
 protected:
 	virtual void NativeInitializeAnimation() override; //애니메이션이 생성되면 호출되는 함수
@@ -87,7 +87,7 @@ private:
 	void AnimNotify_Die() const;
 
 	UFUNCTION()
-	void AnimNotify_Drow() const;
+	void AnimNotify_Draw() const;
 
 	
 	

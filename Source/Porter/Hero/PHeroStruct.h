@@ -68,5 +68,16 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bIsKorean;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USoundBase* AttackSound;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USoundBase* DieSound;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USoundBase* DrawSound;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USoundBase* HitSound;
 };

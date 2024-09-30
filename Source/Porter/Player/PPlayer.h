@@ -148,6 +148,8 @@ protected:
 	float StartBoostTime;
 	UPROPERTY()
 	float RestTime;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats")
+	bool bIsDead = false;
 	
 // 이동 관련 함수거나, 초기화거나, 나중에 버려야할 함수(테스트용 함수)들
 public:
@@ -162,7 +164,7 @@ public:
 	UFUNCTION()
 	void FObjectFinderInputManager();
 	UFUNCTION()
-	void Die();
+	bool Die();
 	UFUNCTION()
 	void PlaySwap();
 	UFUNCTION()
