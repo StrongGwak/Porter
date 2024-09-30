@@ -158,6 +158,18 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Weapon, Meta = (AllowPrivateAccess = "true"));
 	FName SubSocketName;
 
+	UPROPERTY(EditAnywhere, Category = Sound, Meta = (AllowPrivateAccess = "true"));
+	USoundBase* AttackSound;
+
+	UPROPERTY(EditAnywhere, Category = Sound, Meta = (AllowPrivateAccess = "true"));
+	USoundBase* DieSound;
+	
+	UPROPERTY(EditAnywhere, Category = Sound, Meta = (AllowPrivateAccess = "true"));
+	USoundBase* DrawSound;
+
+	UPROPERTY(EditAnywhere, Category = Sound, Meta = (AllowPrivateAccess = "true"));
+	USoundBase* HitSound;
+	
 	UFUNCTION()
 	void Detach();
 
@@ -165,7 +177,7 @@ protected:
 	void DestroyHero();
 
 	UFUNCTION()
-	void Drow();
+	void Draw();
 
 public:
 	void Initialize(FPHeroStruct HeroStruct);
@@ -200,4 +212,7 @@ public:
 	void OnHitBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
 						UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, 
 						bool bFromSweep, const FHitResult& SweepResult);
+
+	bool bIsDead;
+	
 };

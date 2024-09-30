@@ -9,26 +9,6 @@
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_CPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_CPlayer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Effects/BP_Test1_P.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Effects/BP_Test1_PL.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Effects/BP_Test1_PR.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Projectile/BP_Projectile_Meteor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Projectile/BP_Projectile_Meteor.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Boss/BP_Enemy_MageBoss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Boss/BP_Enemy_MageBoss.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Boss/BP_Enemy_OrcBoss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Boss/BP_Enemy_OrcBoss.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Object/BP_LightningRing.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Object/BP_LightningRing.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Parent/BP_Enemy_Melee.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Parent/BP_Enemy_Melee.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Parent/BP_Enemy_Nonhumanoid_Melee.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Enemy/Unit/Parent/BP_Enemy_Nonhumanoid_Melee.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Maps/Lv_Field_1.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Maps/Lv_Field_1.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Maps/Lv_Rest_TExt.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Maps/Lv_Test_1.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Widget/WBP_MainNewOption.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Canvas_Widget/WBP_MainOption.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Level_TestMap/TestMapWidget/WBP_ChapterClear.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/SoundClasses/Mix_Test_0000.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/SoundClasses/SoundClass_Test_0000.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/Sound_Source/Sound_BGM_Test0000.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Widgets/WBP_DTLearn.uasset" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -331,6 +311,7 @@
       <workItem from="1727225432181" duration="12737000" />
       <workItem from="1727250691225" duration="150000" />
       <workItem from="1727326055707" duration="516000" />
+      <workItem from="1727656565016" duration="1419000" />
     </task>
     <servers />
   </component>

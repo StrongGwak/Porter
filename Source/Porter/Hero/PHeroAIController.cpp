@@ -48,6 +48,10 @@ void APHeroAIController::Tick(float DeltaTime)
 		// 현재 인지하고 있는 액터들을 액터 배열에 할당
 		AIPerception->GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), Knowns);
 		OnPerceptionUpdated(Knowns);
+	} else if (OldTarget == nullptr)
+	{
+		// 대상이 없다면 공격 중지
+		Hero->StopAttack();
 	}
 }
 
