@@ -80,4 +80,7 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USoundBase* HitSound;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USoundBase* ImpactSound;
 };

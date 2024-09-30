@@ -8,6 +8,7 @@
 #include "Engine/DamageEvents.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "GameFramework/RotatingMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APHeroBullet::APHeroBullet()
@@ -70,6 +71,7 @@ void APHeroBullet::OnBoxHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UP
 		// 블루프린트 AnyDamage 이벤트 호출
 		FDamageEvent DamageEvent;   // Generic damage event
 		Hit.GetActor()->TakeDamage(Damage, DamageEvent, nullptr, this);
+		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, Hit.GetActor()->GetActorLocation(), 0.5);
 		
 		// 맞은 컴포넌트 유효성 검사
 		UPrimitiveComponent* TargetComponent = Hit.GetComponent();
@@ -166,4 +168,9 @@ void APHeroBullet::UpdateBullet(int UpdateDamage, int UpdateSpeed)
 {
 	Damage = UpdateDamage;
 	Speed = UpdateSpeed;
+}
+
+void APHeroBullet::SetImpactSound(USoundBase* NewImpactSound)
+{
+	ImpactSound = NewImpactSound;
 }

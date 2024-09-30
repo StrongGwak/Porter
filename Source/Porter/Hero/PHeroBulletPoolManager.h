@@ -33,6 +33,8 @@ public:
 
 	FPHeroBulletStruct* FindBullet(FName RowName) const;
 
+	void SetImpactSound(USoundBase* ImpactSound);
+
 protected:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class APHeroBullet> BulletClass;
@@ -44,5 +46,7 @@ protected:
 	int32 PoolSize = 15;
 
 	TArray<APHeroBullet*> BulletPool;
+
+	USoundBase* ImpactSound;
 	
 };

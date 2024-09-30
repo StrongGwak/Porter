@@ -169,6 +169,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = Sound, Meta = (AllowPrivateAccess = "true"));
 	USoundBase* HitSound;
+
+	UPROPERTY(EditAnywhere, Category = Sound, Meta = (AllowPrivateAccess = "true"));
+	USoundBase* ImpactSound;
 	
 	UFUNCTION()
 	void Detach();

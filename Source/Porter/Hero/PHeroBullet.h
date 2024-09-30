@@ -44,6 +44,8 @@ public:
 
 	void UpdateBullet(int UpdateDamage, int UpdateSpeed);
 
+	void SetImpactSound(USoundBase* NewImpactSound);
+
 protected:
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	float Speed;
@@ -62,4 +64,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = Rotating, Meta = (AllowPrivateAccess = "true"))
 	class URotatingMovementComponent* RotatingComponent;
+
+	UPROPERTY(EditAnywhere, Category = Sound, Meta = (AllowPrivateAccess = "true"))
+	USoundBase* ImpactSound;
 };

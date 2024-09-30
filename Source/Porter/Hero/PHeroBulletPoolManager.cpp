@@ -71,6 +71,11 @@ FPHeroBulletStruct* APHeroBulletPoolManager::FindBullet(FName RowName) const
 	return nullptr;
 }
 
+void APHeroBulletPoolManager::SetImpactSound(USoundBase* NewImpactSound)
+{
+	ImpactSound = NewImpactSound;
+}
+
 void APHeroBulletPoolManager::Initialize(FName RowName, int Damage)
 {
 	FPHeroBulletStruct* BulletStructptr = FindBullet(RowName);
@@ -86,6 +91,7 @@ void APHeroBulletPoolManager::Initialize(FName RowName, int Damage)
 				Bullet->SetActorHiddenInGame(true);
 				Bullet->SetBulletPoolManager(this);
 				Bullet->Initialize(BulletStructptr, Damage);
+				Bullet->SetImpactSound(ImpactSound);
 				BulletPool.Add(Bullet);
 			}
 		}

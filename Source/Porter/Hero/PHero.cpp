@@ -167,6 +167,7 @@ void APHero::Initialize(FPHeroStruct HeroStruct)
 	{
 		if (BulletPoolManagerClass) {
 			BulletPoolManager = GetWorld()->SpawnActor<APHeroBulletPoolManager>(BulletPoolManagerClass);
+			BulletPoolManager->SetImpactSound(ImpactSound);
 			BulletPoolManager->Initialize(Name, Damage);
 		}
 	}
@@ -263,6 +264,7 @@ FPHeroStruct APHero::GetHeroStats() const
 	Stat.DrawSound = DrawSound;
 	Stat.DieSound = DieSound;
 	Stat.HitSound = HitSound;
+	Stat.ImpactSound = ImpactSound;
 	return Stat;
 }
 
@@ -290,6 +292,7 @@ void APHero::SetHeroStats(const FPHeroStruct& UpdateStats)
 	DrawSound = UpdateStats.DrawSound;
 	DieSound = UpdateStats.DieSound;
 	HitSound = UpdateStats.HitSound;
+	ImpactSound = UpdateStats.ImpactSound;
 }
 
 FPHeroWeaponStruct* APHero::FindWeapon(FName RowName) const
@@ -346,13 +349,26 @@ void APHero::OnAttackEnded(UAnimMontage* Montage, bool bInterrupted)
 void APHero::OnHitBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor && OtherActor != this)
+	static bool bCanHit = true;
+	if (OtherActor && OtherActor != this && bCanHit)
 	{
 		if (OtherActor->ActorHasTag("Enemy"))
 		{
+			bCanHit = false;
 			// 블루프린트 AnyDamage 이벤트 호출
 			FDamageEvent DamageEvent;   // Generic damage event
 			OtherActor->TakeDamage(Damage, DamageEvent, nullptr, this);
+			UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, OtherActor->GetActorLocation(), 0.5);
+			FTimerHandle TimerHandle;
+			GetWorldTimerManager().SetTimer(
+				TimerHandle, 
+				[this]()
+				{
+					bCanHit = true;  // 쿨타임이 끝나면 다시 히트 가능
+				}, 
+				1.0f,  // 쿨타임 5초
+				false  // 반복하지 않음
+			);
 		}
 	}
 }
@@ -384,7 +400,7 @@ void APHero::StartAttack()
 		bIsLookingForward = false;
 		bIsLookingTarget = true;
 
-		UGameplayStatics::PlaySoundAtLocation(this, AttackSound, GetActorLocation());
+		UGameplayStatics::PlaySoundAtLocation(this, AttackSound, GetActorLocation(), 0.5);
 		
 		//원거리 공격
 		if (!bIsMelee)
@@ -422,10 +438,15 @@ void APHero::LookTarget()
 		
 		// 새로운 회전 각도를 설정
 		GunPosition->SetWorldRotation(LookAtRotation);
-		UE_LOG(LogTemp, Log, TEXT("GunPosition Rotation : %f, %f, %f"), GunPosition->GetRelativeRotation().Pitch, GunPosition->GetRelativeRotation().Yaw, GunPosition->GetRelativeRotation().Roll);
+		if (bIsMelee)
+		{
+			HeroAniminstance->SetRotator(FRotator(0, GunPosition->GetRelativeRotation().Yaw,GunPosition->GetRelativeRotation().Roll + 30));
+		}
+		else
+		{
+			HeroAniminstance->SetRotator(FRotator(0, GunPosition->GetRelativeRotation().Yaw,GunPosition->GetRelativeRotation().Roll));
+		}
 		
-		HeroAniminstance->SetRotator(FRotator(0, GunPosition->GetRelativeRotation().Yaw,GunPosition->GetRelativeRotation().Roll + 30));
-		UE_LOG(LogTemp, Log, TEXT("Anim Rotation : %f, %f, %f"), HeroAniminstance->GetRotator().Pitch, HeroAniminstance->GetRotator().Yaw, HeroAniminstance->GetRotator().Roll);
 		
 		if (NewRotation.Equals(LookAtRotation, 0.1f))
 		{
@@ -465,7 +486,7 @@ void APHero::TwoHandAttachRotation()
 void APHero::GetDamage(int TakenDamage)
 {
 	HP -= TakenDamage;
-	UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
+	UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation(), 0.5);
 	if (HP < 1)
 	{
 		Die();
@@ -481,7 +502,7 @@ void APHero::Die()
 		HeroAniminstance->StopAttack();
 		HeroAniminstance->Die();
 	}
-	UGameplayStatics::PlaySoundAtLocation(this, DieSound, GetActorLocation());
+	UGameplayStatics::PlaySoundAtLocation(this, DieSound, GetActorLocation(), 0.5);
 	
 	FTimerHandle TimerHandle;
 	GetWorldTimerManager().SetTimer(TimerHandle, this, &APHero::DestroyHero, 5.0f, false);
@@ -490,7 +511,7 @@ void APHero::Die()
 void APHero::Draw()
 {
 	SubWeaponMesh->SetHiddenInGame(false);
-	UGameplayStatics::PlaySoundAtLocation(this, DrawSound, GetActorLocation());
+	UGameplayStatics::PlaySoundAtLocation(this, DrawSound, GetActorLocation(), 0.5);
 }
 
 void APHero::Detach()
