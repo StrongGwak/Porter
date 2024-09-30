@@ -9,10 +9,6 @@
   <component name="ChangeListManager">
     <list default="true" id="acb9f1b0-be22-4345-8f25-5dbed5a9da33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Porter.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_CPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Character/BP_CPlayer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Material/MM_RestLandscape.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Material/MM_RestLandscape.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Material/M_LandscapeMat.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Material/M_LandscapeMat.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Porter/Develop/Material/M_WildGrass.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Porter/Develop/Material/M_WildGrass.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -315,7 +311,7 @@
       <workItem from="1727225432181" duration="12737000" />
       <workItem from="1727250691225" duration="150000" />
       <workItem from="1727326055707" duration="516000" />
-      <workItem from="1727656565016" duration="693000" />
+      <workItem from="1727656565016" duration="1419000" />
     </task>
     <servers />
   </component>
